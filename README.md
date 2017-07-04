@@ -5,9 +5,9 @@
 
 # Introduction
 
-Django application for the SynoptiOne MVP.
+Django application for the Datasheet.ai MVP.
 
-The Django application uses Mezzanine as a core application to implement the CMS for the system.
+The Django application uses Wagtail as a core application to implement the CMS for the system.
 
 It is possible to have CMS based pages, as well as non-CMS pages, so we have the flexibility to work either way. CMS pages can be simple, with as many items on the page handled by a database model as needed, or as few. In the simplest case, the page would just be named page in the CMS, that results in a custom template that is 100% hand-configured, and no content is from the CMS
 
@@ -23,25 +23,21 @@ It is possible to have CMS based pages, as well as non-CMS pages, so we have the
 
 Clone the repo and the project-editor-scaffold apps into your working directory
 
-    git clone git@github.com:BigZeta/synopticone.git synopticone
-    git clone git@github.com:BigZeta/project-editor-scaffold.git
+    git clone git@github.com:BigZeta/datasheet.ai.git synopticone
 
-Checkout the develop branch of both repositories (or some other desired branch)
+Checkout the develop branch of the repository (or some other desired branch)
 
-    cd project-editor-scaffold
-    git checkout develop
-    cd ../synopticone
     git checkout develop
 
 Copy the local versions of environment and django config.
 
     cp env.example django_root/.env.local
-    cp django_root/local_config-example.py django_root/local_config.py
+    cp datasheet_ai/local_config-example.py datasheet_ai/local_config.py
 
 If running django local, with a remote postgres and remote smtpd, you need to add a line to your .env.local
 to setup the database url
 
-    DATABASE_URL=postgresql://synopticone:synopticone@0.0.0.0:5441/synopticone
+    DATABASE_URL=postgresql://datasheet_usetr:<password>@0.0.0.0:5441/datasheetai
 
 The hostname of 0.0.0.0 and port of 5441 are based on the dev.yml file, so compare to that if anything changes.
     
@@ -50,8 +46,7 @@ Set the COMPOSE_FILE environment variable, which avoids having to type `docker-c
 There are also a couple of other environment settings that are required to be setup. All of these can be done manually, as below:
 
     export COMPOSE_FILE=dev.yml
-    export DJANGO_ROOT_PATH=./django_root
-    export REACT_BASE_PATH=./react_project_base
+    export DJANGO_ROOT_PATH=./datashseet_ai
 
 To make life easier, I have a "godev" file that can be sourced into the shell (I assume you are using bash). None of this applies if you are on windows, as far as I know.
 

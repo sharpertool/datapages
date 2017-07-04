@@ -1,0 +1,8 @@
+#!/bin/sh
+
+
+pushd datasheet_ai
+python manage.py "$@"
+popd
+
+

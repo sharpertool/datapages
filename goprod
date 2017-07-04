@@ -1,0 +1,12 @@
+#!/bin/bash
+
+eval $(docker-machine env synopticone.prod)
+
+export COMPOSE_FILE=docker-compose.yml
+
+if [ "$TERM_PROGRAM" == "iTerm.app" ]
+then
+    title 'datasheet.wagtail.prod'
+fi
+
+

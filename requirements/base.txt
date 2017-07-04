@@ -1,0 +1,25 @@
+
+# Core tools
+django==1.11.3
+wagtail==1.11
+
+# Forms
+#django-braces
+#django-crispy-forms
+
+django-allauth==0.32.0
+
+# Database
+psycopg2==2.7.1
+#django-model-utils==2.4
+
+# Reading environment variables, secure enclaves
+django-environ==0.4.3
+django-secure==1.0.1
+
+# For caching
+django-redis
+
+# Utilities
+pytz==2017.2
+Pillow==4.2.0

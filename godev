@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export COMPOSE_FILE=dev.yml
+
+# These are needed for dev.yml file
+export DJANGO_ROOT_PATH=./datasheet_ai
+
+#if [ "$TERM_PROGRAM" == "iTerm.app" ]
+#then
+#    #title 'synone.mezz.dev'
+#fi
+
+
+
+

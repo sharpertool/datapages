@@ -18,13 +18,13 @@ services:
       - POSTGRES_USER=datasheet_user
       - POSTGRES_DB=datasheetai
     ports:
-      - "5441:5432"
+      - "5442:5432"
 
   smtpd:
     container_name: datasheet-smtpd
     build: ./compose/smtpd
     ports:
-      - "8025:25"
+      - "8026:25"
 
 #  django:
 #    container_name: datasheet-django

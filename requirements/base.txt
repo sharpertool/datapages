@@ -23,3 +23,5 @@ django-redis
 # Utilities
 pytz==2017.2
 Pillow>=4.2.1
+
+django-suit

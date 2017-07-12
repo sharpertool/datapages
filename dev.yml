@@ -9,7 +9,7 @@ services:
     container_name: datasheet-postgres
     build: ./compose/postgres
     volumes:
-      - postgres_data_dev:/var/lib/postgresql/data
+      #- postgres_data_dev:/var/lib/postgresql/data
       #- ./database/backups:/backups
       # You can also modify this to point to your local Dropbox location where the shared
       # backups are stored. For me this is:

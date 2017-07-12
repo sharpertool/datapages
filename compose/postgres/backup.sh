@@ -10,6 +10,10 @@ then
     exit 1
 fi
 
+# Set the default database to be the username
+: ${POSTGRES_DB:=$POSTGRES_USER}
+export POSTGRES_DB
+
 # export the postgres password so that subsequent commands don't ask for it
 export PGPASSWORD=$POSTGRES_PASSWORD
 
@@ -17,6 +21,8 @@ echo "creating backup"
 echo "---------------"
 
 FILENAME=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
-pg_dump -h postgres -U $POSTGRES_USER >> /backups/$FILENAME
+pg_dump -h postgres -U $POSTGRES_USER $POSTGRES_DB >> /backups/$FILENAME
 
 echo "successfully created backup $FILENAME"
+echo $FILENAME
+

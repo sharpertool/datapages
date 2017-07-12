@@ -1,7 +1,7 @@
 
 # Core tools
 django==1.11.3
-wagtail==1.11
+wagtail>=1.11.1
 
 # Forms
 #django-braces
@@ -22,4 +22,4 @@ django-redis
 
 # Utilities
 pytz==2017.2
-Pillow==4.2.0
+Pillow>=4.2.1

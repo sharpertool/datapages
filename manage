@@ -1,8 +1,9 @@
 #!/bin/sh
 
 
+base=`pwd`
 pushd datasheet_ai
-python manage.py "$@"
+${base}/.venv3/bin/python manage.py "$@"
 popd
 
 

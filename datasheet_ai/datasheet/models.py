@@ -6,12 +6,18 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from taggit.models import TaggedItemBase
 
-from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.models import register_snippet
+from wagtail.core.models import Page, Orderable
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core import blocks
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    MultiFieldPanel,
+    InlinePanel,
+    StreamFieldPanel)
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
+from wagtail.snippets.models import register_snippet
 
 # Create your models here.
 class DatasheetIndexPage(Page):
@@ -41,6 +47,21 @@ class DatasheetIndexPage(Page):
         ImageChooserPanel('logo')
     ]
 
+
+## Blocks
+class RelayProductCodeStructureBlock(blocks.StructBlock):
+    type = blocks.CharBlock()
+    version = blocks.CharBlock()
+    coil_version = blocks.CharBlock()
+    coil_system = blocks.CharBlock()
+    load_voltage = blocks.CharBlock()
+    contact_material = blocks.CharBlock()
+    status = blocks.CharBlock()
+    connector_version = blocks.CharBlock()
+
+    class Meta:
+        icon = 'user'
+
 class DatasheetPageTag(TaggedItemBase):
     content_object = ParentalKey('DatasheetPage', related_name='tagged_items')
 
@@ -48,6 +69,12 @@ class DatasheetPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
+    stream1 = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('product_code', RelayProductCodeStructureBlock())
+    ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 
     parent_page_types = ['DatasheetIndexPage']
@@ -70,9 +97,23 @@ class DatasheetPage(Page):
             FieldPanel('tags'),
         ], heading="Blog information"),
         FieldPanel('intro'),
+        InlinePanel('features', label="Features"),
         FieldPanel('body', classname="full"),
+        StreamFieldPanel('stream1'),
         InlinePanel('related_links', label="Related Links"),
     ]
+
+
+class Features(Orderable):
+    page = ParentalKey(DatasheetPage, related_name='features')
+    feature = RichTextField()
+
+    panels = [
+        FieldPanel('feature', classname="full")
+    ]
+
+class Revisions(Orderable):
+    date = models.DateField()
 
 
 class RelatedLinks(Orderable):

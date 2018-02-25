@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-datasheet{% endblock %}
+
+{% block content %}
+
+    <h1>{{ page.title }}</h1>
+    <p class="meta">{{ page.date }}</p>
+
+    <div class="intro">{{ page.intro }}</div>
+
+    {{ page.body|richtext }}
+
+    {% if page.related_links.all.count  %}
+        <div class="tags">
+            <h3>Links</h3>
+            {% for link in page.related_links.all %}
+                <a href="{{ link.url }}">
+                    {{ link.name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if page.tags.all.count %}
+        <div class="tags">
+            <h3>Tags</h3>
+            {% for tag in page.tags.all %}
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}" target="_blank">
+                    <button type="button">{{ tag }}</button>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <p><a href="{{ page.get_parent.url }}">Return to Index</a></p>
+
+{% endblock %}
+

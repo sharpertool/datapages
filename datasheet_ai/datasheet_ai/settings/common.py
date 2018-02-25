@@ -27,6 +27,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
     'blog',
+    'datasheet',
     'home',
     'search',
 
@@ -162,3 +163,6 @@ WAGTAIL_SITE_NAME = "datasheet.ai"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://datasheet.ai'
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default='datapages.ai')
+ALLOWED_HOSTS = ['datapages.ai']

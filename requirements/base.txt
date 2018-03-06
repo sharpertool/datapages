@@ -1,7 +1,7 @@
 
 # Core tools
-django>=1.11,<=1.12
-wagtail==2.0rc1
+django>=2.0, <=2.1
+wagtail>=2.0, <=2.1
 
 # Forms
 #django-braces

@@ -15,14 +15,14 @@ env = environ.Env()
 
 if len(sys.argv) > 1 and sys.argv[1] == 'test':
     print("Running test mode..")
-    from datasheet_ai.settings.testing import *
+    from datapages.settings.testing import *
 else:
 
     if env.bool('DJANGO_DOCKER', False):
         env.read_env('.env.local.docker')
     else:
         env.read_env('.env.local')
-    from datasheet_ai.settings.dev import *
+    from datapages.settings.dev import *
 
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = "<make yourself a new key!!>"
@@ -37,7 +37,7 @@ NEVERCACHE_KEY = "<make yourself a new key here too!>"
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "datasheet.localhost",
+    "datapages.localhost",
 ]
 
 INTERNAL_IPS = ('127.0.0.1',

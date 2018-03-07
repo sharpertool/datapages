@@ -1,5 +1,5 @@
 """
-WSGI config for datasheet_ai project.
+WSGI config for datapages project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datasheet_ai.settings.prod")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datapages.settings.prod")
 
 application = get_wsgi_application()

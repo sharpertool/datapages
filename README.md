@@ -1,11 +1,9 @@
 
-[![CircleCI](https://circleci.com/gh/BigZeta/synopticone/tree/feature%2Fbuild-script-SYNOPTIC-190.svg?style=svg&circle-token=b870be8aec7230a1f7b460085e9a38ed6d24240e)](https://circleci.com/gh/BigZeta/synopticone/tree/feature%2Fbuild-script-SYNOPTIC-190)
-
-[ ![Codeship Status for BigZeta/synopticone](https://app.codeship.com/projects/56c631c0-cb1b-0134-86a7-36c4adfc6db3/status?branch=master)](https://app.codeship.com/projects/199817)
+[![CircleCI](https://circleci.com/gh/BigZeta/datapages.ai/tree/feature%2Fbuild-script-SYNOPTIC-190.svg?style=svg&circle-token=b870be8aec7230a1f7b460085e9a38ed6d24240e)](https://circleci.com/gh/BigZeta/synopticone/tree/feature%2Fbuild-script-SYNOPTIC-190)
 
 # Introduction
 
-Django application for the Datasheet.ai MVP.
+Django application for the DataPages.ai MVP.
 
 The Django application uses Wagtail as a core application to implement the CMS for the system.
 
@@ -16,14 +14,14 @@ It is possible to have CMS based pages, as well as non-CMS pages, so we have the
 ## Prerequisites
 
 1. git
-2. docker and docker-compose 1.12+
+2. docker and docker-compose 17+
 3. npm
 
 ## Installation
 
 Clone the repo and the project-editor-scaffold apps into your working directory
 
-    git clone git@github.com:BigZeta/datasheet.ai.git synopticone
+    git clone git@github.com:BigZeta/datapages.git synopticone
 
 Checkout the develop branch of the repository (or some other desired branch)
 
@@ -31,33 +29,23 @@ Checkout the develop branch of the repository (or some other desired branch)
 
 Copy the local versions of environment and django config.
 
-    cp env.example django_root/.env.local
-    cp datasheet_ai/local_config-example.py datasheet_ai/local_config.py
+    dc datapages
+    cp env.local.example .env.local
+    cp local_config-example.py local_config.py
 
 If running django local, with a remote postgres and remote smtpd, you need to add a line to your .env.local
 to setup the database url
 
-    DATABASE_URL=postgresql://datasheet_usetr:<password>@0.0.0.0:5441/datasheetai
+    DATABASE_URL=postgresql://datasheet_user:<password>@0.0.0.0:5441/datasheetai
 
-The hostname of 0.0.0.0 and port of 5441 are based on the dev.yml file, so compare to that if anything changes.
+The hostname of 0.0.0.0 and port of 5441 are based on the docker-compose.yml file, so compare to that if anything changes.
     
-Set the COMPOSE_FILE environment variable, which avoids having to type `docker-compose -f dev.yml` each time.
-
 There are also a couple of other environment settings that are required to be setup. All of these can be done manually, as below:
 
-    export COMPOSE_FILE=dev.yml
     export DJANGO_ROOT_PATH=./datashseet_ai
 
 To make life easier, I have a "godev" file that can be sourced into the shell (I assume you are using bash). None of this applies if you are on windows, as far as I know.
 
-The [bash 'source' builtin](http://ss64.com/bash/source.html) will read a file and execute it into the current environment.
-
-    source godev
-
-Or:
-
-    . godev
-    
 I find that typing 'docker-compose' a lot is tedious. If you are on a Unix like system (*nix or Mac, not windows), you can set a shell alias also. The rest of this document will use 'dc' instead of docker-compose. If you are on windows, go ahead and type out the full name.
     
     alias dc='docker-compose'
@@ -82,13 +70,6 @@ If you were given a database file, put that file there. Assume you were given a 
 
     dc exec postgres restore backup_2016_07_21T16_30_50.sql
 
-If you followed the instructions, django will not be running right now, but in the future you will need to stop the django container before you restore a DB backup. Use the following steps when restoring from backup on a working system:
-
-    dc stop django
-    dc exec postgres restore backup_2016_07_21T16_30_50.sql
-    dc start django
-    
-
 Now, you can start the rest of the containers. docker-compose up will bring all of the containers that are not running up, which will include django and smtpd
 
     dc up -d
@@ -96,8 +77,7 @@ Now, you can start the rest of the containers. docker-compose up will bring all 
 Now, use ps to check the status again, and the django logs
 
     docker ps
-    dc logs django
-    
+
 #### Last Step - build SASS files
 
 The frontend assets are built using gulp. I have a special container that runs gulp in watch mode so that any changes are detected and written. This gulp task has been added to the dev.yml, so no further steps are required. 
@@ -157,13 +137,13 @@ I use Docker to avoid having to install PostGreSQL on each system. If you happen
 
 I don't recommend this setup, but here are a few notes for if you want to try and get this all configured from scratch. 
 
-### Python 3.5+
+### Python 3.6+
 
-Development requires a current Python 3.5+ configuration. The development is using the latest Python 3.5+ so that we may take advantage of all of the new capabilities of Python 3.
+Development requires a current Python 3.6+ configuration. The development is using the latest Python 3.6+ so that we may take advantage of all of the new capabilities of Python 3.
 
 #### Install Python on OSX
 
-This is pretty easy. Go to https://www.python.org/downloads/, and download the latest Python 3.5+ version. Run the installer, and you will be ready to start.
+This is pretty easy. Go to https://www.python.org/downloads/, and download the latest Python 3.6+ version. Run the installer, and you will be ready to start.
 
 ### NodeJS
 

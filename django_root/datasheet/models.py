@@ -31,7 +31,7 @@ class DatasheetIndexPage(Page):
     subpage_types = ['DatasheetPage']
 
     class Meta:
-        verbose_name = "Datasheet Index"
+        verbose_name = "DataPages Index"
 
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron

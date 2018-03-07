@@ -37,6 +37,6 @@ static
 .venv
 .venv3
 
-datasheet_ai/\.env\.local
+django_root/\.env\.local
 
-datasheet_ai/local_config\.py
+django_root/local_config\.py

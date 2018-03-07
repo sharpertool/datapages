@@ -1,0 +1,343 @@
+version: 2.0
+
+references:
+
+  container_config: &container_config
+    working_directory: ~/build
+    docker:
+      - image: bigzeta/ci_python3_node:1.0.0
+
+      - image: bigzeta/ci_postgres:1.0.0
+        environment:
+          POSTGRES_PASSWORD: testing-password
+          POSTGRES_USER: datasheet_user
+          POSTGRES_DB: datasheetai
+
+      - image: bigzeta/smtpd:1.0.0
+
+  container_config_min: &container_config_min
+    working_directory: ~/build
+    docker:
+      - image: bigzeta/ci_python3_node:1.0.0
+
+  devops_config: &devops_config
+    working_directory: ~/build
+    docker:
+      - image: bigzeta/devops_base:1.0.0
+        auth:
+          username: kutenai
+          password: $DOCKERHUB_PASSWORD
+
+  workspace_root: &workspace_root
+    ~/build
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  restore_repo: &restore_repo
+    restore_cache:
+      keys:
+        - v1-repo-{{ .Branch }}-{{ .Revision }}
+        - v1-repo-{{ .Branch }}
+        - v1-repo
+
+  venv_cache_key: &venv_cache_key
+    v2-dependency-venv-{{ checksum "requirements/test.txt" }}-{{ checksum "requirements/dev.txt" }}-{{ checksum "requirements/base.txt" }}
+
+  restore_venv: &restore_venv
+    restore_cache:
+      keys:
+        - *venv_cache_key
+
+  disable_strict_type_checking: &disable_strict_type_checking
+    run:
+      name: Disable strict type checking
+      command: |
+        mkdir ~/.ssh/
+        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
+  make_vault: &make_vault
+    run:
+      name: Create the ansible password file for secrets
+      command: |
+        echo ${ANSIBLE_VAULT_PASSWORD} > ~/.ansible.password
+
+  persist_manifest: &persist_manifest
+    persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./manifest.json
+
+  store_manifest: &store_manifest
+    store_artifacts:
+      path: ./manfest.json
+      destination: manifest.json
+
+jobs:
+  checkout_code:
+    <<: *container_config
+    steps:
+      - *restore_repo
+
+      - run:
+          name: Avoid hosts unknown for github
+          command: |
+            mkdir -p ~/.ssh/
+            echo -e "Host github.com\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - run:
+          name: fetch tags
+          command: |
+            git fetch --tags
+
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .
+
+  build_venv:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_venv
+
+      - run:
+          name: Install project pip modules
+          command: |
+            python3 -m venv .venv
+            source .venv/bin/activate
+            pip install -r requirements/dev.txt
+            pip install -r requirements/test.txt
+
+      - save_cache:
+          key: *venv_cache_key
+          paths:
+            - .venv
+
+  collectstatic:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_venv
+
+      - *attach_workspace
+
+      - run:
+          name: Collect static files
+          command: |
+            source .venv/bin/activate
+            cd django_root
+            export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
+            python manage.py collectstatic --noinput
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./collectedstatic
+
+  install_synoptic:
+    <<: *container_config_min
+    steps:
+      - run:
+          name: Install datapages client packages
+          command: |
+            aws s3 sync s3://datapages.ai.prod/datapages/0.1.0 ./datapages
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./build
+
+  pytest:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_venv
+      - *attach_workspace
+
+      - run:
+          command: |
+            source .venv/bin/activate
+            cd django_root
+            export EDITOR_DIST_DIR=~/build/datapages
+            DJANGO_SETTINGS_MODULE=datapages.settings.circleci python manage.py test
+
+  build_zip_file:
+    <<: *container_config_min
+    steps:
+      - *restore_repo
+      - *restore_venv
+      - *attach_workspace
+
+      - run:
+          name: Build zip deploy file and persist to workspace
+          command: |
+            mkdir -p zipout
+            if [ ! -z "${CIRCLE_TAG}" ];then
+              zipfile=synopticone_${CIRCLE_TAG}.gz
+            else
+              zipfile=synopticone_${CIRCLE_BRANCH}.gz
+            fi
+            zip -r zipout/${zipfile} \
+              collectedstatic/ *.wsgi django_root/ scripts/ \
+              requirements/ requirements.txt \
+              -x \*.pyc -x django_root/local_config.py \
+              -x django_root/.env.local -x django_root/.env.test
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./zipout
+
+  deploy_to_s3_bucket:
+    <<: *container_config_min
+    steps:
+      - *restore_repo
+      - *restore_venv
+      - *attach_workspace
+
+      - run:
+          name: Deploy the zip file to the remote bucket
+          command: |
+            zipfile=synopticone_${CIRCLE_TAG}.gz
+            s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${CIRCLE_TAG}/${zipfile}"
+            aws s3 cp zipout/${zipfile} ${s3path}
+          environment:
+            DEPLOY_BUCKET: datapages.ai.deploy
+            DEPLOY_BUCKET_PATH: backend_versions
+
+  deploy_to_test_server:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *disable_strict_type_checking
+      - *attach_workspace
+
+      - run:
+          name: Add Target Host to config to disable strict type checking
+          command: |
+            ./scripts/host_config.sh
+
+      - run:
+          name: Show current config value.
+          command: |
+            ls -al ~
+            if [[ -d ~/.ssh ]];then
+              cat ~/.ssh/config
+            fi
+
+      - run:
+          name:  Add circle ci server to security group for ec2 access
+          command: |
+            cd scripts
+            source ./getenv_circleci_security_group.sh
+            ./add_myip_to_circleci_security_group.sh || /bin/true
+
+      - run:
+          name: Copy deploy script to test server
+          command: |
+            scp ./scripts/site_deploy_zip.sh deploy_host:synoptic.ai/site_deploy_zip.sh
+
+      - run:
+          name: Copy zipfile to test server
+          command: |
+            scp zipout/synoptic*.gz deploy_host:synoptic.ai/
+
+      - run:
+          name: Run deploy script on test server
+          command: |
+            ssh deploy_host "./synoptic.ai/site_deploy_zip.sh synopticone*.gz"
+
+      - run:
+          name:  Remove circle ci server to security group for ec2 access
+          command: |
+            cd scripts
+            source ./getenv_circleci_security_group.sh
+            ./clear_circleci_security_group.sh
+
+
+workflows:
+  version: 2
+
+  build_test_deploy:
+    jobs:
+      - checkout_code:
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              ignore:
+                - develop_ci_test
+                - packer_test
+                - terraform_production_test
+
+      - install_synoptic:
+          requires:
+            - checkout_code
+          filters:
+            tags:
+              only: /v.*/
+
+      - build_venv:
+          requires:
+            - checkout_code
+          filters:
+            tags:
+              only: /v.*/
+
+      - compile_assets:
+          requires:
+            - build_venv
+          filters:
+            tags:
+              only: /v.*/
+
+      - collectstatic:
+          requires:
+            - build_venv
+            - compile_assets
+          filters:
+            tags:
+              only: /v.*/
+
+      - pytest:
+          requires:
+            - build_venv
+            - install_synoptic
+            - compile_assets
+            - collectstatic
+          filters:
+            tags:
+              only: /v.*/
+
+      - build_zip_file:
+          requires:
+            - pytest
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only:
+                - develop
+
+      - deploy_to_s3_bucket:
+          requires:
+            - build_zip_file
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+
+      - deploy_to_test_server:
+          requires:
+            - pytest
+            - build_zip_file
+          filters:
+            tags:
+              only: /v.*-rc.*/
+            branches:
+              only:
+                - develop
+

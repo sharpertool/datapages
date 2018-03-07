@@ -11,9 +11,9 @@ machine:
   environment:
     # ToDo Update the database urls
     DATABASE_URL: postgres://postgres@127.0.0.1:5432/datasheetai
-    DJANGO_SETTINGS_MODULE: datasheet_ai.settings.test
+    DJANGO_SETTINGS_MODULE: datapages.settings.test
     DATABASE_URL: postgresql://ubuntu@localhost/circle_test
-    # ToDo: Update this security group for datasheet.ai
+    # ToDo: Update this security group for datapages.ai
     BIGZETA_CIRCLECI_SG: sg-8e3fa8f6
 
   services:
@@ -55,11 +55,11 @@ deployment:
   staging:
     branch: release
     commands:
-      - aws s3 sync /home/ubuntu/datasheetai/static s3://bigzeta.deploy/prod/deploy/datasheet.ai
+      - aws s3 sync /home/ubuntu/datasheetai/static s3://bigzeta.deploy/prod/deploy/datapages.ai
   test:
     branch: develop
     commands:
       - ./add_myip_to_circleci_security_group.sh || /bin/true
-      - ssh -l ec2-user -o ProxyCommand='ssh -q $BASTION nc %h %p' $DEPLOY_HOST './datasheet.ai/siteupdate.sh'
+      - ssh -l ec2-user -o ProxyCommand='ssh -q $BASTION nc %h %p' $DEPLOY_HOST './datapages.ai/siteupdate.sh'
       - ./clear_circleci_security_group.sh
 

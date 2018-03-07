@@ -2,7 +2,7 @@
 
 
 base=`pwd`
-pushd datasheet_ai
+pushd django_root
 ${base}/.venv3/bin/python manage.py "$@"
 popd
 

@@ -24,7 +24,7 @@ if __name__ == "__main__":
     if local_exists():
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "local_config")
     else:
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datasheet_ai.settings.dev")
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "datapages.settings.dev")
 
 
     try:

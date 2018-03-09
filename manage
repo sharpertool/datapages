@@ -2,8 +2,7 @@
 
 
 base=`pwd`
-pushd django_root
+cd django_root
 ${base}/.venv3/bin/python manage.py "$@"
-popd
 
 

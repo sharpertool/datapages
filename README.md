@@ -3,7 +3,7 @@
 
 # Introduction
 
-Django application for the DataPages.ai MVP.
+Django application for the DataPages.io MVP.
 
 The Django application uses Wagtail as a core application to implement the CMS for the system.
 

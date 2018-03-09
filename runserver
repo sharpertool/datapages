@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+base=`pwd`
+cd django_root
+while true
+do
+    ${base}/.venv3/bin/python manage.py runserver_plus
+    sleep 2
+done
+
+

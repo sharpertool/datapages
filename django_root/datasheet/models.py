@@ -18,8 +18,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
 
 from .blocks import (RelayProductCodeStructureBlock,
-                     CarouselEmbedBlock,
-                     CarouselImageBlock,
+                     CarouselStreamBlock,
                      FeaturesBlock, ApplicationsBlock,
                      ContactDataBlock, CoilDataBlock
                      )
@@ -59,19 +58,16 @@ class DatasheetPageTag(TaggedItemBase):
 class DatasheetPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, blank=True)
-    part_name = models.CharField(max_length=64),
-    part_description = models.CharField(max_length=128),
     body = RichTextField(blank=True)
     stream1 = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
+        ('heading', blocks.CharBlock(
+            classname="full title",
+            template="datasheet/blocks/heading.html"
+        )),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
-        ('carousel', blocks.ListBlock(CarouselImageBlock())),
-        ('carousel_stream', blocks.StreamBlock([
-            ('image', CarouselImageBlock()),
-            ('embed', CarouselEmbedBlock()),
-        ])),
+        ('carousel', CarouselStreamBlock()),
         ('features', blocks.ListBlock(blocks.RichTextBlock(label="feature"))),
         ('features2', FeaturesBlock()),
         ('applications', ApplicationsBlock()),

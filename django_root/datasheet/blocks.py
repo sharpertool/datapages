@@ -49,6 +49,12 @@ class CarouselEmbedBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     embed = EmbedBlock()
 
+class CarouselStreamBlock(blocks.StreamBlock):
+    image = CarouselImageBlock()
+    embed = CarouselEmbedBlock()
+
+    class Meta:
+        icon='cogs'
 
 class FeaturesBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
@@ -84,4 +90,5 @@ class CoilDataBlock(blocks.StructBlock):
     """
     title = blocks.CharBlock()
     coils = blocks.ListBlock(CoilDataItemBlock())
+
 

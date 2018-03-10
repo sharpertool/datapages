@@ -24,7 +24,15 @@
         </div>
     {% endif %}
 
+    <h1>Start Stream</h1>
     {% include_block page.stream1 %}
+    <h1>End Stream</h1>
+
+    <h1>Stream Iterate</h1>
+    {% for block in page.stream1 %}
+        {% include_block block %}
+    {% endfor %}
+    <h1>End Stream Iterate</h1>
 
     {% if page.related_links.all.count  %}
         <div class="tags">

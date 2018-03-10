@@ -6,28 +6,28 @@
 # immediately.
 
 import environ
-import os
 import sys
 
-print("Loaded local_config from {}.".format(__file__))
+print(f"Loaded local_config from {__file__}.")
 
 env = environ.Env()
 
+
 if len(sys.argv) > 1 and sys.argv[1] == 'test':
     print("Running test mode..")
-    from datapages.settings.testing import *
+    from datapages.settings.test import *
 else:
-
     if env.bool('DJANGO_DOCKER', False):
         env.read_env('.env.local.docker')
     else:
         env.read_env('.env.local')
+
     from datapages.settings.dev import *
 
 # Make these unique, and don't share it with anybody.
-SECRET_KEY = "<make yourself a new key!!>"
-NEVERCACHE_KEY = "<make yourself a new key here too!>"
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
+NEVERCACHE_KEY = env.str('NEVERCACHE_KEY', default="<create a long string with 1Password>")
 
 ###################
 # DEPLOY SETTINGS #
@@ -36,21 +36,14 @@ NEVERCACHE_KEY = "<make yourself a new key here too!>"
 # Domains for public site
 ALLOWED_HOSTS = [
     "127.0.0.1",
+    "0.0.0.0",
     "localhost",
-    "datapages.localhost",
+    "datapages.local",
+    "datapages.io",
 ]
 
 INTERNAL_IPS = ('127.0.0.1',
-                'localhost',)
-
-MAILCHIMP_USERNAME = ''
-MAILCHIMP_API_KEY = ''
-MAILCHIMP_LIST_ID = ''
-
-ANYMAIL = {
-    "MAILGUN_API_KEY": "",
-    "MAILGUN_SENDER_DOMAIN": "",
-}
-
-EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend" 
+                'localhost',
+                'datapages.local',
+                '0.0.0.0:8001',)
 

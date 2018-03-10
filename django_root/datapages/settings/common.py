@@ -19,7 +19,6 @@ env = environ.Env()
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -54,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -92,7 +92,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'datapages.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -102,7 +101,6 @@ DATABASES = {
 }
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -122,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -136,6 +133,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Wagtail settings
+
+WAGTAIL_SITE_NAME = env.str("WAGTAIL_SITE_NAME", default="datapages.io")
+
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+BASE_URL = 'http://{0}'.format(WAGTAIL_SITE_NAME)
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[WAGTAIL_SITE_NAME])
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -155,14 +161,40 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Django Storages
+AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", default=None)
+AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY", default=None)
+AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", default=None)
+AWS_S3_REGION_NAME = env.str("AWS_S3_REGION_NAME", default="us-west-2")
+AWS_S3_OBJECT_PARAMETERS = env.dict("AWS_S3_OBJECT_PARAMETERS",
+                                    default={
+                                        'CacheControl': 'max-age=86400'
+                                    })
+AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
+                               default="{}.s3.amazonws.com".format(AWS_STORAGE_BUCKET_NAME))
 
-# Wagtail settings
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
-WAGTAIL_SITE_NAME = "datapages.ai"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
-# Base URL to use when referring to full URLs within the Wagtail admin backend -
-# e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://datapages.ai'
+# Make the AWS Configuration optional, for local development
+if (AWS_ACCESS_KEY_ID is None):
+    STATICFILES_DIRS = [
+        os.path.join(PROJECT_DIR, 'static'),
+    ]
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default='datapages.ai')
-ALLOWED_HOSTS = ['datapages.ai']
+else:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    STATIC_ROOT = "staticfiles"
+    STATIC_URL = "https://{bucket}.s3.amazonws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+
+    MEDIA_ROOT = "media"
+    MEDIA_URL = "{0}media/".format(STATIC_URL)
+
+    ADMIN_MEDIA_PREFIX = "{}admin/".format(STATIC_URL)
+
+print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

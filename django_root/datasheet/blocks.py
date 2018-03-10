@@ -60,7 +60,7 @@ class ApplicationsBlock(blocks.StructBlock):
 
 class ContactDataBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    data = TableBlock({
+    data = TableBlock(table_options={
         'startCols': 3,
         'startRows': 1,
         'colHeaders': True,
@@ -71,7 +71,7 @@ class CoilDataItemBlock(blocks.StructBlock):
     """ Individual Coil Data Item """
     name = blocks.CharBlock()
     subtitle = blocks.CharBlock()
-    data_table = TableBlock({
+    data_table = TableBlock(table_options={
         'colHeaders': True,
     })
     image_title = blocks.CharBlock()

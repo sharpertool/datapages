@@ -168,10 +168,11 @@ AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", default=None)
 AWS_S3_REGION_NAME = env.str("AWS_S3_REGION_NAME", default="us-west-2")
 AWS_S3_OBJECT_PARAMETERS = env.dict("AWS_S3_OBJECT_PARAMETERS",
                                     default={
+                                        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
                                         'CacheControl': 'max-age=86400'
                                     })
 AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
-                               default="{}.s3.amazonws.com".format(AWS_STORAGE_BUCKET_NAME))
+                               default="{}.s3.amazonaws.com".format(AWS_STORAGE_BUCKET_NAME))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
@@ -186,15 +187,20 @@ if (AWS_ACCESS_KEY_ID is None):
     ]
 
 else:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    print("Setting up to use S3 storage.")
 
+    STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
     STATIC_ROOT = "staticfiles"
-    STATIC_URL = "https://{bucket}.s3.amazonws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+    STATIC_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
 
-    MEDIA_ROOT = "media"
-    MEDIA_URL = "{0}media/".format(STATIC_URL)
+    MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
+    MEDIA_ROOT = "mediafiles"
+    MEDIA_URL = "{0}{1}/".format(STATIC_URL, MEDIA_ROOT)
 
     ADMIN_MEDIA_PREFIX = "{}admin/".format(STATIC_URL)
+
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
 
 print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

@@ -51,16 +51,33 @@ class CarouselEmbedBlock(blocks.StructBlock):
     """
     subtitle = blocks.CharBlock()
     embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
 
     class Meta:
         template = 'datasheet/blocks/carousel_embed.html'
 
+class CarouselFusionEmbedBlock(blocks.StructBlock):
+    """
+    Embed option for the carousel
+    """
+    subtitle = blocks.CharBlock()
+    embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
+
+    class Meta:
+        template = 'datasheet/blocks/carousel_fusion_embed.html'
+
 class CarouselStreamBlock(blocks.StreamBlock):
     image = CarouselImageBlock()
     embed = CarouselEmbedBlock()
+    fusion360 = CarouselFusionEmbedBlock()
 
     class Meta:
-        icon='cogs'
+        icon = 'cogs'
 
 class FeaturesBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()

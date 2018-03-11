@@ -31,6 +31,8 @@
                 {% include_block block %}
             {% elif block.block_type ==  'embed' %}
                 {% include_block block %}
+            {% elif block.block_type == 'fusion360' %}
+                {% include_block block %}
             {% endif %}
         {% endfor %}
     </div>

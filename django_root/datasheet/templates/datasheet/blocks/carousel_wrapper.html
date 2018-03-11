@@ -1,0 +1,16 @@
+{% load wagtailcore_tags %}
+
+<div class="carousel-inner">
+    {% for block in page.carousel %}
+        <div class="carousel-item">
+        {% if block.block_type == 'image' %}
+            {% include_block block %}
+        {% elif block.block_type ==  'embed' %}
+            {% include_block block %}
+        {% elif block.block_type == 'fusion360' %}
+            {% include_block block %}
+        {% endif %}
+        </div>
+    {% endfor %}
+</div>
+

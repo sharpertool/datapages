@@ -19,6 +19,8 @@ env = environ.Env()
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+print("PROJECT_DIR:{0} BASE_DIR:{1}".format(PROJECT_DIR, BASE_DIR))
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -151,9 +153,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR, 'static'),
-]
+STATICFILES_DIRS = []
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
@@ -182,10 +182,7 @@ MEDIA_URL = '/media/'
 
 # Make the AWS Configuration optional, for local development
 if (AWS_ACCESS_KEY_ID is None):
-    STATICFILES_DIRS = [
-        os.path.join(PROJECT_DIR, 'static'),
-    ]
-
+    print("Using Local Static and Media files")
 else:
     print("Setting up to use S3 storage.")
 
@@ -203,4 +200,4 @@ else:
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 
-print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))
+    print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

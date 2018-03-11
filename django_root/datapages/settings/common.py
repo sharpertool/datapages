@@ -20,6 +20,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
+SASS_PROCESSOR_ENABLED = DEBUG == True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'pipeline',
+    'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -165,6 +167,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'pipeline.finders.PipelineFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 STATICFILES_DIRS = [
@@ -196,13 +199,21 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, 'datapages/static/sass'),
+    os.path.join(BASE_DIR, 'datasheet/static/sass'),
+]
+
 PIPELINE = {
     'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging
     'PIPELINE_COLLECTOR_ENABLED': True,  # Always collect assets
+    'COMPILERS': [
+        'pipeline.compilers.sass.SASSCompiler',
+    ],
     'STYLESHEETS': {
         'datasheet': {
             'source_filenames': (
-
+                'datasheet/static/sass/index.scss',
             ),
             'output_filename': 'css/datasheet.css',
             'extra_context': {

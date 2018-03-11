@@ -1,0 +1,23 @@
+.card {
+  &.chart-card {
+    box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 20px 0 rgba(0,0,0,0.33);
+    .card-body {
+      position: relative;
+      padding-top: 37px;
+      .expand-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 1;
+        color: #CCCCCC;
+      }
+      .card-links {
+        margin-top: 25px;
+        text-align: center;
+        a {
+          color: #CCCCCC;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+.product-slider {
+  margin-top: -72px;
+  .carousel {
+    background: #fff;
+  }
+  
+  #product_info {
+    padding-left: 25px;
+  }
+  
+  .nav-pills {
+    .nav-link {
+      border-radius: 0px;
+      padding: 0 1rem;
+      color: #007BBA;
+      margin-bottom: 20px;
+      font-size: 24px;
+      &.active {
+        background: transparent;
+        border-bottom: 3px solid #fff;
+        color: #fff;
+      }
+    }
+    
+    & + .tab-content {
+      margin-bottom: 50px;
+      .tab-pane {
+        margin: 0;
+        padding-left: 15px;
+        li {
+          line-height: 30px;
+        }
+      }
+    }
+  }
+  
+  #distributors {
+    border-radius: 0px;
+    .card-header {
+      padding: 20px;
+      h5, p {
+        font-size: 14px;
+      }
+      h5 {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      p {
+        margin-bottom: 20px;
+      }
+      .dropdown {
+        .btn {
+          text-align: left;
+          padding: 17px 20px;
+          border: 1px solid #ddd;
+          &:after {
+            position: absolute;
+            right: 16px;
+            top: 29px;
+          }
+        }
+        .dropdown-menu {
+          width: 100%;
+        }
+      }
+      .btn {
+        padding-top: 17px;
+        padding-bottom: 17px;
+      }
+    }
+  }
+}

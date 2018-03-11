@@ -2,8 +2,13 @@
 
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load pipeline %}
+{% load sass_tags %}
 
 {% block body_class %}template-datasheet{% endblock %}
+
+{% block extra_css %}
+    <link href="{% sass_src 'sass/index.scss' %}" ...>
+{% endblock %}
 
 {% block content %}
 

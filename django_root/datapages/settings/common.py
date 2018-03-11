@@ -20,7 +20,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
-SASS_PROCESSOR_ENABLED = DEBUG == True
+SASS_PROCESSOR_ENABLED = DEBUG is True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/

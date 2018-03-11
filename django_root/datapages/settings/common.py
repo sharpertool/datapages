@@ -140,6 +140,18 @@ USE_TZ = True
 
 WAGTAIL_SITE_NAME = env.str("WAGTAIL_SITE_NAME", default="datapages.io")
 
+IFRAMELY_API_KEY = env.str('IFRAMELY_API_KEY', default=None)
+WAGTAILEMBEDS_FINDERS = [
+    {
+        'class': 'wagtail.embeds.finders.oembed'
+    },
+]
+if IFRAMELY_API_KEY:
+    WAGTAILEMBEDS_FINDERS += [{
+        'class': 'embed.finders.iframely',
+        'key': IFRAMELY_API_KEY
+    }]
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://{0}'.format(WAGTAIL_SITE_NAME)

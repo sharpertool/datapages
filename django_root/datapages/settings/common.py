@@ -19,6 +19,8 @@ env = environ.Env()
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -54,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'pipeline',
 ]
 
 MIDDLEWARE = [
@@ -149,6 +152,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[WAGTAIL_SITE_NAME])
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
 ]
 
 STATICFILES_DIRS = [
@@ -180,6 +184,39 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+PIPELINE = {
+    'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging
+    'PIPELINE_COLLECTOR_ENABLED': True,  # Always collect assets
+    'STYLESHEETS': {
+        'datasheet': {
+            'source_filenames': (
+
+            ),
+            'output_filename': 'css/datasheet.css',
+            'extra_context': {
+                'media': 'screen,projection'
+            }
+        }
+    },
+    'JAVASCRIPT': {
+        'datasheet': {
+            'source_filenames': (
+
+            ),
+            'output_filename': 'js/datasheet.js',
+        },
+        # 'stats': {
+        #     'source_filenames': (
+        #       'js/jquery.js',
+        #       'js/d3.js',
+        #       'js/collections/*.js',
+        #       'js/application.js',
+        #     ),
+        #     'output_filename': 'js/stats.js',
+        # }
+    }
+}
+
 # Make the AWS Configuration optional, for local development
 if (AWS_ACCESS_KEY_ID is None):
     STATICFILES_DIRS = [
@@ -201,6 +238,8 @@ else:
 
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    # How to manage pipelines AND S3 static file storage?
+    #STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 
 print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

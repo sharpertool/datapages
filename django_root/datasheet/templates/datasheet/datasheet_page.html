@@ -24,13 +24,34 @@
         </div>
     {% endif %}
 
-    <h1>Start Stream</h1>
-    {% include_block page.stream1 %}
-    <h1>End Stream</h1>
+    <h1>Carousel Here</h1>
+    <div class="carousel top">
+        {% for block in page.carousel %}
+            {% if block.block_type == 'image' %}
+                {% include_block block %}
+            {% elif block.block_type ==  'embed' %}
+                {% include_block block %}
+            {% endif %}
+        {% endfor %}
+    </div>
 
     <h1>Stream Iterate</h1>
     {% for block in page.stream1 %}
-        {% include_block block %}
+        {% if block.block_type == 'image' %}
+            <div class="image my-image">
+                <h3>An Image is Here</h3>
+                {% image block.value width-400 %}
+            </div>
+
+        {% elif block.block_type == 'carousel' %}
+        {% elif block.block_type == 'features2' %}
+            {% include_block block %}
+        {% elif block.block_type == 'contact_data' %}
+            {% include_block block %}
+        {% elif block.block_type == 'coil_data' %}
+        {% else %}
+            {% include_block block %}
+        {% endif %}
     {% endfor %}
     <h1>End Stream Iterate</h1>
 

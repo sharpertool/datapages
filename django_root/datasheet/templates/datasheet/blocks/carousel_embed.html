@@ -1,0 +1,7 @@
+{% load wagtailcore_tags wagtailembeds_tags %}
+
+<div class="carousel embed">
+    <h3>{{ value.subtitle }}</h3>
+    <p>{{ value.embed.url }}</p>
+    {% embed value.embed.url %}
+</div>

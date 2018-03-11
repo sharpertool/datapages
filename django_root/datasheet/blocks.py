@@ -39,7 +39,10 @@ class CarouselImageBlock(blocks.StructBlock):
     """
     subtitle = blocks.CharBlock()
     image = ImageChooserBlock()
-    alt = blocks.CharBlock()
+    alt = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/carousel_image.html'
 
 
 class CarouselEmbedBlock(blocks.StructBlock):
@@ -48,6 +51,9 @@ class CarouselEmbedBlock(blocks.StructBlock):
     """
     subtitle = blocks.CharBlock()
     embed = EmbedBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/carousel_embed.html'
 
 class CarouselStreamBlock(blocks.StreamBlock):
     image = CarouselImageBlock()

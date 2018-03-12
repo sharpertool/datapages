@@ -41,3 +41,4 @@ django_root/\.env\.local
 django_root/local_config\.py
 django_root/static
 /django_root/datasheet/static/sass/index.css
+.idea

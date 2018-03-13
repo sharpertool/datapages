@@ -6,65 +6,39 @@
 
 {% block body_class %}template-datasheet{% endblock %}
 
-{% block extra_css %}
-    <link href="{% sass_src 'sass/index.scss' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block content %}
 
-    {% include "datasheet/partials/header.html" %}
+    {% include 'datasheet/partials/header.html' %}
 
-    {% include "datasheet/partials/jumbotron.html" %}
+    <main>
+        {% include 'datasheet/partials/jumbotron.html' %}
 
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-3">
-                {% include "datasheet/partials/sidebar.html" %}
-            </div>
-
-            <div class="col-lg-9">
-                <div class="product-slider block">
-                    {% include "datasheet/partials/product_slider.html" %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    {% include 'datasheet/partials/sidebar.html' %}
                 </div>
 
-                <div class="other_stuff block">
-                    <h1>Stream Iterate</h1>
-                    {% for block in page.stream1 %}
-                        {% if block.block_type == 'image' %}
-                            <div class="image my-image">
-                                <h3>An Image is Here</h3>
-                                {% image block.value width-400 %}
-                            </div>
+                <div class="col-lg-9">
+                    <div class="product-slider block">
+                        {% include 'datasheet/partials/product_slider.html' %}
+                    </div>
 
-                        {% elif block.block_type == 'carousel' %}
-                        {% elif block.block_type == 'features2' %}
-                            {% include_block block %}
-                        {% elif block.block_type == 'contact_data' %}
-                            {% include_block block %}
-                        {% elif block.block_type == 'coil_data' %}
-                        {% else %}
-                            {% include_block block %}
+                    {% for block in page.stream1.stream_data %}
+                        {% if block.type == 'contact_data' %}
+                            <div class="block contact-data">
+                                {% include 'datasheet/partials/contact_data.html' %}
+                            </div>
+                        {% elif block.type == 'coil_data' %}
+                            <div class="coil-data block">
+                                {% include 'datasheet/partials/coil_data.html' %}
+                            </div>
                         {% endif %}
                     {% endfor %}
-                    <h1>End Stream Iterate</h1>
-                </div>
-
-                <div class="links block">
-                    {% if page.related_links.all.count %}
-                        <div class="tags">
-                            <h3>Links</h3>
-                            {% for link in page.related_links.all %}
-                                <a href="{{ link.url }}">
-                                    {{ link.name }}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
 {% endblock %}
 

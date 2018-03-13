@@ -40,11 +40,7 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% include 'datasheet/partials/header.html' %}
-
-        <main>
-            {% block content %}{% endblock %}
-        </main>
+        {% block content %}{% endblock %}
 
         {% block main_js %}
             {# Global javascript #}

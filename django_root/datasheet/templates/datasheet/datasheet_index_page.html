@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load wagtailuserbar %}
 
 {% block body_class %}template-datasheet-index{% endblock %}
 
@@ -15,9 +14,41 @@
             </div>
 
             <div class="col-lg-9">
-                <div class="product-slider block">
-                    {% include 'datasheet/partials/product_slider.html' %}
-                </div>
+                {% for sheet in datasheets %}
+                    {% with sheet.specific as post %}
+                        <div class="product-slider block">
+                            {% include 'datasheet/partials/product_slider.html' %}
+                        </div>
+
+                        {% for block in post.stream1.stream_data %}
+                            {% if block.type == 'contact_data' %}
+                                <div class="block contact-data">
+                                    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+                                    <table class="table">
+                                        <tbody>
+                                            {% for row in block.value.data.data %}
+                                                <tr>
+                                                    {% for col in row %}
+                                                        {% if not col %}
+                                                            <td>&nbsp;</td>
+                                                        {% else %}
+                                                            <td>{{ col }}</td>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% elif block.type == 'coil_data' %}
+                                <div class="coil-data block">
+                                    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
             </div>
         </div>
     </div>

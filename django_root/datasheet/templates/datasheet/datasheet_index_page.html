@@ -6,25 +6,21 @@
 {% block body_class %}template-datasheet-index{% endblock %}
 
 {% block content %}
+    {% include 'datasheet/partials/jumbotron.html' %}
 
-    <img src="{{ page.svglogo.url }}" alt="TE Logo">
-    <h1>{{ page.title }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'datasheet/partials/sidebar.html' %}
+            </div>
 
-    <div class="intro">{{ page.intro|richtext }}</div>
-
-
-
-    {% for sheet in datasheets %}
-        {% with sheet=sheet.specific %}
-            <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
-
-            <p>{{ sheet.intro }}</p>
-{#            {{ sheet.body|richtext }}#}
-        {% endwith %}
-    {% endfor %}
-
-    {% wagtailuserbar %}
-    
+            <div class="col-lg-9">
+                <div class="product-slider block">
+                    {% include 'datasheet/partials/product_slider.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

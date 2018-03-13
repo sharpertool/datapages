@@ -11,7 +11,8 @@
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        {% for slide in post.carousel %}
+                        {% for slide in page.carousel %}
+                            <!-- Doing a slider -->
                             {{ slide }}
                         {% endfor %}
                     </div>

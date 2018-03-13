@@ -23,27 +23,11 @@
                         {% for block in post.stream1.stream_data %}
                             {% if block.type == 'contact_data' %}
                                 <div class="block contact-data">
-                                    <h1 class="title"><span>{{ block.value.title }}</span></h1>
-                                    <table class="table">
-                                        <tbody>
-                                            {% for row in block.value.data.data %}
-                                                <tr>
-                                                    {% for col in row %}
-                                                        {% if not col %}
-                                                            <td>&nbsp;</td>
-                                                        {% else %}
-                                                            <td>{{ col }}</td>
-                                                        {% endif %}
-
-                                                    {% endfor %}
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    {% include 'datasheet/partials/contact_data.html' %}
                                 </div>
                             {% elif block.type == 'coil_data' %}
                                 <div class="coil-data block">
-                                    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+                                    {% include 'datasheet/partials/coil_data.html' %}
                                 </div>
                             {% endif %}
                         {% endfor %}

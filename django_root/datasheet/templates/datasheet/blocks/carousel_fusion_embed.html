@@ -1,13 +1,6 @@
 {% load wagtailcore_tags wagtailembeds_tags %}
 
-<div class="carousel fusion-embed">
-    <h3>{{ value.subtitle }}</h3>
-{#    <p>{{ value.embed.url }}</p>#}
-    {% comment %}
-    <iframe src="https://myhub.autodesk360.com/ue2944fd6/shares/public/SH7f1edQT22b515c761ed936e724d2a72785?mode=embed"
-            width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-            frameborder="0"></iframe>
-            {% endcomment %}
+<div class="carousel-item">
     <iframe src="{{ value.embed.url }}"
             width="{{ value.width }}" height="{{ value.height }}" allowfullscreen="false"
             webkitallowfullscreen="false" mozallowfullscreen="false"

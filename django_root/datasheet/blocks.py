@@ -71,6 +71,7 @@ class CarouselFusionEmbedBlock(blocks.StructBlock):
     class Meta:
         template = 'datasheet/blocks/carousel_fusion_embed.html'
 
+
 class CarouselStreamBlock(blocks.StreamBlock):
     image = CarouselImageBlock()
     embed = CarouselEmbedBlock()
@@ -79,20 +80,24 @@ class CarouselStreamBlock(blocks.StreamBlock):
     class Meta:
         icon = 'cogs'
 
+
 class FeaturesBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     feature = blocks.ListBlock(blocks.RichTextBlock(label="feature"))
+
 
 class ApplicationsBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     applications = blocks.ListBlock(blocks.RichTextBlock(label="application"))
 
+
 class ContactDataBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     data = TableBlock(table_options={
-        'startCols': 3,
+        'startCols': 2,
         'startRows': 1,
         'colHeaders': True,
+        'editor': 'handsontable'
     })
 
 

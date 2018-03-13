@@ -1,0 +1,17 @@
+.footer {
+  margin: 100px 0;
+  .back-to-top {
+    color: #0066A1;
+    float: left;
+    font-size: 12px;
+    text-align: center;
+    > img {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+  > img {
+    display: block;
+    margin: 0 auto;
+  }
+}

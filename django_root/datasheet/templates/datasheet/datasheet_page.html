@@ -1,83 +1,70 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load pipeline %}
+{% load sass_tags %}
 
 {% block body_class %}template-datasheet{% endblock %}
 
+{% block extra_css %}
+    <link href="{% sass_src 'sass/index.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
 {% block content %}
 
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
+    {% include "datasheet/partials/header.html" %}
 
-    <div class="intro">{{ page.intro }}</div>
+    {% include "datasheet/partials/jumbotron.html" %}
 
-    {{ page.body|richtext }}
+    <div class="container">
 
-    {% if page.features.all.count %}
-        <div class="feature">
-            <h3>Features</h3>
-            <ul class="feature-list">
-                {% for feature in page.features.all %}
-                <li>{{ feature.feature|richtext }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
-    <h1>Carousel Here</h1>
-    <div class="carousel top">
-        {% for block in page.carousel %}
-            {% if block.block_type == 'image' %}
-                {% include_block block %}
-            {% elif block.block_type ==  'embed' %}
-                {% include_block block %}
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <h1>Stream Iterate</h1>
-    {% for block in page.stream1 %}
-        {% if block.block_type == 'image' %}
-            <div class="image my-image">
-                <h3>An Image is Here</h3>
-                {% image block.value width-400 %}
+        <div class="row">
+            <div class="col-lg-3">
+                {% include "datasheet/partials/sidebar.html" %}
             </div>
 
-        {% elif block.block_type == 'carousel' %}
-        {% elif block.block_type == 'features2' %}
-            {% include_block block %}
-        {% elif block.block_type == 'contact_data' %}
-            {% include_block block %}
-        {% elif block.block_type == 'coil_data' %}
-        {% else %}
-            {% include_block block %}
-        {% endif %}
-    {% endfor %}
-    <h1>End Stream Iterate</h1>
+            <div class="col-lg-9">
+                <div class="product-slider block">
+                    {% include "datasheet/partials/product_slider.html" %}
+                </div>
 
-    {% if page.related_links.all.count  %}
-        <div class="tags">
-            <h3>Links</h3>
-            {% for link in page.related_links.all %}
-                <a href="{{ link.url }}">
-                    {{ link.name }}
-                </a>
-            {% endfor %}
+                <div class="other_stuff block">
+                    <h1>Stream Iterate</h1>
+                    {% for block in page.stream1 %}
+                        {% if block.block_type == 'image' %}
+                            <div class="image my-image">
+                                <h3>An Image is Here</h3>
+                                {% image block.value width-400 %}
+                            </div>
+
+                        {% elif block.block_type == 'carousel' %}
+                        {% elif block.block_type == 'features2' %}
+                            {% include_block block %}
+                        {% elif block.block_type == 'contact_data' %}
+                            {% include_block block %}
+                        {% elif block.block_type == 'coil_data' %}
+                        {% else %}
+                            {% include_block block %}
+                        {% endif %}
+                    {% endfor %}
+                    <h1>End Stream Iterate</h1>
+                </div>
+
+                <div class="links block">
+                    {% if page.related_links.all.count %}
+                        <div class="tags">
+                            <h3>Links</h3>
+                            {% for link in page.related_links.all %}
+                                <a href="{{ link.url }}">
+                                    {{ link.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    {% endif %}
-
-    {% if page.tags.all.count %}
-        <div class="tags">
-            <h3>Tags</h3>
-            {% for tag in page.tags.all %}
-                <a href="{% slugurl 'tags' %}?tag={{ tag }}" target="_blank">
-                    <button type="button">{{ tag }}</button>
-                </a>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <p><a href="{{ page.get_parent.url }}">Return to Index</a></p>
+    </div>
 
 {% endblock %}
 

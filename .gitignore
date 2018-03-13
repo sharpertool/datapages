@@ -30,7 +30,6 @@ django_root/frontend/static
 /django_root/project_editor/static/js/bundle.js
 /django_root/htmlcov
 htmlcov
-static
 /django_root/geckodriver.log
 /coverage_report
 /.coverage
@@ -41,3 +40,5 @@ django_root/\.env\.local
 
 django_root/local_config\.py
 django_root/static
+/django_root/datasheet/static/sass/index.css
+.idea

@@ -1,30 +1,41 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load wagtailuserbar %}
 
 {% block body_class %}template-datasheet-index{% endblock %}
 
 {% block content %}
+    {% include 'datasheet/partials/jumbotron.html' %}
 
-    <img src="{{ page.svglogo.url }}" alt="TE Logo">
-    <h1>{{ page.title }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {% include 'datasheet/partials/sidebar.html' %}
+            </div>
 
-    <div class="intro">{{ page.intro|richtext }}</div>
+            <div class="col-lg-9">
+                {% for sheet in datasheets %}
+                    {% with sheet.specific as post %}
+                        <div class="product-slider block">
+                            {% include 'datasheet/partials/product_slider.html' %}
+                        </div>
 
-
-
-    {% for sheet in datasheets %}
-        {% with sheet=sheet.specific %}
-            <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
-
-            <p>{{ sheet.intro }}</p>
-{#            {{ sheet.body|richtext }}#}
-        {% endwith %}
-    {% endfor %}
-
-    {% wagtailuserbar %}
-    
+                        {% for block in post.stream1.stream_data %}
+                            {% if block.type == 'contact_data' %}
+                                <div class="block contact-data">
+                                    {% include 'datasheet/partials/contact_data.html' %}
+                                </div>
+                            {% elif block.type == 'coil_data' %}
+                                <div class="coil-data block">
+                                    {% include 'datasheet/partials/coil_data.html' %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

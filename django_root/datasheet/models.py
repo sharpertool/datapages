@@ -19,6 +19,7 @@ from wagtail.search import index
 
 from .blocks import (RelayProductCodeStructureBlock,
                      CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
+                     CarouselFusionEmbedBlock,
                      FeaturesBlock, ApplicationsBlock,
                      ContactDataBlock, CoilDataBlock
                      )
@@ -62,6 +63,7 @@ class DatasheetPage(Page):
     carousel = StreamField([
         ('image', CarouselImageBlock()),
         ('embed', CarouselEmbedBlock()),
+        ('fusion360', CarouselFusionEmbedBlock()),
     ], blank=True)
     stream1 = StreamField([
         ('heading', blocks.CharBlock(

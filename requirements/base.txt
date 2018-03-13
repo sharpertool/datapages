@@ -23,9 +23,15 @@ django-environ>=0.4
 # For caching
 #django-redis
 
-# Static and Media files storages
+# Static and Media files
 django-storages>=1.6.5,<=1.7
 boto3>=1.6.4<=1.7
+django-pipeline>=1.6.14,<=1.7
+
+# SCSS files
+libsass
+django-compressor
+django-sass-processor
 
 # Utilities
 pytz>=2017.2

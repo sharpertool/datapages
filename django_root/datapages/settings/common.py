@@ -19,7 +19,8 @@ env = environ.Env()
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-print("PROJECT_DIR:{0} BASE_DIR:{1}".format(PROJECT_DIR, BASE_DIR))
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
+SASS_PROCESSOR_ENABLED = DEBUG is True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -56,6 +57,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'pipeline',
+    'sass_processor',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +142,18 @@ USE_TZ = True
 
 WAGTAIL_SITE_NAME = env.str("WAGTAIL_SITE_NAME", default="datapages.io")
 
+IFRAMELY_API_KEY = env.str('IFRAMELY_API_KEY', default=None)
+WAGTAILEMBEDS_FINDERS = [
+    {
+        'class': 'wagtail.embeds.finders.oembed'
+    },
+]
+if IFRAMELY_API_KEY:
+    WAGTAILEMBEDS_FINDERS += [{
+        'class': 'embed.finders.iframely',
+        'key': IFRAMELY_API_KEY
+    }]
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://{0}'.format(WAGTAIL_SITE_NAME)
@@ -151,6 +166,8 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[WAGTAIL_SITE_NAME])
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 STATICFILES_DIRS = []
@@ -180,6 +197,47 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(BASE_DIR, 'datapages/static/sass'),
+    os.path.join(BASE_DIR, 'datasheet/static/sass'),
+]
+
+PIPELINE = {
+    'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging
+    'PIPELINE_COLLECTOR_ENABLED': True,  # Always collect assets
+    'COMPILERS': [
+        'pipeline.compilers.sass.SASSCompiler',
+    ],
+    'STYLESHEETS': {
+        'datasheet': {
+            'source_filenames': (
+                'datasheet/static/sass/index.scss',
+            ),
+            'output_filename': 'css/datasheet.css',
+            'extra_context': {
+                'media': 'screen,projection'
+            }
+        }
+    },
+    'JAVASCRIPT': {
+        'datasheet': {
+            'source_filenames': (
+
+            ),
+            'output_filename': 'js/datasheet.js',
+        },
+        # 'stats': {
+        #     'source_filenames': (
+        #       'js/jquery.js',
+        #       'js/d3.js',
+        #       'js/collections/*.js',
+        #       'js/application.js',
+        #     ),
+        #     'output_filename': 'js/stats.js',
+        # }
+    }
+}
+
 # Make the AWS Configuration optional, for local development
 if (AWS_ACCESS_KEY_ID is None):
     print("Using Local Static and Media files")
@@ -198,6 +256,8 @@ else:
 
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    # How to manage pipelines AND S3 static file storage?
+    #STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

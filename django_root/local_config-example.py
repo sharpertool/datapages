@@ -27,8 +27,6 @@ else:
 # Make these unique, and don't share it with anybody.
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
-NEVERCACHE_KEY = env.str('NEVERCACHE_KEY', default="<create a long string with 1Password>")
-
 ###################
 # DEPLOY SETTINGS #
 ###################

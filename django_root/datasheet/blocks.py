@@ -51,31 +51,53 @@ class CarouselEmbedBlock(blocks.StructBlock):
     """
     subtitle = blocks.CharBlock()
     embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
 
     class Meta:
         template = 'datasheet/blocks/carousel_embed.html'
 
+class CarouselFusionEmbedBlock(blocks.StructBlock):
+    """
+    Embed option for the carousel
+    """
+    subtitle = blocks.CharBlock()
+    embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
+
+    class Meta:
+        template = 'datasheet/blocks/carousel_fusion_embed.html'
+
+
 class CarouselStreamBlock(blocks.StreamBlock):
     image = CarouselImageBlock()
     embed = CarouselEmbedBlock()
+    fusion360 = CarouselFusionEmbedBlock()
 
     class Meta:
-        icon='cogs'
+        icon = 'cogs'
+
 
 class FeaturesBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     feature = blocks.ListBlock(blocks.RichTextBlock(label="feature"))
 
+
 class ApplicationsBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     applications = blocks.ListBlock(blocks.RichTextBlock(label="application"))
 
+
 class ContactDataBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     data = TableBlock(table_options={
-        'startCols': 3,
+        'startCols': 2,
         'startRows': 1,
         'colHeaders': True,
+        'editor': 'handsontable'
     })
 
 

@@ -1,0 +1,110 @@
+{% load wagtailcore_tags %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card chart-card">
+            <div class="card-body">
+
+                <a href="#" class="expand-btn">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
+                </a>
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for slide in post.carousel %}
+                            {{ slide }}
+                        {% endfor %}
+                    </div>
+
+                    <a class="carousel-control-prev"
+                       href="#carouselExampleIndicators"
+                       role="button"
+                       data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+
+                    <a class="carousel-control-next"
+                       href="#carouselExampleIndicators"
+                       role="button"
+                       data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+                <div class="card-links">
+                    <a href="#" class="card-link"><i class="fa fa-search-plus"></i></a>
+                    <a href="#" class="card-link"><i class="fa fa-pencil-alt"></i></a>
+                    <a href="#" class="card-link"><i class="fa fa-download"></i></a>
+                    <a href="#" class="card-link"><i class="fa fa-share"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6" id="product_info">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="#features" class="nav-link active" data-toggle="tab">Features</a>
+            </li>
+            <li class="nav-item">
+                <a href="#applications" class="nav-link" data-toggle="tab">Applications</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <ul class="tab-pane fade show active" id="features">
+                <li>Limiting continuous current <strong>175A at +85C</strong></li>
+                <li>Suitable for voltage levels up to <strong>500VDC</strong></li>
+                <li>High peak current carrying capability up to <strong>5000A</strong></li>
+                <li>Rated Coil Voltage (VDC) <strong>12</strong></li>
+                <li>Contact Current Class (A) <strong>101-200</strong></li>
+                <li>Coil Suppress <strong>Internal Coil Switch</strong></li>
+                <li>Terminal Type <strong>Plug (Coil), Screw Terminals</strong></li>
+                <li>Rated Voltage (VDC) <strong>450</strong></li>
+                <li>IEC 60664 compliant</li>
+                <li>EU RoHS Compliant</li>
+                <li>EU ELV Compliant</li>
+            </ul>
+
+            <ul class="tab-pane fade" id="applications">
+                <li>Limiting continuous current <strong>175A at +85C</strong></li>
+                <li>Suitable for voltage levels up to <strong>500VDC</strong></li>
+                <li>High peak current carrying capability up to <strong>5000A</strong></li>
+                <li>Rated Coil Voltage (VDC) <strong>12</strong></li>
+                <li>Contact Current Class (A) <strong>101-200</strong></li>
+                <li>Coil Suppress <strong>Internal Coil Switch</strong></li>
+                <li>Terminal Type <strong>Plug (Coil), Screw Terminals</strong></li>
+                <li>Rated Voltage (VDC) <strong>450</strong></li>
+                <li>IEC 60664 compliant</li>
+                <li>EU RoHS Compliant</li>
+                <li>EU ELV Compliant</li>
+            </ul>
+        </div>
+
+        <div class="card" id="distributors">
+            <div class="card-header">
+                <h5>Shop our Distributors</h5>
+                <p>Request pricing, availability and customization options</p>
+                <div class="form-row">
+                    <div class="col-9">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-block dropdown-toggle" data-toggle="dropdown">
+                                North America
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">North America</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <button class="btn btn-primary btn-block">Shop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

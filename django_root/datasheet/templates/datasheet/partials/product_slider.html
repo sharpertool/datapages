@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags utility_tags %}
 
 <div class="row">
     <div class="col-lg-6">
@@ -47,42 +47,25 @@
 
     <div class="col-lg-6" id="product_info">
         <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a href="#features" class="nav-link active" data-toggle="tab">Features</a>
-            </li>
-            <li class="nav-item">
-                <a href="#applications" class="nav-link" data-toggle="tab">Applications</a>
-            </li>
+            {% for attribute in page.attributes.stream_data %}
+                <li class="nav-item">
+                    <a href="#{{ attribute.type }}"
+                       class="nav-link {% if forloop.counter == 1 %}active{% endif %}"
+                       data-toggle="tab">{{ attribute.type|capfirst }}</a>
+                </li>
+            {% endfor %}
         </ul>
 
         <div class="tab-content">
-            <ul class="tab-pane fade show active" id="features">
-                <li>Limiting continuous current <strong>175A at +85C</strong></li>
-                <li>Suitable for voltage levels up to <strong>500VDC</strong></li>
-                <li>High peak current carrying capability up to <strong>5000A</strong></li>
-                <li>Rated Coil Voltage (VDC) <strong>12</strong></li>
-                <li>Contact Current Class (A) <strong>101-200</strong></li>
-                <li>Coil Suppress <strong>Internal Coil Switch</strong></li>
-                <li>Terminal Type <strong>Plug (Coil), Screw Terminals</strong></li>
-                <li>Rated Voltage (VDC) <strong>450</strong></li>
-                <li>IEC 60664 compliant</li>
-                <li>EU RoHS Compliant</li>
-                <li>EU ELV Compliant</li>
-            </ul>
-
-            <ul class="tab-pane fade" id="applications">
-                <li>Limiting continuous current <strong>175A at +85C</strong></li>
-                <li>Suitable for voltage levels up to <strong>500VDC</strong></li>
-                <li>High peak current carrying capability up to <strong>5000A</strong></li>
-                <li>Rated Coil Voltage (VDC) <strong>12</strong></li>
-                <li>Contact Current Class (A) <strong>101-200</strong></li>
-                <li>Coil Suppress <strong>Internal Coil Switch</strong></li>
-                <li>Terminal Type <strong>Plug (Coil), Screw Terminals</strong></li>
-                <li>Rated Voltage (VDC) <strong>450</strong></li>
-                <li>IEC 60664 compliant</li>
-                <li>EU RoHS Compliant</li>
-                <li>EU ELV Compliant</li>
-            </ul>
+            {% for attribute in page.attributes.stream_data %}
+                <ul class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="{{ attribute.type }}">
+                    {% with attribute.value|lookup:attribute.type as items %}
+                        {% for item in items %}
+                            <li>{{ item|safe }}</li>
+                        {% endfor %}
+                    {% endwith %}
+                </ul>
+            {% endfor %}
         </div>
 
         <div class="card" id="distributors">

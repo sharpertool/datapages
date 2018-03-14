@@ -60,6 +60,10 @@ class DatasheetPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=True)
+    attributes = StreamField([
+        ('features', FeaturesBlock()),
+        ('applications', ApplicationsBlock())
+    ], blank=True)
     carousel = StreamField([
         ('image', CarouselImageBlock()),
         ('embed', CarouselEmbedBlock()),
@@ -102,8 +106,8 @@ class DatasheetPage(Page):
             FieldPanel('tags'),
         ], heading="DataSheet Information"),
         FieldPanel('intro'),
-        InlinePanel('features', label="Features"),
         FieldPanel('body', classname="full"),
+        StreamFieldPanel('attributes'),
         StreamFieldPanel('carousel'),
         StreamFieldPanel('stream1'),
         InlinePanel('related_links', label="Related Links"),

@@ -82,13 +82,17 @@ class CarouselStreamBlock(blocks.StreamBlock):
 
 
 class FeaturesBlock(blocks.StructBlock):
-    subtitle = blocks.CharBlock()
-    feature = blocks.ListBlock(blocks.RichTextBlock(label="feature"))
+    features = blocks.ListBlock(blocks.RichTextBlock())
+
+    class Meta:
+        label = 'Features'
 
 
 class ApplicationsBlock(blocks.StructBlock):
-    subtitle = blocks.CharBlock()
-    applications = blocks.ListBlock(blocks.RichTextBlock(label="application"))
+    applications = blocks.ListBlock(blocks.RichTextBlock())
+
+    class Meta:
+        label = 'Applications'
 
 
 class ContactDataBlock(blocks.StructBlock):

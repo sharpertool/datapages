@@ -1,6 +1,11 @@
 {% extends "base.html" %}
+{% load sass_tags wagtailcore_tags %}
 
 {% block body_class %}template-datasheet{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% sass_src 'sass/index.scss' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 
 {% block content %}
 
@@ -20,28 +25,8 @@
                         {% include 'datasheet/partials/product_slider.html' %}
                     </div>
 
-                    {% for block in page.stream1.stream_data %}
-                        {% if block.type == 'contact_data' %}
-                            <div class="block contact-data" id="contact_data">
-                                {% include 'datasheet/partials/contact_data.html' %}
-                            </div>
-                        {% elif block.type == 'coil_data' %}
-                            <div class="coil-data block" id="coil_data">
-                                {% include 'datasheet/partials/coil_data.html' %}
-                            </div>
-                        {% elif block.type == 'dimension' %}
-                            <div class="dimension block" id="dimention">
-                                {% include 'datasheet/partials/dimension.html' %}
-                            </div>
-                        {% elif block.type == 'product_code' %}
-                            <div class="product-code-structure block" id="product_code">
-                                {% include 'datasheet/partials/product_code.html' %}
-                            </div>
-                        {% elif block.type == 'revisions' %}
-                            <div class="revision block" id="revision">
-                                {% include 'datasheet/partials/revisions.html' %}
-                            </div>
-                        {% endif %}
+                    {% for block in page.stream1 %}
+                        {% include_block block %}
                     {% endfor %}
                 </div>
             </div>

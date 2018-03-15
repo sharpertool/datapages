@@ -84,7 +84,7 @@ class DatasheetPage(Page):
         ('revisions', blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('data', blocks.ListBlock(RevisionBlock()))
-        ]))
+        ], template='datasheet/blocks/revision.html'))
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 

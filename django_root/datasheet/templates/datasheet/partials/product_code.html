@@ -1,0 +1,51 @@
+<h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+<ul class="product-code">
+    {% for code in block.value.product_code %}
+        <li class="product-code-item">
+            <div class="head">
+                <h5 class="name">{{ code.value }}</h5>
+                <p class="description">{{ code.description }}</p>
+            </div>
+
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">{{ code.options.0 }}</button>
+                <div class="dropdown-menu">
+                    {% for option in code.options %}
+                        <a href="#" class="dropdown-item">{{ option }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <p class="foot">
+                {% with code.options|length as options_length  %}
+                    <i>{{ options_length }} option{% if options_length > 1 %}s{% endif %}</i>
+                {% endwith %}
+            </p>
+        </li>
+    {% endfor %}
+</ul>
+
+<table class="table">
+    <thead>
+        <th>Product Code</th>
+        <th>Relay Version</th>
+        <th>Coil</th>
+        <th>Circuit</th>
+        <th>Coil Suppr.</th>
+        <th>Part Number</th>
+        <th>&nbsp;</th>
+    </thead>
+    <tbody>
+        {% for row in block.value.code_table.data %}
+            <tr>
+                {% for col in row  %}
+                    <td>{{ col }}</td>
+                {% endfor %}
+                <td class="text-right">
+                    <button class="btn btn-primary">Buy Now</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -6,11 +6,10 @@
             <tr>
                 {% for col in row %}
                     {% if not col %}
-                        <td>&nbsp;</td>
+                        <td {% if forloop.counter == 1 %}class="borderless"{% endif %}>&nbsp;</td>
                     {% else %}
                         <td>{{ col }}</td>
                     {% endif %}
-
                 {% endfor %}
             </tr>
         {% endfor %}

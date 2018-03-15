@@ -4,18 +4,29 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock, EmbedValue
 
 
+class DimensionBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    image = ImageChooserBlock()
+
+
+class RevisionBlock(blocks.StructBlock):
+    date = blocks.DateBlock()
+    revisions = blocks.ListBlock(blocks.StructBlock([
+        ('title', blocks.CharBlock()),
+        ('description', blocks.CharBlock())
+    ]))
+
+
 class RelayProductCodeStructureBlock(blocks.StructBlock):
     """
     Capture all of the parts of a product code, somewhat specific to TE
     """
-    type = blocks.CharBlock(value_class='foo bar')
-    version = blocks.CharBlock()
-    coil_version = blocks.CharBlock()
-    coil_system = blocks.CharBlock()
-    load_voltage = blocks.CharBlock()
-    contact_material = blocks.CharBlock()
-    status = blocks.CharBlock()
-    connector_version = blocks.CharBlock()
+    title = blocks.CharBlock()
+    product_code = blocks.ListBlock(blocks.StructBlock([
+        ('description', blocks.CharBlock()),
+        ('value', blocks.CharBlock()),
+        ('options', blocks.ListBlock(blocks.CharBlock()))
+    ]))
     code_table = TableBlock({
         'startCols': 7,
         'startRows': 1,

@@ -33,7 +33,7 @@
         {% if DEBUG %}
             <link rel="stylesheet" href="{% sass_src 'sass/index.scss' %}" rel="stylesheet" type="text/css">
         {% else %}
-            <link rel="stylesheet" href="{% static 'sass/index.css' %}" rel="stylesheet" type="text/css">
+            {# Render production compiled css #}
         {% endif %}
     {% endblock %}
 

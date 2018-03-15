@@ -169,7 +169,7 @@ STATICFILES_FINDERS = [
     'pipeline.finders.PipelineFinder',
     'sass_processor.finders.CssFinder',
 ]
-print(BASE_DIR)
+
 STATICFILES_DIRS = []
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

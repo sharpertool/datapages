@@ -47,23 +47,19 @@
 
     <div class="col-lg-6" id="product_info">
         <ul class="nav nav-pills">
-            {% for attribute in page.attributes.stream_data %}
+            {% for attribute in page.attributes %}
                 <li class="nav-item">
-                    <a href="#{{ attribute.type }}"
-                       class="nav-link {% if forloop.counter == 1 %}active{% endif %}"
-                       data-toggle="tab">{{ attribute.type|capfirst }}</a>
+                    <a href="#{{ attribute.block_type }}"
+                       class="nav-link {% if forloop.first %}active{% endif %}"
+                       data-toggle="tab">{{ attribute.block_type|capfirst }}</a>
                 </li>
             {% endfor %}
         </ul>
 
         <div class="tab-content">
-            {% for attribute in page.attributes.stream_data %}
-                <ul class="tab-pane fade show {% if forloop.counter == 1 %}active{% endif %}" id="{{ attribute.type }}">
-                    {% with attribute.value|lookup:attribute.type as items %}
-                        {% for item in items %}
-                            <li>{{ item|safe }}</li>
-                        {% endfor %}
-                    {% endwith %}
+            {% for block in page.attributes %}
+                <ul class="tab-pane fade show {% if forloop.first %}active{% endif %}" id="{{ block.block_type }}">
+                    {% include_block block %}
                 </ul>
             {% endfor %}
         </div>

@@ -86,6 +86,7 @@ class FeaturesBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Features'
+        template = 'datasheet/blocks/features_list.html'
 
 
 class ApplicationsBlock(blocks.StructBlock):
@@ -93,6 +94,7 @@ class ApplicationsBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Applications'
+        template = 'datasheet/blocks/applications_list.html'
 
 
 class ContactDataBlock(blocks.StructBlock):

@@ -1,9 +1,56 @@
-<h1>Product Code</h1>
+{% load wagtailcore_tags %}
 
-<h3>{{ foo }}</h3>
+<div class="product-code-structure block">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
 
-<div class="product_code">
-    <span>Type</span> is {{ value.type }}
-    <span>Version</span> is {{ value.version }}
+    <ul class="product-code">
+        <li class="product-code-item">
+            {% include_block block.value.type with index="type" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.relay_version with index="relay_version" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.coil_version with index="coil_version" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.coil_system with index="coil_system" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.load_voltage with index="load_voltage" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.contact_material with index="contact_material" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.status_monitoring with index="status_monitoring" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.coil_connector_version with index="coil_connector_version" %}
+        </li>
+    </ul>
+
+    <table class="table">
+        <thead>
+            <th>Product Code</th>
+            <th>Relay Version</th>
+            <th>Coil</th>
+            <th>Circuit</th>
+            <th>Coil Suppr.</th>
+            <th>Part Number</th>
+            <th>&nbsp;</th>
+        </thead>
+        <tbody>
+            {% for row in block.value.code_table.data %}
+                <tr>
+                    {% for col in row  %}
+                        <td>{{ col }}</td>
+                    {% endfor %}
+                    <td class="text-right">
+                        <button class="btn btn-primary">Buy Now</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-

@@ -21,7 +21,7 @@ from .blocks import (RelayProductCodeStructureBlock,
                      CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
                      CarouselFusionEmbedBlock,
                      FeaturesBlock, ApplicationsBlock,
-                     ContactDataBlock, CoilDataBlock
+                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock
                      )
 
 # Create your models here.
@@ -78,11 +78,13 @@ class DatasheetPage(Page):
         ('image', ImageChooserBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
         ('carousel', CarouselStreamBlock()),
-        ('features', blocks.ListBlock(blocks.RichTextBlock(label="feature"))),
-        ('features2', FeaturesBlock()),
-        ('applications', ApplicationsBlock()),
+        ('dimension', DimensionBlock()),
         ('contact_data', ContactDataBlock()),
         ('coil_data', CoilDataBlock()),
+        ('revisions', blocks.StructBlock([
+            ('title', blocks.CharBlock()),
+            ('data', blocks.ListBlock(RevisionBlock()))
+        ], template='datasheet/blocks/revision.html'))
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 

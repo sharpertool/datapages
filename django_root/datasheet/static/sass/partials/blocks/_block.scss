@@ -44,9 +44,9 @@
             padding: 0px;
           }
         }
-        &:not(:last-child) {
+        &:not(:first-child) {
           > td, th {
-            border-bottom: 1px solid #dee2e6;
+            border-top: 1px solid #dee2e6;
           }
         }
         &:only-child {

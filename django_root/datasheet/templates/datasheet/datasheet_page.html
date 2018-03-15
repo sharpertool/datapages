@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-
-{% load wagtailcore_tags wagtailimages_tags %}
-{% load pipeline %}
-{% load sass_tags %}
+{% load sass_tags wagtailcore_tags %}
 
 {% block body_class %}template-datasheet{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% sass_src 'sass/index.scss' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 
 {% block content %}
 
     {% include 'datasheet/partials/header.html' %}
 
-    <main>
+    <main id="top">
         {% include 'datasheet/partials/jumbotron.html' %}
 
         <div class="container">
@@ -24,19 +25,13 @@
                         {% include 'datasheet/partials/product_slider.html' %}
                     </div>
 
-                    {% for block in page.stream1.stream_data %}
-                        {% if block.type == 'contact_data' %}
-                            <div class="block contact-data">
-                                {% include 'datasheet/partials/contact_data.html' %}
-                            </div>
-                        {% elif block.type == 'coil_data' %}
-                            <div class="coil-data block">
-                                {% include 'datasheet/partials/coil_data.html' %}
-                            </div>
-                        {% endif %}
+                    {% for block in page.stream1 %}
+                        {% include_block block %}
                     {% endfor %}
                 </div>
             </div>
+
+            {% include 'datasheet/partials/footer.html' %}
         </div>
     </main>
 

@@ -4,18 +4,46 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock, EmbedValue
 
 
+class DimensionBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    image = ImageChooserBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/dimension.html'
+
+
+class RevisionBlock(blocks.StructBlock):
+    date = blocks.DateBlock()
+    revisions = blocks.ListBlock(blocks.StructBlock([
+        ('title', blocks.CharBlock()),
+        ('description', blocks.CharBlock())
+    ]))
+
+
+class ProductCodeBlock(blocks.StructBlock):
+    value = blocks.CharBlock()
+    options = blocks.ListBlock(blocks.StructBlock([
+        ('key', blocks.CharBlock()),
+        ('value', blocks.CharBlock())
+    ]))
+
+    class Meta:
+        template = 'datasheet/blocks/product_code_item.html'
+
+
 class RelayProductCodeStructureBlock(blocks.StructBlock):
     """
     Capture all of the parts of a product code, somewhat specific to TE
     """
-    type = blocks.CharBlock(value_class='foo bar')
-    version = blocks.CharBlock()
-    coil_version = blocks.CharBlock()
-    coil_system = blocks.CharBlock()
-    load_voltage = blocks.CharBlock()
-    contact_material = blocks.CharBlock()
-    status = blocks.CharBlock()
-    connector_version = blocks.CharBlock()
+    title = blocks.CharBlock()
+    type = ProductCodeBlock()
+    relay_version = ProductCodeBlock()
+    coil_version = ProductCodeBlock()
+    coil_system = ProductCodeBlock()
+    load_voltage = ProductCodeBlock()
+    contact_material = ProductCodeBlock()
+    status_monitoring = ProductCodeBlock()
+    coil_connector_version = ProductCodeBlock()
     code_table = TableBlock({
         'startCols': 7,
         'startRows': 1,
@@ -106,6 +134,9 @@ class ContactDataBlock(blocks.StructBlock):
         'editor': 'handsontable'
     })
 
+    class Meta:
+        template = 'datasheet/blocks/contact_data.html'
+
 
 class CoilDataItemBlock(blocks.StructBlock):
     """ Individual Coil Data Item """
@@ -124,5 +155,8 @@ class CoilDataBlock(blocks.StructBlock):
     """
     title = blocks.CharBlock()
     coils = blocks.ListBlock(CoilDataItemBlock())
+
+    class Meta:
+        template = 'datasheet/blocks/coil_data.html'
 
 

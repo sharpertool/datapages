@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
 
-    'suit',
+    #'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -201,6 +201,7 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(BASE_DIR, 'datapages/static/sass'),
     os.path.join(BASE_DIR, 'datasheet/static/sass'),
 ]
+
 
 PIPELINE = {
     'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging

@@ -1,0 +1,13 @@
+import os
+import sys
+import environ
+from datapages.settings.read_env import read_env
+
+print(f"Using local config file {__file__}")
+
+env = environ.Env()
+read_env()
+
+from datapages.settings.{{ settings_file }} import *
+
+

@@ -1,34 +1,62 @@
+print("Circle CI Testing Settings")
 import environ
+import os
+from os.path import exists, join
 
 env = environ.Env()
-from os.path import join
+
+ROOT_DIR = environ.Path(__file__) - 4
+print(f"RootDir: {ROOT_DIR}")
+
+# Allow testing to override a lot of variables at once.
+if os.path.exists('.env.circleci'):
+    env.read_env('.env.circleci')
+
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
+
+HOME_DIR = '/home/circleci/synopticone'
+if not exists(HOME_DIR):
+    root = environ.Path(__file__) - 4
+    HOME_DIR = str(root)
 
 from .common import *
 
-# DEBUG
-# ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', default=True)
-TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+STATIC_ROOT = join(HOME_DIR, "collectedstatic")
+MEDIA_ROOT = join(HOME_DIR, 'media')
 
-MIDDLEWARE += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-]
-
-INSTALLED_APPS += [
-    'debug_toolbar',
-    'django_extensions',
-]
-
-DEBUG_TOOLBAR_CONFIG = {
-    'DISABLE_PANELS': [
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-    ],
-    'SHOW_TEMPLATE_CONTEXT': True,
+POSTGRES_HOST = env('POSTGRES_HOST', default='localhost')
+POSTGRES_PORT = env('POSTGRES_PORT', default='5432')
+POSTGRES_USER = env('POSTGRES_USER', default='datapages_user')
+POSTGRES_DB = env('POSTGRES_DB', default='datapages_test')
+POSTGRES_PASSWORD = env('POSTGRES_PASSWORD', default='testing-password')
+DATABASES = {
+    'default': env.db("DATABASE_URL",
+                      default=f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}'),
 }
 
-INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
+INSTALLED_APPS += (
+    'coverage',
+    'django_nose',
+)
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_PORT = 8026
-EMAIL_HOST = 'localhost'
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
+# CACHING
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': ''
+    }
+}
+
+TEST_RUNNER = env('TEST_RUNNER', default='django_nose.NoseTestSuiteRunner')
+
+NOSE_ARGS = [
+    '--verbosity=2',
+]
+
+if env("NOSE_OUTPUT_FILE", default=False):
+    NOSE_ARGS += [
+        '--with-xunit',
+        '--xunit-file={}'.format(env("NOSE_OUTPUT_FILE"))
+    ]

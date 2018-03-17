@@ -9,12 +9,14 @@ ROOT_DIR = environ.Path(__file__) - 4
 print(f"RootDir: {ROOT_DIR}")
 
 # Allow testing to override a lot of variables at once.
-if os.path.exists('.env.circleci'):
-    env.read_env('.env.circleci')
+envfile='.env.circleci'
+if os.path.exists(envfile):
+    print(f"Reading environment from {envfile}")
+    env.read_env(envfile)
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
-HOME_DIR = '/home/circleci/synopticone'
+HOME_DIR = '/home/circleci/build'
 if not exists(HOME_DIR):
     root = environ.Path(__file__) - 4
     HOME_DIR = str(root)

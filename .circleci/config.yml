@@ -27,7 +27,7 @@ references:
   devops_config: &devops_config
     working_directory: ~/build
     docker:
-      - image: bigzeta/devops_base:1.0.0
+      - image: bigzeta/devops_base:1.3.1
         auth:
           username: kutenai
           password: $DOCKERHUB_PASSWORD
@@ -261,6 +261,49 @@ jobs:
             cd scripts
             source ./getenv_circleci_security_group.sh
             ./clear_circleci_security_group.sh
+
+  packer_build_ami:
+    <<: *devops_config
+    steps:
+      - *attach_workspace
+      - *make_vault
+
+      - run:
+          name: Download packer config from S3
+          command: |
+            newest=$(aws s3 ls s3://${BUCKET}/packer/ | sed -e 's/.*PRE\s*//' -e 's|/$||' | sort -r | head -n 1)
+            mkdir -p devops
+            aws s3 cp s3://${BUCKET}/packer/${newest}/packer.tar.gz devops
+            cd ./devops
+            tar xvzf packer.tar.gz
+            rm packer.tar.gz
+            mv packer.ansible.cfg ansible.cfg
+          environment:
+            BUCKET: bigzeta.devops
+
+      - run:
+          name: Build a new fully-baked AMI using Packer
+          command: |
+            cd ./devops
+
+            # If this is a production tag, build prod version.
+            if [[ "${CIRCLE_TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            then
+              export PACKER_FILE=packer/build_datapages_prod.json
+            else
+              export PACKER_FILE=packer/build_datapages_demo_ami.json
+            fi
+
+            packer build -var "tag=${CIRCLE_TAG}" ${PACKER_FILE}
+            cp manifest.json ~/build
+          environment:
+            - USER: circleci
+            - PACKER_BUILD_VPC_ID: vpc-21ed5546
+            - PACKER_BUILD_SUBNET_ID: subnet-53e63934 # First public subnet.. only for building
+
+      - *persist_manifest
+      - *store_manifest
+
 
 
 workflows:

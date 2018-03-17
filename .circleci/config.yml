@@ -276,7 +276,6 @@ workflows:
               ignore:
                 - develop_ci_test
                 - packer_test
-                - terraform_production_test
 
       - build_venv:
           requires:
@@ -288,7 +287,6 @@ workflows:
       - collectstatic:
           requires:
             - build_venv
-            - compile_assets
           filters:
             tags:
               only: /v.*/
@@ -296,8 +294,6 @@ workflows:
       - pytest:
           requires:
             - build_venv
-            - install_synoptic
-            - compile_assets
             - collectstatic
           filters:
             tags:

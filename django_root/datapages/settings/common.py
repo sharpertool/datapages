@@ -248,9 +248,9 @@ if (AWS_ACCESS_KEY_ID is None):
 else:
     print("Setting up to use S3 storage.")
 
-    STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
-    STATIC_ROOT = "staticfiles"
-    STATIC_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+    #STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
+    #STATIC_ROOT = "staticfiles"
+    #STATIC_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
 
     MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
     MEDIA_ROOT = "mediafiles"
@@ -259,7 +259,7 @@ else:
     ADMIN_MEDIA_PREFIX = "{}admin/".format(STATIC_URL)
 
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     # How to manage pipelines AND S3 static file storage?
     #STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 

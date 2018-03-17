@@ -19,6 +19,10 @@ references:
     working_directory: ~/build
     docker:
       - image: bigzeta/ci_python3_node:1.0.0
+        environment:
+          ZIP_PREFIX: datapages
+          DEPLOY_BUCKET: datapages.io.deploy
+          DEPLOY_BUCKET_PATH: backend_versions
 
   devops_config: &devops_config
     working_directory: ~/build
@@ -114,7 +118,6 @@ jobs:
           command: |
             python3 -m venv .venv
             source .venv/bin/activate
-            pip install -r requirements/dev.txt
             pip install -r requirements/test.txt
 
       - save_cache:
@@ -143,13 +146,13 @@ jobs:
           paths:
             - ./collectedstatic
 
-  install_synoptic:
+  install_js_packages:
     <<: *container_config_min
     steps:
       - run:
           name: Install datapages client packages
           command: |
-            aws s3 sync s3://datapages.ai.prod/datapages/0.1.0 ./datapages
+            aws s3 sync s3://${DEPLOY_BUCKET}/datapages/0.1.0 ./datapages
       - persist_to_workspace:
           root: *workspace_root
           paths:
@@ -181,9 +184,9 @@ jobs:
           command: |
             mkdir -p zipout
             if [ ! -z "${CIRCLE_TAG}" ];then
-              zipfile=synopticone_${CIRCLE_TAG}.gz
+              zipfile=${ZIP_PREFIX}_${CIRCLE_TAG}.gz
             else
-              zipfile=synopticone_${CIRCLE_BRANCH}.gz
+              zipfile=${ZIP_PREFIX}_${CIRCLE_BRANCH}.gz
             fi
             zip -r zipout/${zipfile} \
               collectedstatic/ *.wsgi django_root/ scripts/ \
@@ -206,12 +209,9 @@ jobs:
       - run:
           name: Deploy the zip file to the remote bucket
           command: |
-            zipfile=synopticone_${CIRCLE_TAG}.gz
+            zipfile=${ZIP_PREFIX}_${CIRCLE_TAG}.gz
             s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${CIRCLE_TAG}/${zipfile}"
             aws s3 cp zipout/${zipfile} ${s3path}
-          environment:
-            DEPLOY_BUCKET: datapages.ai.deploy
-            DEPLOY_BUCKET_PATH: backend_versions
 
   deploy_to_test_server:
     <<: *container_config
@@ -345,5 +345,5 @@ workflows:
               only: /v.*-rc.*/
             branches:
               only:
-                - develop
+                - develop-off
 

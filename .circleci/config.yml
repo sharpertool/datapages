@@ -278,23 +278,9 @@ workflows:
                 - packer_test
                 - terraform_production_test
 
-      - install_synoptic:
-          requires:
-            - checkout_code
-          filters:
-            tags:
-              only: /v.*/
-
       - build_venv:
           requires:
             - checkout_code
-          filters:
-            tags:
-              only: /v.*/
-
-      - compile_assets:
-          requires:
-            - build_venv
           filters:
             tags:
               only: /v.*/

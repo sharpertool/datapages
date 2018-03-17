@@ -24,9 +24,6 @@ else:
 
     from datapages.settings.dev import *
 
-# Make these unique, and don't share it with anybody.
-SECRET_KEY = env.str('DJANGO_SECRET_KEY')
-
 ###################
 # DEPLOY SETTINGS #
 ###################

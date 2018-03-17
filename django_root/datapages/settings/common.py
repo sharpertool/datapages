@@ -22,6 +22,9 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 SASS_PROCESSOR_ENABLED = DEBUG is True
 
+# Make these unique, and don't share it with anybody.
+SECRET_KEY = env.str('SECRET_KEY')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 

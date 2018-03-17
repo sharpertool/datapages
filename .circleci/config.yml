@@ -10,8 +10,8 @@ references:
       - image: bigzeta/ci_postgres:1.0.0
         environment:
           POSTGRES_PASSWORD: testing-password
-          POSTGRES_USER: datasheet_user
-          POSTGRES_DB: datasheetai
+          POSTGRES_USER: datapages_user
+          POSTGRES_DB: datapages
 
       - image: bigzeta/smtpd:1.0.0
 

@@ -15,6 +15,7 @@ env = environ.Env()
 
 if len(sys.argv) > 1 and sys.argv[1] == 'test':
     print("Running test mode..")
+    env.read_env('.env.local')
     from datapages.settings.test import *
 else:
     if env.bool('DJANGO_DOCKER', False):

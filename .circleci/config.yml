@@ -301,7 +301,8 @@ workflows:
 
       - build_zip_file:
           requires:
-            - pytest
+            - build_venv
+            - collectstatic
           filters:
             tags:
               only: /^v.*/

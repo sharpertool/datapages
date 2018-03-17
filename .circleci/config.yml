@@ -89,9 +89,15 @@ jobs:
       - run:
           name: fetch tags
           command: |
-            git fetch --tags
+            git fetch --tags || true
 
       - checkout
+
+      - run:
+          name: fetch tags
+          command: |
+            git fetch --tags || true
+
       - save_cache:
           key: v1-repo-{{ .Branch }}-{{ .Revision }}
           paths:

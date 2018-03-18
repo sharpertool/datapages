@@ -1,6 +1,7 @@
 #!/bin/bash
 
 zipfile=$1
+VERSION={$2:-''}
 APPPATH=${APPPATH:-/home/ec2-user/datapages.io}
 
 # Put site into maintenance mode
@@ -25,7 +26,8 @@ echo -e "\n Collecting updated statics.."
 ./manage migrate --noinput
 
 echo "Updating DATAPAGES_VERSION to match production version"
-version=$(grep DATAPAGES_VERSION django_root/production.env.j2  | sed 's/DATAPAGES_VERSION=//')
+template_version=$(grep DATAPAGES_VERSION django_root/production.env.j2  | sed 's/DATAPAGES_VERSION=//')
+version=${VERSION:-template_version}
 sed -i -e "s/DATAPAGES_VERSION=.*/DATAPAGES_VERSION=${version}/" .env
 
 echo -e "\n Reloading uWSGI web service.."

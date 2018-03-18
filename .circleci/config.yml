@@ -266,7 +266,8 @@ jobs:
       - run:
           name: Run deploy script on test server
           command: |
-            ssh deploy_host "./datapages.io/site_deploy_zip.sh ${ZIP_PREFIX}*.gz"
+            VERSION=${CIRCLE_TAG:-CIRCLE_SHA1}
+            ssh deploy_host "./datapages.io/site_deploy_zip.sh ${ZIP_PREFIX}*.gz ${VERSION}"
 
       - run:
           name:  Remove circle ci server to security group for ec2 access

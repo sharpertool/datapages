@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'storages',
     'pipeline',
     'sass_processor',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -268,3 +269,15 @@ else:
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))
+
+# Get settings from environment. These are required to be set.
+RAVEN_CONFIG = {
+    'dsn': env.str('DJANGO_SENTRY_DSN', default=''),
+    # Public DSN is passed to Javascript since it is client side and could be compromised.
+    'public_dsn': env.str('DJANGO_SENTRY_PUBLIC_DSN', default=''),
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    # 'release': raven.fetch_git_sha(GIT_ROOT),
+    'release': env.str('DATAPAGES_VERSION', default='')
+}
+

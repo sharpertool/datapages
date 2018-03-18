@@ -13,6 +13,8 @@ django-allauth>=0.32.0
 # NOTE: version 2.7.4 is busted.. do not update.
 psycopg2==2.7.3
 
+# Logging, errors
+raven>=6.60
 
 django-model-utils>=3.1
 

@@ -18,7 +18,7 @@ references:
   container_config_min: &container_config_min
     working_directory: ~/build
     docker:
-      - image: bigzeta/ci_python3_node:1.0.0
+      - image: bigzeta/ci_python3_node:1.1.0
         environment:
           ZIP_PREFIX: datapages
           DEPLOY_BUCKET: datapages.io.deploy
@@ -134,12 +134,20 @@ jobs:
       - *attach_workspace
 
       - run:
+          name: Compile SCSS Files
+          command: |
+            source .venv/bin/activate
+            cd django_root
+            export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
+            python manage.py compilescss
+
+      - run:
           name: Collect static files
           command: |
             source .venv/bin/activate
             cd django_root
             export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
-            python manage.py collectstatic --noinput
+            python manage.py collectstatic --noinput --ignore=*.scss
 
       - persist_to_workspace:
           root: *workspace_root

@@ -204,6 +204,7 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(BASE_DIR, 'datapages/static/sass'),
     os.path.join(BASE_DIR, 'datasheet/static/sass'),
 ]
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 PIPELINE = {

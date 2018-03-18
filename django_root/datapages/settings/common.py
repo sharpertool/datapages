@@ -200,6 +200,7 @@ AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -252,20 +253,22 @@ if (AWS_ACCESS_KEY_ID is None):
 else:
     print("Setting up to use S3 storage.")
 
-    #STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
-    #STATIC_ROOT = "staticfiles"
-    #STATIC_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+    S3_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    #STATICFILES_LOCATION = STATIC_ROOT
+    #STATIC_URL = '/static/'
+    STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
+    STATIC_ROOT = "staticfiles"
+    STATIC_URL = S3_URL
 
     MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
     MEDIA_ROOT = "mediafiles"
-    MEDIA_URL = "{0}{1}/".format(STATIC_URL, MEDIA_ROOT)
+    MEDIA_URL = "{0}{1}/".format(S3_URL, MEDIA_ROOT)
 
     ADMIN_MEDIA_PREFIX = "{}admin/".format(STATIC_URL)
 
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    # How to manage pipelines AND S3 static file storage?
-    #STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

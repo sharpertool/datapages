@@ -13,7 +13,7 @@ unzip -uoq ${zipfile}
 rm ${zipfile}
 
 echo "Update requirements"
-.venv3/bin/pip install -r requirements/base.txt
+.venv3/bin/pip install -r requirements/prod.txt
 
 echo -e "\n Collecting updated statics.."
 ./manage collectstatic --noinput
@@ -29,6 +29,7 @@ version=$(grep DATAPAGES_VERSION django_root/production.env.j2  | sed 's/DATAPAG
 sed -i -e "s/DATAPAGES_VERSION=.*/DATAPAGES_VERSION=${version}/" .env
 
 echo -e "\n Reloading uWSGI web service.."
+
 # Note: forcing a full reload.
 #touch reload.me
 sudo /usr/local/bin/supervisorctl restart datapages.io

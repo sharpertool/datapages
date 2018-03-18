@@ -223,7 +223,7 @@ jobs:
       - run:
           name: Add Target Host to config to disable strict type checking
           command: |
-            ./scripts/host_config.sh
+            ./scripts/host_config_nobastion.sh
 
       - run:
           name: Show current config value.
@@ -243,17 +243,17 @@ jobs:
       - run:
           name: Copy deploy script to test server
           command: |
-            scp ./scripts/site_deploy_zip.sh deploy_host:synoptic.ai/site_deploy_zip.sh
+            scp ./scripts/site_deploy_zip.sh deploy_host:datapages.io/site_deploy_zip.sh
 
       - run:
           name: Copy zipfile to test server
           command: |
-            scp zipout/synoptic*.gz deploy_host:synoptic.ai/
+            scp zipout/${ZIP_PREFIX}*.gz deploy_host:datapages.io/
 
       - run:
           name: Run deploy script on test server
           command: |
-            ssh deploy_host "./synoptic.ai/site_deploy_zip.sh synopticone*.gz"
+            ssh deploy_host "./datapages.io/site_deploy_zip.sh ${ZIP_PREFIX}*.gz"
 
       - run:
           name:  Remove circle ci server to security group for ec2 access
@@ -364,12 +364,11 @@ workflows:
 
       - deploy_to_test_server:
           requires:
-            - pytest
             - build_zip_file
           filters:
             tags:
               only: /v.*-rc.*/
             branches:
               only:
-                - develop-off
+                - develop
 

@@ -248,27 +248,26 @@ PIPELINE = {
 }
 
 # Make the AWS Configuration optional, for local development
-if (AWS_ACCESS_KEY_ID is None):
+if (AWS_STORAGE_BUCKET_NAME is None):
     print("Using Local Static and Media files")
 else:
     print("Setting up to use S3 storage.")
 
     S3_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
 
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     #STATICFILES_LOCATION = STATIC_ROOT
     #STATIC_URL = '/static/'
-    STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
-    STATIC_ROOT = "staticfiles"
-    STATIC_URL = S3_URL
+    #STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
+    #STATIC_ROOT = "staticfiles"
+    #STATIC_URL = S3_URL
 
     MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
     MEDIA_ROOT = "mediafiles"
     MEDIA_URL = "{0}{1}/".format(S3_URL, MEDIA_ROOT)
-
-    ADMIN_MEDIA_PREFIX = "{}admin/".format(STATIC_URL)
-
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+    ADMIN_MEDIA_PREFIX = "{}admin/".format(S3_URL)
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

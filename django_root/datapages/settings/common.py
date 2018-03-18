@@ -161,7 +161,9 @@ if IFRAMELY_API_KEY:
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://{0}'.format(WAGTAIL_SITE_NAME)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[WAGTAIL_SITE_NAME])
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[WAGTAIL_SITE_NAME])
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

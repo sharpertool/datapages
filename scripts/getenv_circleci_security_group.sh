@@ -10,5 +10,5 @@ else
 fi
 
 # Security group with inbound ssh access to target server.
-export sgname=${BIGZETA_CIRCLECI_SG:-sg-78f1e707}
+export sgname=${BIGZETA_CIRCLECI_SG:-sg-3be9f844}
 

@@ -217,8 +217,13 @@ jobs:
       - run:
           name: Deploy the zip file to the remote bucket
           command: |
-            zipfile=${ZIP_PREFIX}_${CIRCLE_TAG}.gz
-            s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${CIRCLE_TAG}/${zipfile}"
+            if [ ! -z "${CIRCLE_TAG}" ];then
+              VERSION=${CIRCLE_TAG}
+            else
+              VERSION=${CIRCLE_BRANCH}
+            fi
+            zipfile=${ZIP_PREFIX}_${VERSION}.gz
+            s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${VERSION}/${zipfile}"
             aws s3 cp zipout/${zipfile} ${s3path}
 
   deploy_to_test_server:
@@ -368,7 +373,8 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+(-rc.*)?$/
             branches:
-              ignore: /.*/
+              only:
+                - develop
 
       - deploy_to_test_server:
           requires:

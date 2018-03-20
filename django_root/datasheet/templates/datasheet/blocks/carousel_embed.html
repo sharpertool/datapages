@@ -1,5 +1,9 @@
 {% load wagtailcore_tags wagtailembeds_tags %}
 
-<div class="carousel-item">
-    {% embed value.embed.url %}
+<div class="carousel-item ">
+    <iframe src="{{ value.embed.url }}"
+            width="{{value.width}}" height="{{ value.height }}" allowfullscreen="false"
+            webkitallowfullscreen="false" mozallowfullscreen="false"
+            frameborder="0">
+    </iframe>
 </div>

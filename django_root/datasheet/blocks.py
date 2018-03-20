@@ -68,6 +68,8 @@ class CarouselImageBlock(blocks.StructBlock):
     subtitle = blocks.CharBlock()
     image = ImageChooserBlock()
     alt = blocks.CharBlock(required=False)
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
 
     class Meta:
         template = 'datasheet/blocks/carousel_image.html'
@@ -158,5 +160,3 @@ class CoilDataBlock(blocks.StructBlock):
 
     class Meta:
         template = 'datasheet/blocks/coil_data.html'
-
-

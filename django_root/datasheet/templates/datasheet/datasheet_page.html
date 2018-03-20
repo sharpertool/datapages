@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load sass_tags wagtailcore_tags %}
-
+{% load static %}
 {% block body_class %}template-datasheet{% endblock %}
 
 {% block extra_css %}
@@ -32,8 +32,11 @@
             </div>
 
             {% include 'datasheet/partials/footer.html' %}
+
+            {% block extra_js %}
+                <script src="{% static 'js/carouselequalheights.js' %}"></script>
+            {% endblock %}
         </div>
     </main>
 
 {% endblock %}
-

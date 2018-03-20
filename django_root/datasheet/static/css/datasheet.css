@@ -1,0 +1,329 @@
+/**
+Include a bunch of partials for better code management.
+ */
+#header {
+  padding: 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd; }
+  #header .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: 11.3rem; }
+  #header .nav-link {
+    color: #0066A1;
+    margin-right: 20px; }
+    #header .nav-link img, #header .nav-link i {
+      margin-right: 7px; }
+  #header .btn {
+    padding: 15px 20px; }
+    #header .btn.btn-outline-primary {
+      border-color: #0066A1;
+      color: #0066A1; }
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 840px; } }
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 1020px; } }
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1260px; } }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1440px; } }
+
+.jumbotron {
+  padding-left: 0px;
+  padding-right: 0px;
+  background: #0066A1;
+  border-radius: 0px;
+  padding-top: 60px;
+  padding-bottom: 113px; }
+  .jumbotron p {
+    font-size: 30px; }
+  .jumbotron * {
+    color: #fff; }
+
+.sidebar {
+  margin: 0;
+  list-style-type: none;
+  padding: 0 5rem 0 0; }
+  .sidebar li {
+    padding-left: 27px; }
+    .sidebar li a {
+      line-height: 30px;
+      display: block;
+      color: #0066A1;
+      font-size: 14px; }
+    .sidebar li.active {
+      border-left: 3px solid #0066A1; }
+      .sidebar li.active a {
+        text-decoration: underline; }
+    .sidebar li:not(:last-child) {
+      margin-bottom: 26px; }
+    .sidebar li.input-group .addon {
+      position: absolute;
+      margin-top: 15px;
+      z-index: 4;
+      color: #777; }
+      .sidebar li.input-group .addon + .form-control {
+        padding: 15px 30px; }
+    .sidebar li.input-group .form-control {
+      border-top: 0px;
+      border-right: 0px;
+      border-left: 0px;
+      border-radius: 0px;
+      font-size: 14px; }
+      .sidebar li.input-group .form-control:focus {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25); }
+    .sidebar li.chat-with-support {
+      background: #0066A1;
+      border-right: 5px solid #007BBA;
+      padding-top: 15px;
+      padding-bottom: 15px; }
+      .sidebar li.chat-with-support a {
+        color: #fff; }
+        .sidebar li.chat-with-support a h5 {
+          font-size: 18px;
+          margin-bottom: 0px; }
+          .sidebar li.chat-with-support a h5 > i {
+            margin-left: 10px; }
+        .sidebar li.chat-with-support a p {
+          font-size: 14px;
+          margin-bottom: 5px; }
+
+.card.chart-card {
+  box-shadow: 0 0 30px 0 rgba(0, 159, 189, 0.05), 0 0 20px 0 rgba(0, 0, 0, 0.33); }
+  .card.chart-card .card-body {
+    position: relative;
+    padding-top: 37px; }
+    .card.chart-card .card-body .expand-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 1;
+      color: #CCCCCC; }
+    .card.chart-card .card-body .card-links {
+      margin-top: 25px;
+      text-align: center; }
+      .card.chart-card .card-body .card-links a {
+        color: #CCCCCC; }
+
+.footer {
+  margin: 100px 0; }
+  .footer .back-to-top {
+    color: #0066A1;
+    float: left;
+    font-size: 12px;
+    text-align: center; }
+    .footer .back-to-top > img {
+      display: block;
+      margin-bottom: 10px; }
+  .footer > img {
+    display: block;
+    margin: 0 auto; }
+
+.block {
+  margin-bottom: 80px; }
+  .block .title {
+    position: relative;
+    margin-bottom: 40px;
+    color: #1A1A1A; }
+    .block .title span {
+      background: #fff;
+      padding-right: 30px;
+      font-size: 30px; }
+    .block .title:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0.4em;
+      border-top: 1px solid #ddd;
+      z-index: -1; }
+  .block .table {
+    margin-bottom: 0px;
+    table-layout: fixed; }
+    .block .table thead tr th, .block .table thead tr td {
+      border-top: 0px;
+      font-size: 14px; }
+    .block .table thead tr th {
+      border-bottom: 1px solid #dee2e6; }
+    .block .table tbody > tr > td, .block .table tbody > tr th {
+      border-top: 0px;
+      font-size: 14px; }
+      .block .table tbody > tr > td.nested, .block .table tbody > tr th.nested {
+        padding: 0px; }
+    .block .table tbody > tr:not(:first-child) > td, .block .table tbody > tr:not(:first-child) th {
+      border-top: 1px solid #dee2e6; }
+    .block .table tbody > tr:only-child > td, .block .table tbody > tr:only-child th {
+      border-bottom: 0px; }
+
+.contact-data .table tr > td.borderless:not(:last-child) {
+  border-top: 0px !important; }
+
+.product-slider {
+  margin-top: -72px; }
+  .product-slider .carousel {
+    background: #fff; }
+  .product-slider #product_info {
+    padding-left: 25px; }
+  .product-slider .nav-pills .nav-link {
+    border-radius: 0px;
+    padding: 0 1rem;
+    color: #007BBA;
+    margin-bottom: 20px;
+    font-size: 24px; }
+    .product-slider .nav-pills .nav-link.active {
+      background: transparent;
+      border-bottom: 3px solid #fff;
+      color: #fff; }
+  .product-slider .nav-pills + .tab-content {
+    margin-bottom: 50px; }
+    .product-slider .nav-pills + .tab-content .tab-pane {
+      margin: 0;
+      padding-left: 15px; }
+      .product-slider .nav-pills + .tab-content .tab-pane li {
+        line-height: 30px; }
+        .product-slider .nav-pills + .tab-content .tab-pane li p {
+          margin-bottom: 0px; }
+  .product-slider #distributors {
+    border-radius: 0px; }
+    .product-slider #distributors .card-header {
+      padding: 20px; }
+      .product-slider #distributors .card-header h5, .product-slider #distributors .card-header p {
+        font-size: 14px; }
+      .product-slider #distributors .card-header h5 {
+        margin-bottom: 5px;
+        font-weight: bold; }
+      .product-slider #distributors .card-header p {
+        margin-bottom: 20px; }
+      .product-slider #distributors .card-header .dropdown .btn {
+        text-align: left;
+        padding: 17px 20px;
+        border: 1px solid #ddd; }
+        .product-slider #distributors .card-header .dropdown .btn:after {
+          position: absolute;
+          right: 16px;
+          top: 29px; }
+      .product-slider #distributors .card-header .dropdown .dropdown-menu {
+        width: 100%; }
+      .product-slider #distributors .card-header .btn {
+        padding-top: 17px;
+        padding-bottom: 17px; }
+
+.coil-data .nav-pills {
+  margin-bottom: 30px; }
+  .coil-data .nav-pills .nav-link {
+    color: #0066A1;
+    font-size: 14px; }
+    .coil-data .nav-pills .nav-link.active {
+      box-shadow: 0 0 1px 0 #009FBD;
+      background-color: rgba(0, 115, 173, 0.07);
+      border-radius: 3px;
+      border: 1px solid rgba(0, 115, 173, 0.2);
+      box-sizing: border-box;
+      font-weight: bold; }
+  .coil-data .nav-pills + .tab-content .head {
+    margin-bottom: 40px; }
+    .coil-data .nav-pills + .tab-content .head .subtitle {
+      font-size: 24px; }
+    .coil-data .nav-pills + .tab-content .head p {
+      font-size: 18px; }
+  .coil-data .nav-pills + .tab-content .chart-title {
+    font-size: 14px; }
+  .coil-data .nav-pills + .tab-content .table {
+    table-layout: auto; }
+
+.product-code-structure .product-code {
+  margin: 0 0 80px 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex; }
+  .product-code-structure .product-code .product-code-item {
+    flex: 1;
+    text-align: center;
+    margin-right: 10px; }
+    .product-code-structure .product-code .product-code-item .head {
+      max-height: 67px; }
+      .product-code-structure .product-code .product-code-item .head .name {
+        font-size: 30px;
+        margin-bottom: 10px; }
+      .product-code-structure .product-code .product-code-item .head .description {
+        font-size: 14px;
+        color: #4C4C4C;
+        margin-bottom: 32px; }
+    .product-code-structure .product-code .product-code-item .foot {
+      font-size: 12px;
+      color: #7F7F7F; }
+    .product-code-structure .product-code .product-code-item .dropdown {
+      margin-bottom: 9px; }
+      .product-code-structure .product-code .product-code-item .dropdown .btn {
+        border: 1px solid #ddd;
+        box-shadow: 0 0 30px 0 rgba(0, 159, 189, 0.05), 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        color: #0073AD;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 120px;
+        margin: 0 auto; }
+        .product-code-structure .product-code .product-code-item .dropdown .btn:after {
+          display: none; }
+      .product-code-structure .product-code .product-code-item .dropdown .dropdown-menu {
+        padding: 5px;
+        top: -40px !important;
+        box-shadow: 0 0 30px 0 rgba(0, 159, 189, 0.05), 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        border: 1px solid #E5E5E5; }
+        .product-code-structure .product-code .product-code-item .dropdown .dropdown-menu .dropdown-item {
+          color: #0073AD;
+          font-size: 14px;
+          padding: 8px;
+          border: 1px solid transparent; }
+          .product-code-structure .product-code .product-code-item .dropdown .dropdown-menu .dropdown-item:hover {
+            background-color: rgba(0, 115, 173, 0.07);
+            border-radius: 3px;
+            border-color: rgba(0, 115, 173, 0.2);
+            font-weight: bold; }
+
+.product-code-structure .table tbody tr > td, .product-code-structure .table tbody tr th {
+  vertical-align: middle; }
+  .product-code-structure .table tbody tr > td .btn, .product-code-structure .table tbody tr th .btn {
+    padding: 8px 10px;
+    font-size: 14px; }
+
+.revision .table {
+  table-layout: auto; }
+  .revision .table h4, .revision .table a {
+    font-size: 14px; }
+  .revision .table h4 {
+    font-weight: bold; }
+  .revision .table a {
+    color: #0066A1; }
+    .revision .table a > i {
+      margin-left: 10px; }
+
+/**
+ * index.scss
+ * - Add any styles you want here!
+ */
+body {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+  font-family: BrixSansRegular; }
+
+main {
+  margin-top: 90px; }
+
+.btn-primary {
+  background: #0066A1;
+  border-color: #0066A1; }

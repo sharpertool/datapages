@@ -1,5 +1,7 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-
+{% image value.image original as carousel_image %}
 <div class="carousel-item active">
-    {% image value.image width-400 %}
+
+    <img class="d-block img-fluid ml-auto mr-auto"src="{{carousel_image.url}}" width="{{value.width}}"
+     height="{{value.height}}" alt="{{carousel_image.alt}}"/>
 </div>

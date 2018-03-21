@@ -253,21 +253,22 @@ if (AWS_STORAGE_BUCKET_NAME is None):
 else:
     print("Setting up to use S3 storage.")
 
-    S3_URL = "http://{bucket}.s3.amazonaws.com/".format(bucket=AWS_STORAGE_BUCKET_NAME)
+    CDN_URL = env.str('CDN_URL',
+                      default=f"http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/")
 
     #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     #STATICFILES_LOCATION = STATIC_ROOT
     #STATIC_URL = '/static/'
     #STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
     #STATIC_ROOT = "staticfiles"
-    #STATIC_URL = S3_URL
+    #STATIC_URL = CDN_URL
 
     MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
     MEDIA_ROOT = "mediafiles"
-    MEDIA_URL = "{0}{1}/".format(S3_URL, MEDIA_ROOT)
+    MEDIA_URL = "{0}{1}/".format(CDN_URL, MEDIA_ROOT)
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-    ADMIN_MEDIA_PREFIX = "{}admin/".format(S3_URL)
+    ADMIN_MEDIA_PREFIX = "{}admin/".format(CDN_URL)
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))

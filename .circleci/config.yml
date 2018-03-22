@@ -266,7 +266,8 @@ jobs:
       - run:
           name: Run deploy script on test server
           command: |
-            VERSION=${CIRCLE_TAG:-CIRCLE_SHA1}
+            VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
+            echo "Updating the version to ${VERSION}"
             ssh deploy_host "./datapages.io/site_deploy_zip.sh ${ZIP_PREFIX}*.gz ${VERSION}"
 
       - run:

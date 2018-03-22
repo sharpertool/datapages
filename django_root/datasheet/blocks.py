@@ -1,3 +1,4 @@
+from textwrap import dedent
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
@@ -25,11 +26,11 @@ class ProductCodeBlock(blocks.StructBlock):
     options = blocks.ListBlock(blocks.StructBlock([
         ('key', blocks.CharBlock()),
         ('value', blocks.CharBlock())
-    ]))
+    ]), required=False)
 
     class Meta:
         template = 'datasheet/blocks/product_code_item.html'
-
+        form_template = "datasheet/blocks/editing/product_code_item.html"
 
 class RelayProductCodeStructureBlock(blocks.StructBlock):
     """
@@ -59,6 +60,10 @@ class RelayProductCodeStructureBlock(blocks.StructBlock):
         icon = 'user'
         template = 'datasheet/blocks/product_code.html'
         form_classname = "product_code struct-block"
+        form_template = "datasheet/blocks/editing/product_code.html"
+        help_text = dedent("""
+            Fill in the table with information about the Product Code.
+        """)
 
 
 class CarouselImageBlock(blocks.StructBlock):

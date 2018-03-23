@@ -48,11 +48,3 @@ def add_datasheet_summary(request, items):
 @hooks.register('product_code')
 def product_code_hook():
     pass
-
-
-@hooks.register('insert_editor_css')
-def editor_css():
-    return format_html(
-        '<link rel="stylesheet" href="{}">',
-        static('{%  %}')
-    )

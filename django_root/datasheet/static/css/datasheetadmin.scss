@@ -1,0 +1,40 @@
+.product_code {
+  .product-code-item {
+    .sequence-container {
+      .sequence-container-inner {
+        > .sequence {
+          .sequence-member {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding-right: 90px;
+            height: 90px;
+            .list-controls {
+              top: 28px;
+              right: 20px;
+            }
+            .sequence-member-inner {
+              padding: 20px;
+            }
+          }
+        }
+      }
+    }
+    .product-code-option {
+      .fields {
+        display: flex;
+        width: 100%;
+        li {
+          display: inline-block;
+          flex: 1;
+          padding: 0px;
+          &:not(:last-child) {
+            margin-right: 25px;
+          }
+          label {
+            width: 65px;
+          }
+        }
+      }
+    }
+  }
+}

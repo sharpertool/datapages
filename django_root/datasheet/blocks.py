@@ -24,13 +24,19 @@ class RevisionBlock(blocks.StructBlock):
 class ProductCodeBlock(blocks.StructBlock):
     value = blocks.CharBlock()
     options = blocks.ListBlock(blocks.StructBlock([
-        ('key', blocks.CharBlock()),
-        ('value', blocks.CharBlock())
-    ]), required=False)
+                ('key', blocks.CharBlock()),
+                ('value', blocks.CharBlock())
+            ],
+            form_template='datasheet/blocks/editing/product_code_option.html',
+            form_classname='product-code-option'
+        ),
+        required=False)
 
     class Meta:
         template = 'datasheet/blocks/product_code_item.html'
         form_template = "datasheet/blocks/editing/product_code_item.html"
+        form_classname = 'product-code-item'
+
 
 class RelayProductCodeStructureBlock(blocks.StructBlock):
     """

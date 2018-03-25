@@ -109,7 +109,11 @@ class DatasheetPage(Page):
         ], heading="DataSheet Information"),
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
-        StreamFieldPanel('attributes'),
+        MultiFieldPanel([
+            StreamFieldPanel('attributes', heading=None, classname="full"),
+        ],
+            heading="Attributes and Applications",
+            classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
         StreamFieldPanel('stream1'),
         InlinePanel('related_links', label="Related Links"),

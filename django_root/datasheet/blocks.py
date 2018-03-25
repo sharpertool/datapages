@@ -123,7 +123,7 @@ class CarouselStreamBlock(blocks.StreamBlock):
 
 
 class FeaturesBlock(blocks.StructBlock):
-    features = blocks.ListBlock(blocks.RichTextBlock())
+    features = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
 
     class Meta:
         label = 'Features'
@@ -131,7 +131,7 @@ class FeaturesBlock(blocks.StructBlock):
 
 
 class ApplicationsBlock(blocks.StructBlock):
-    applications = blocks.ListBlock(blocks.RichTextBlock())
+    applications = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
 
     class Meta:
         label = 'Applications'

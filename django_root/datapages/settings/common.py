@@ -176,13 +176,7 @@ STATICFILES_FINDERS = [
     'sass_processor.finders.CssFinder',
 ]
 
-STATICFILES_DIRS = []
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 # Django Storages
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", default=None)
@@ -197,9 +191,9 @@ AWS_S3_OBJECT_PARAMETERS = env.dict("AWS_S3_OBJECT_PARAMETERS",
 AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
                                default="{}.s3.amazonaws.com".format(AWS_STORAGE_BUCKET_NAME))
 
+STATICFILES_DIRS = []
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -209,7 +203,6 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
     os.path.join(BASE_DIR, 'datasheet/static/sass'),
 ]
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
-
 
 PIPELINE = {
     'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging

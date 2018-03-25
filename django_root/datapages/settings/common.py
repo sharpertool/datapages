@@ -15,11 +15,16 @@ import os
 
 env = environ.Env()
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
-
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+#PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONF_DIR = environ.Path(__file__)
+PROJECT_DIR = environ.Path(__file__) - 3
+BASE_DIR = PROJECT_DIR - 1
+
+if DEBUG:
+    print(f"Project Dir: {PROJECT_DIR} Bases dir: {BASE_DIR}")
 SASS_PROCESSOR_ENABLED = DEBUG is True
 
 # Make these unique, and don't share it with anybody.
@@ -85,7 +90,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(PROJECT_DIR, 'templates'),
+            PROJECT_DIR('templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -191,18 +196,19 @@ AWS_S3_OBJECT_PARAMETERS = env.dict("AWS_S3_OBJECT_PARAMETERS",
 AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
                                default="{}.s3.amazonaws.com".format(AWS_STORAGE_BUCKET_NAME))
 
-STATICFILES_DIRS = []
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = PROJECT_DIR('static')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_ROOT = PROJECT_DIR('media')
 MEDIA_URL = '/media/'
 
 SASS_PROCESSOR_INCLUDE_DIRS = [
-    os.path.join(BASE_DIR, 'datapages/static/sass'),
-    os.path.join(BASE_DIR, 'datasheet/static/sass'),
+    PROJECT_DIR('datapages/static/sass'),
+    PROJECT_DIR('datasheet/static/sass'),
 ]
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
+SASS_PROCESSOR_ROOT = PROJECT_DIR('static')
+
 
 PIPELINE = {
     'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging

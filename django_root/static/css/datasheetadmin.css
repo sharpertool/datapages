@@ -1,8 +1,8 @@
 /**
-Improve the editing interface for the datasheet admin.
+Improve the editing interface for the datasheet admin. Test.
  */
 .product_code .product-code-item .sequence-container .sequence-container-inner > .sequence .sequence-member {
-  border: 10px solid lightblue;
+  border: 10px solid blue;
   margin-bottom: 20px;
   padding-right: 90px;
   height: 90px; }

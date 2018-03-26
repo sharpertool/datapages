@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'pipeline',
-    'sass_processor',
     'raven.contrib.django.raven_compat',
 ]
 

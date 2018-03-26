@@ -1,10 +1,13 @@
+/**
+Improve the editing interface for the datasheet admin.
+ */
 .product_code {
   .product-code-item {
     .sequence-container {
       .sequence-container-inner {
         > .sequence {
           .sequence-member {
-            border: 1px solid #ddd;
+            border: 10px solid lightblue;
             margin-bottom: 20px;
             padding-right: 90px;
             height: 90px;

@@ -1,5 +1,5 @@
 /**
-Include a bunch of partials for better code management.
+  Include a bunch of partials for better code management.
  */
 #header {
   padding: 0;
@@ -23,19 +23,15 @@ Include a bunch of partials for better code management.
 @media (min-width: 576px) {
   .container {
     max-width: 840px; } }
-
 @media (min-width: 768px) {
   .container {
     max-width: 1020px; } }
-
 @media (min-width: 992px) {
   .container {
     max-width: 1260px; } }
-
 @media (min-width: 1200px) {
   .container {
     max-width: 1440px; } }
-
 .jumbotron {
   padding-left: 0px;
   padding-right: 0px;
@@ -289,7 +285,6 @@ Include a bunch of partials for better code management.
             border-radius: 3px;
             border-color: rgba(0, 115, 173, 0.2);
             font-weight: bold; }
-
 .product-code-structure .table tbody tr > td, .product-code-structure .table tbody tr th {
   vertical-align: middle; }
   .product-code-structure .table tbody tr > td .btn, .product-code-structure .table tbody tr th .btn {
@@ -327,3 +322,5 @@ main {
 .btn-primary {
   background: #0066A1;
   border-color: #0066A1; }
+
+/*# sourceMappingURL=datasheet.css.map */

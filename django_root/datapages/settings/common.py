@@ -18,13 +18,13 @@ env = environ.Env()
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONF_DIR = environ.Path(__file__)
 PROJECT_DIR = environ.Path(__file__) - 3
 BASE_DIR = PROJECT_DIR - 1
 
 if DEBUG:
     print(f"Project Dir: {PROJECT_DIR} Bases dir: {BASE_DIR}")
+
 SASS_PROCESSOR_ENABLED = DEBUG is True
 
 # Make these unique, and don't share it with anybody.
@@ -253,13 +253,6 @@ else:
 
     CDN_URL = env.str('CDN_URL',
                       default=f"http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/")
-
-    #STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    #STATICFILES_LOCATION = STATIC_ROOT
-    #STATIC_URL = '/static/'
-    #STATICFILES_LOCATION = env.str("STATICFILES_LOCATION", default="staticfiles")
-    #STATIC_ROOT = "staticfiles"
-    #STATIC_URL = CDN_URL
 
     MEDIAFILES_LOCATION = env.str("MEDIAFILES_LOCATION", default="mediafiles")
     MEDIA_ROOT = "mediafiles"

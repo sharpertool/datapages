@@ -270,7 +270,7 @@ jobs:
       - run:
           name: Copy zipfile to test server
           command: |
-            ssh deploy_host "mkdkir -p deploy/"
+            ssh deploy_host "mkdir -p deploy/"
             zipfile=$(./scripts/zipfilename.sh)
             scp zipout/${zipfile} deploy_host:deploy/
 

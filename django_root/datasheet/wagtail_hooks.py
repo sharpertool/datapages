@@ -52,6 +52,6 @@ def product_code_hook():
 @hooks.register('insert_editor_css')
 def editor_css():
     return format_html(
-        '<link rel="stylesheet" href="{}"',
+        '<link rel="stylesheet" href="{}" />',
         static('css/datasheetadmin.css')
     )

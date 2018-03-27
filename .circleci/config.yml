@@ -62,8 +62,7 @@ references:
       name: Disable strict type checking
       command: |
         mkdir ~/.ssh/
-        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/co
-          name: Copy zipfnfig
+        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
   make_vault: &make_vault
     run:
@@ -268,7 +267,8 @@ jobs:
           command: |
             scp ./scripts/site_deploy_zip.sh deploy_host:datapages.io/site_deploy_zip.sh
 
-      - run: Copy zipfile to test server
+      - run:
+          name: Copy zipfile to test server
           command: |
             ssh deploy_host "mkdkir -p deploy/"
             zipfile=$(./scripts/zipfilename.sh)

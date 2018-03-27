@@ -232,6 +232,7 @@ jobs:
           name: Deploy the zip file to the remote bucket
           command: |
             zipfile=$(./scripts/zipfilename.sh)
+            VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
             s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${VERSION}/${zipfile}"
             aws s3 cp zipout/${zipfile} ${s3path}
 

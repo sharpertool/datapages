@@ -15,10 +15,16 @@ rm -rf ${zipdir}
 mkdir -p ${zipdir}
 pushd ${zipdir}
 unzip -uoq ~/deploy/${zipfile}
+popd
 
 echo "use rsync to synchronize the two paths"
-rsync -av --delete zipdir/ django_root
-popd
+rsync -av ${zipdir}/ .
+
+echo "Use rsync to remove old files in selected paths"
+rsync -av --delete ${zipdir}/django_root/ django_root
+rsync -av --delete ${zipdir}/collectedstatic/ collectedstatic
+rsync -av --delete ${zipdir}/requirements/ requirements
+rsync -av --delete ${zipdir}/scripts/ scripts
 
 echo "Update requirements"
 .venv3/bin/pip install -r requirements/prod.txt

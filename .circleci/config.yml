@@ -57,6 +57,14 @@ references:
       keys:
         - *venv_cache_key
 
+  gulp_build_cache_key: &gulp_build_cache_key
+    v1-gulp-build-{{ checksum "build/package.json" }}
+
+  restore_gulp_build_cache: &restore_gulp_build_cache
+    restore_cache:
+      keys:
+        - *gulp_build_cache_key
+
   disable_strict_type_checking: &disable_strict_type_checking
     run:
       name: Disable strict type checking
@@ -133,6 +141,7 @@ jobs:
     steps:
       - *restore_repo
       - *restore_venv
+      - *restore_gulp_build_cache
 
       - run:
           name: Install npm packages for gulp_build
@@ -141,10 +150,15 @@ jobs:
             yarn install
 
       - run:
-          name: Build assets
+          name: Build CSS Assets using Gulp
           command: |
             cd build
             yarn build
+
+      - save_cache:
+        key: *gulp_build_cache_key
+        paths:
+          - build/node_modules
 
       - persist_to_workspace:
           root: *workspace_root
@@ -356,9 +370,16 @@ workflows:
             tags:
               only: /v.*/
 
-      - collectstatic:
+      - compile_assets:
           requires:
             - build_venv
+          filters:
+            tags:
+              only: /v.*/
+
+      - collectstatic:
+          requires:
+            - compile_assets
           filters:
             tags:
               only: /v.*/

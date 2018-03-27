@@ -11,6 +11,7 @@ cd ${APPPATH}
 
 echo "unzip ${zipfile}"
 rm -rf ${APPPATH}/zipdir
+mkdir -p ${APPPATH}/zipdir
 cd ${APPPATH}/zipdir
 unzip -uoq ${zipfile}
 #rm ${zipfile}

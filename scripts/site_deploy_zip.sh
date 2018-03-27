@@ -10,8 +10,13 @@ touch ${APPPATH}/maintenance.on
 cd ${APPPATH}
 
 echo "unzip ${zipfile}"
+rm -rf ${APPPATH}/zipdir
+cd ${APPPATH}/zipdir
 unzip -uoq ${zipfile}
-rm ${zipfile}
+#rm ${zipfile}
+
+echo "use rsync to synchronize the two paths"
+rsync -av --delete zipdir/ django_root
 
 echo "Update requirements"
 .venv3/bin/pip install -r requirements/prod.txt

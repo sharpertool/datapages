@@ -1,0 +1,8 @@
+{
+  "strict": false,
+  "breakOnError": false,
+  "src": "../django_root",
+  "dest": "../django_root/static",
+  "srcmap": true,
+  "minify": false
+}

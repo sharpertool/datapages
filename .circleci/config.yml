@@ -210,11 +210,7 @@ jobs:
           name: Build zip deploy file and persist to workspace
           command: |
             mkdir -p zipout
-            if [ ! -z "${CIRCLE_TAG}" ];then
-              zipfile=${ZIP_PREFIX}_${CIRCLE_TAG}.gz
-            else
-              zipfile=${ZIP_PREFIX}_${CIRCLE_SHA1}.gz
-            fi
+            zipfile=$(./scripts/zipfilename.sh)
             zip -r zipout/${zipfile} \
               collectedstatic/ *.wsgi django_root/ scripts/ \
               requirements/ requirements.txt \
@@ -236,12 +232,7 @@ jobs:
       - run:
           name: Deploy the zip file to the remote bucket
           command: |
-            if [ ! -z "${CIRCLE_TAG}" ];then
-              VERSION=${CIRCLE_TAG}
-            else
-              VERSION=${CIRCLE_BRANCH}
-            fi
-            zipfile=${ZIP_PREFIX}_${VERSION}.gz
+            zipfile=$(./scripts/zipfilename.sh)
             s3path="s3://${DEPLOY_BUCKET}/${DEPLOY_BUCKET_PATH}/${VERSION}/${zipfile}"
             aws s3 cp zipout/${zipfile} ${s3path}
 
@@ -277,22 +268,20 @@ jobs:
           command: |
             scp ./scripts/site_deploy_zip.sh deploy_host:datapages.io/site_deploy_zip.sh
 
-      - run:ile to test server
+      - run: Copy zipfile to test server
           command: |
             ssh deploy_host "mkdkir -p deploy/"
-            scp zipout/${ZIP_PREFIX}*.gz deploy_host:deploy/
+            zipfile=$(./scripts/zipfilename.sh)
+            scp zipout/${zipfile} deploy_host:deploy/
 
       - run:
           name: Run deploy script on test server
           command: |
-            if [ ! -z "${CIRCLE_TAG}" ];then
-              VERSION=${CIRCLE_TAG}
-            else
-              VERSION=${CIRCLE_BRANCH}
-            fi
-            VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
+            zipfile=$(./scripts/zipfilename.sh)
+            export VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
             echo "Updating the version to ${VERSION}"
-            ssh deploy_host "./datapages.io/site_deploy_zip.sh ~/deploy/${ZIP_PREFIX}*.gz ${VERSION}"
+            ssh deploy_host \
+              "./datapages.io/site_deploy_zip.sh ${zipfile} ${VERSION}"
 
       - run:
           name:  Remove circle ci server to security group for ec2 access

@@ -3,21 +3,22 @@
 zipfile=$1
 VERSION={$2:-''}
 APPPATH=${APPPATH:-/home/ec2-user/datapages.io}
+zipdir=${APPPATH}/zipdir
 
 # Put site into maintenance mode
 touch ${APPPATH}/maintenance.on
 
 cd ${APPPATH}
 
-echo "unzip ${zipfile}"
-rm -rf ${APPPATH}/zipdir
-mkdir -p ${APPPATH}/zipdir
-cd ${APPPATH}/zipdir
-unzip -uoq ${zipfile}
-#rm ${zipfile}
+echo "unzip ${zipfile} to ${zipdir}"
+rm -rf ${zipdir}
+mkdir -p ${zipdir}
+pushd ${zipdir}
+unzip -uoq ~/deploy/${zipfile}
 
 echo "use rsync to synchronize the two paths"
 rsync -av --delete zipdir/ django_root
+popd
 
 echo "Update requirements"
 .venv3/bin/pip install -r requirements/prod.txt

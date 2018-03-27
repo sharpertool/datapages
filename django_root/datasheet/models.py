@@ -82,9 +82,12 @@ class DatasheetPage(Page):
         ('contact_data', ContactDataBlock()),
         ('coil_data', CoilDataBlock()),
         ('revisions', blocks.StructBlock([
-            ('title', blocks.CharBlock()),
-            ('data', blocks.ListBlock(RevisionBlock()))
-        ], template='datasheet/blocks/revision.html'))
+                ('title', blocks.CharBlock()),
+                ('data', blocks.ListBlock(RevisionBlock()))
+            ],
+            template='datasheet/blocks/revision.html',
+            form_classname='revision-block')
+        )
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 
@@ -115,7 +118,7 @@ class DatasheetPage(Page):
             heading="Attributes and Applications",
             classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
-        StreamFieldPanel('stream1'),
+        StreamFieldPanel('stream1', heading='Datasheet Blocks', classname='collapsible collapsed'),
         InlinePanel('related_links', label="Related Links"),
     ]
 

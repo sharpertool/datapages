@@ -125,6 +125,29 @@ jobs:
           paths:
             - .venv
 
+  compile_assets:
+    <<: *container_config
+    steps:
+      - *restore_repo
+      - *restore_venv
+
+      - run:
+          name: Install npm packages for gulp_build
+          command: |
+            cd build
+            yarn install
+
+      - run:
+          name: Build assets
+          command: |
+            cd build
+            yarn build
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./django_root/static
+
   collectstatic:
     <<: *container_config
     steps:
@@ -132,14 +155,6 @@ jobs:
       - *restore_venv
 
       - *attach_workspace
-
-      - run:
-          name: Compile SCSS Files
-          command: |
-            source .venv/bin/activate
-            cd django_root
-            export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
-            python manage.py compilescss
 
       - run:
           name: Collect static files

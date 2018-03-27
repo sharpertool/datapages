@@ -6,6 +6,9 @@ references:
     working_directory: ~/build
     docker:
       - image: bigzeta/ci_python3_node:1.0.0
+        environment:
+          ZIP_PREFIX: datapages
+
 
       - image: bigzeta/ci_postgres:1.0.0
         environment:
@@ -59,7 +62,8 @@ references:
       name: Disable strict type checking
       command: |
         mkdir ~/.ssh/
-        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+        echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/co
+          name: Copy zipfnfig
 
   make_vault: &make_vault
     run:
@@ -209,7 +213,7 @@ jobs:
             if [ ! -z "${CIRCLE_TAG}" ];then
               zipfile=${ZIP_PREFIX}_${CIRCLE_TAG}.gz
             else
-              zipfile=${ZIP_PREFIX}_${CIRCLE_BRANCH}.gz
+              zipfile=${ZIP_PREFIX}_${CIRCLE_SHA1}.gz
             fi
             zip -r zipout/${zipfile} \
               collectedstatic/ *.wsgi django_root/ scripts/ \
@@ -273,17 +277,22 @@ jobs:
           command: |
             scp ./scripts/site_deploy_zip.sh deploy_host:datapages.io/site_deploy_zip.sh
 
-      - run:
-          name: Copy zipfile to test server
+      - run:ile to test server
           command: |
-            scp zipout/${ZIP_PREFIX}*.gz deploy_host:datapages.io/
+            ssh deploy_host "mkdkir -p deploy/"
+            scp zipout/${ZIP_PREFIX}*.gz deploy_host:deploy/
 
       - run:
           name: Run deploy script on test server
           command: |
+            if [ ! -z "${CIRCLE_TAG}" ];then
+              VERSION=${CIRCLE_TAG}
+            else
+              VERSION=${CIRCLE_BRANCH}
+            fi
             VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
             echo "Updating the version to ${VERSION}"
-            ssh deploy_host "./datapages.io/site_deploy_zip.sh ${ZIP_PREFIX}*.gz ${VERSION}"
+            ssh deploy_host "./datapages.io/site_deploy_zip.sh ~/deploy/${ZIP_PREFIX}*.gz ${VERSION}"
 
       - run:
           name:  Remove circle ci server to security group for ec2 access

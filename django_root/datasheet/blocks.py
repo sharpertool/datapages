@@ -16,26 +16,26 @@ class DimensionBlock(blocks.StructBlock):
 class RevisionBlock(blocks.StructBlock):
     date = blocks.DateBlock()
     revisions = blocks.ListBlock(blocks.StructBlock([
-        ('title', blocks.CharBlock()),
-        ('description', blocks.CharBlock())
-    ]))
+            ('title', blocks.CharBlock()),
+            ('description', blocks.CharBlock())
+        ],
+        form_template='datasheet/blocks/editing/common/struct_inline.html'))
 
 
 class ProductCodeBlock(blocks.StructBlock):
     value = blocks.CharBlock()
-    options = blocks.ListBlock(blocks.StructBlock([
+    options = blocks.ListBlock(
+        blocks.StructBlock([
                 ('key', blocks.CharBlock()),
                 ('value', blocks.CharBlock())
             ],
-            form_template='datasheet/blocks/editing/product_code_option.html',
-            form_classname='product-code-option'
+            form_template='datasheet/blocks/editing/common/struct_inline.html'
         ),
         required=False)
 
     class Meta:
         template = 'datasheet/blocks/product_code_item.html'
-        form_template = "datasheet/blocks/editing/product_code_item.html"
-        form_classname = 'product-code-item'
+        form_classname = 'product-code-block'
 
 
 class RelayProductCodeStructureBlock(blocks.StructBlock):
@@ -65,8 +65,6 @@ class RelayProductCodeStructureBlock(blocks.StructBlock):
     class Meta:
         icon = 'user'
         template = 'datasheet/blocks/product_code.html'
-        form_classname = "product_code struct-block"
-        form_template = "datasheet/blocks/editing/product_code.html"
         help_text = dedent("""
             Fill in the table with information about the Product Code.
         """)

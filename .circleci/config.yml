@@ -142,6 +142,7 @@ jobs:
       - *restore_repo
       - *restore_venv
       - *restore_gulp_build_cache
+      - *attach_workspace
 
       - run:
           name: Install npm packages for gulp_build
@@ -153,17 +154,19 @@ jobs:
           name: Show initial contents of static location
           command: |
             ls -al ./django_root/static || true
+            ls -al ./collectedstatic
 
       - run:
           name: Build CSS Assets using Gulp
           command: |
             cd build
-            yarn build
+            environment=circleci yarn build
 
       - run:
           name: Show compiled contents of static location
           command: |
             ls -al ./django_root/static || true
+            ls -al ./collectedstatic
 
       - save_cache:
           key: *gulp_build_cache_key
@@ -174,6 +177,7 @@ jobs:
           root: *workspace_root
           paths:
             - ./django_root/static
+            - ./collectedstatic
 
   collectstatic:
     <<: *container_config

@@ -154,7 +154,7 @@ jobs:
           name: Show initial contents of static location
           command: |
             ls -al ./django_root/static || true
-            ls -al ./collectedstatic
+            ls -al ./collectedstatic || true
 
       - run:
           name: Build CSS Assets using Gulp
@@ -166,7 +166,7 @@ jobs:
           name: Show compiled contents of static location
           command: |
             ls -al ./django_root/static || true
-            ls -al ./collectedstatic
+            ls -al ./collectedstatic || true
 
       - save_cache:
           key: *gulp_build_cache_key

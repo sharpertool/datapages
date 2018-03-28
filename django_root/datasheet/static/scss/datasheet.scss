@@ -1,7 +1,7 @@
 /**
   Include a bunch of partials for better code management.
+  R3
  */
-
 @import "partials/navbar";
 @import "partials/grid";
 @import "partials/jumbotron";
@@ -15,6 +15,7 @@
 @import "partials/blocks/coil_data";
 @import "partials/blocks/product_code_structure";
 @import "partials/blocks/revisions";
+
 
 /**
  * index.scss
@@ -36,6 +37,6 @@ main {
 }
 
 .btn-primary {
-  background: #0066A1;
-  border-color: #0066A1;
+  background: var(--primary_color);
+  border-color: var(--primary_color);
 }

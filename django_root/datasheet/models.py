@@ -33,6 +33,13 @@ class DatasheetIndexPage(Page):
     )
     svglogo = models.FileField(blank=True, null=True)
 
+    page_logo = models.FileField(blank=True, null=True)
+    primary_color = models.CharField(default='#000', max_length=20)
+    banner_mark = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
+        blank=True, null=True
+    )
+
     subpage_types = ['DatasheetPage']
 
     class Meta:
@@ -48,7 +55,19 @@ class DatasheetIndexPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
         FieldPanel('svglogo'),
-        ImageChooserPanel('logo')
+        ImageChooserPanel('logo'),
+
+        MultiFieldPanel([
+            FieldPanel('page_logo'),
+            FieldPanel('primary_color'),
+            ImageChooserPanel('banner_mark'),
+        ], heading='DataPage Common Values')
+
+        # MultiFieldPanel([
+        #     FieldPanel('page_logo'),
+        #     FieldPanel('primary_color'),
+        #     ImageChooserPanel('banner_mark')
+        # ], heading='DataPage Common Values')
     ]
 
 
@@ -93,13 +112,6 @@ class DatasheetPage(Page):
 
     parent_page_types = ['DatasheetIndexPage']
 
-    def main_image(self):
-        gallery_item = self.gallery_images.first()
-        if gallery_item:
-            return gallery_item.image
-        else:
-            return None
-
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
@@ -118,9 +130,25 @@ class DatasheetPage(Page):
             heading="Attributes and Applications",
             classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
-        StreamFieldPanel('stream1', heading='Datasheet Blocks', classname='collapsible collapsed'),
+        StreamFieldPanel('stream1',
+                         heading='Datasheet Blocks'),
         InlinePanel('related_links', label="Related Links"),
     ]
+
+    def get_context(self, request):
+        context = super().get_context(request)
+
+        parent = self.get_ancestors().last()
+        parent = parent.specific
+
+        # Add common page elements
+        context['vendor_logo'] = parent.page_logo
+        context['primary_color'] = parent.primary_color
+        context['banner_mark'] = parent.banner_mark
+
+        print(f"Logo is {parent.page_logo}")
+        print(f"Primary Color: {parent.primary_color}")
+        return context
 
 
 class Features(Orderable):

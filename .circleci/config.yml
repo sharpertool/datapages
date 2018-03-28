@@ -150,10 +150,20 @@ jobs:
             yarn install
 
       - run:
+          name: Show initial contents of static location
+          command: |
+            ls -al ./django_root/static || true
+
+      - run:
           name: Build CSS Assets using Gulp
           command: |
             cd build
             yarn build
+
+      - run:
+          name: Show compiled contents of static location
+          command: |
+            ls -al ./django_root/static || true
 
       - save_cache:
           key: *gulp_build_cache_key
@@ -172,6 +182,11 @@ jobs:
       - *restore_venv
 
       - *attach_workspace
+
+      - run:
+          name: Show compiled contents of static location
+          command: |
+            ls -al ./django_root/static || true
 
       - run:
           name: Collect static files

@@ -1,4 +1,5 @@
 {
+  "name": "Development",
   "strict": false,
   "breakOnError": false,
   "src": "../django_root",

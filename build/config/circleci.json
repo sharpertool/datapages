@@ -1,0 +1,9 @@
+{
+  "name": "CircleCI",
+  "strict": false,
+  "breakOnError": false,
+  "src": "../django_root",
+  "dest": "../collectedstatic",
+  "srcmap": false,
+  "minify": true
+}

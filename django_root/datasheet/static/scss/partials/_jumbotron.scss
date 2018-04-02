@@ -1,11 +1,17 @@
 .jumbotron {
   padding-left: 0px;
   padding-right: 0px;
-  background: #0C5404;
-  background: var(--primary_color);
   border-radius: 0px;
   padding-top: 60px;
   padding-bottom: 113px;
+  position: relative;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
   p {
     font-size: 30px;
   }

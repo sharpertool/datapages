@@ -12,7 +12,7 @@
     .nav-link {
       border-radius: 0px;
       padding: 0 1rem;
-      color: #007BBA;
+      color: var(--primary_color);
       margin-bottom: 20px;
       font-size: 24px;
       &.active {

@@ -8,7 +8,7 @@
     margin-right: 11.3rem;
   }
   .nav-link {
-    color: #0066A1;
+    color: var(--primary_color);
     margin-right: 20px;
     img, i {
       margin-right: 7px;
@@ -17,8 +17,8 @@
   .btn {
     padding: 15px 20px;
     &.btn-outline-primary {
-      border-color: #0066A1;
-      color: #0066A1;
+      border-color: var(--primary_color);
+      color: var(--primary_color);
     }
   }
 

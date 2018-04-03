@@ -31,6 +31,9 @@ class DatasheetIndexPage(Page):
         'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
         blank=True, null=True
     )
+    svglogo = models.FileField(blank=True, null=True)
+
+    page_logo = models.FileField(blank=True, null=True)
     primary_color = models.CharField(default='#000', max_length=20)
     secondary_color = models.CharField(default='#ddd', max_length=20)
     banner_mark = models.ForeignKey(
@@ -52,19 +55,15 @@ class DatasheetIndexPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
+        FieldPanel('svglogo'),
         ImageChooserPanel('logo'),
 
         MultiFieldPanel([
+            FieldPanel('page_logo'),
             FieldPanel('primary_color'),
             FieldPanel('secondary_color'),
             ImageChooserPanel('banner_mark'),
         ], heading='DataPage Common Values')
-
-        # MultiFieldPanel([
-        #     FieldPanel('page_logo'),
-        #     FieldPanel('primary_color'),
-        #     ImageChooserPanel('banner_mark')
-        # ], heading='DataPage Common Values')
     ]
 
 
@@ -139,7 +138,7 @@ class DatasheetPage(Page):
         parent = parent.specific
 
         # Add common page elements
-        context['vendor_logo'] = parent.logo
+        context['vendor_logo'] = parent.page_logo
         context['primary_color'] = parent.primary_color
         context['secondary_color'] = parent.secondary_color
         context['banner_mark'] = parent.banner_mark

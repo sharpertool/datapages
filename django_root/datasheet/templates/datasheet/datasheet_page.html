@@ -15,12 +15,9 @@
             --secondary_color: {{ secondary_color }};
         }
         .jumbotron {
-            {% if banner_mark %}
-                {% image banner_mark original as banner %}
-                background: url({{ banner.url }});
-            {% else %}
-                background: {{ primary_color }};
-            {% endif %}
+            {% image banner_mark original as banner %}
+            background: url({{ banner.url }}) no-repeat, {{ primary_color }};
+            background-position: 33% 100%;
         }
     </style>
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">

@@ -1,3 +1,4 @@
+import collections
 from django.db import models
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
@@ -16,6 +17,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
+
 
 from .blocks import (RelayProductCodeStructureBlock,
                      CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
@@ -131,6 +133,31 @@ class DatasheetPage(Page):
         InlinePanel('related_links', label="Related Links"),
     ]
 
+    def get_bookmarks(self):
+        """
+        Iterate over the blocks and find ones that define a bookmarkk and title.
+        Return turn each found bookmark as a namedtuple of id and title.
+
+        Note: that we are just looking for StructValues here, so if the model
+        is expanded to include other types that may have a bookmark, this logic will
+        need to be expanded as well.
+
+        ToDo: Extract this to a re-usable Mixin or base class so it can be re-used easier.
+        :return:
+        """
+
+        Bookmark = collections.namedtuple('Bookmark', ['title', 'id'])
+        bookmarks = []
+
+        for block in self.stream1:
+            val = block.value
+            if isinstance(val, blocks.StructValue):
+                if 'bookmark' in val and val['bookmark'] and 'title' in val:
+                    bookmarks.append(Bookmark(val['title'], val['bookmark']))
+
+        print(f"Bookmarks {bookmarks}")
+        return bookmarks
+
     def get_context(self, request):
         context = super().get_context(request)
 
@@ -142,6 +169,8 @@ class DatasheetPage(Page):
         context['primary_color'] = parent.primary_color
         context['secondary_color'] = parent.secondary_color
         context['banner_mark'] = parent.banner_mark
+
+        context['bookmarks'] = self.get_bookmarks()
 
         print(f"Logo is {parent.logo}")
         print(f"Primary Color: {parent.primary_color}")

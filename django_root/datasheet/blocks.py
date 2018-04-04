@@ -138,6 +138,7 @@ class ApplicationsBlock(blocks.StructBlock):
 
 class ContactDataBlock(blocks.StructBlock):
     title = blocks.CharBlock()
+    bookmark = blocks.CharBlock()
     data = TableBlock(table_options={
         'startCols': 2,
         'startRows': 1,
@@ -165,6 +166,7 @@ class CoilDataBlock(blocks.StructBlock):
     Block definition to capture coil data, as seen in TE datasheet
     """
     title = blocks.CharBlock()
+    bookmark = blocks.CharBlock()
     coils = blocks.ListBlock(CoilDataItemBlock())
 
     class Meta:

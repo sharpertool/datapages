@@ -57,3 +57,18 @@
     </main>
 
 {% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/carouselequalheights.js' %}"></script>
+    <script type="text/javascript">
+        (function($) {
+            $("a[data-action='anchor']").click(function(e) {
+                var target = $(this.getAttribute('href'))
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 100
+                }, 1000);
+               e.preventDefault();
+            });
+        })($);
+    </script>
+{% endblock %}

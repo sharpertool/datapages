@@ -1,6 +1,6 @@
 {% load image_tags wagtailimages_tags %}
 
-<div class="dimension block">
+<div class="dimension block" id="{{ block.value.bookmark }}">
     <h1 class="title"><span>{{ block.value.title }}</span></h1>
 
     <p class="text-muted text-center chart-title"><i>{{ block.value.title|capfirst }}</i></p>

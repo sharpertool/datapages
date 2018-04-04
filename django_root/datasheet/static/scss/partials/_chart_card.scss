@@ -20,4 +20,18 @@
       }
     }
   }
+  &-carousel-indicator{
+    padding: 0;
+    margin: 25px 0;
+    list-style: none;
+    display: flex;
+    li {
+        padding: 6px;
+        border-radius: 50%;
+        margin-right: 8px;
+        &.active {
+            background: none !important;
+        }
+    }
+  }
 }

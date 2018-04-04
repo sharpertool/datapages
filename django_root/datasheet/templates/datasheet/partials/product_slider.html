@@ -16,22 +16,6 @@
                             {{ slide }}
                         {% endfor %}
                     </div>
-
-                    <a class="carousel-control-prev"
-                       href="#carouselExampleIndicators"
-                       role="button"
-                       data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-
-                    <a class="carousel-control-next"
-                       href="#carouselExampleIndicators"
-                       role="button"
-                       data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
 
                 <div class="card-links">
@@ -43,6 +27,11 @@
 
             </div>
         </div>
+        <ul class="card-carousel-indicator">
+            {% for slide in page.carousel %}
+                <li data-target="#carouselExampleIndicators" class="{% if forloop.first %}active{% endif %}" style="background: {{ primary_color }}; border: 1px solid {{primary_color}};" data-slide-to="{{forloop.counter0}}"></li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div class="col-lg-6" id="product_info">

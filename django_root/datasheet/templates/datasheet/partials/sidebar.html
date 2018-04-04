@@ -14,11 +14,10 @@
     </li>
 
     <li class="active"><a href="#">Introduction</a></li>
-    <li><a href="#contact_data">Contact Data</a></li>
-    <li><a href="#coil_data">Coil Data</a></li>
-    <li><a href="#dimension">Dimensions</a></li>
-    <li><a href="#product_code">Product Code Structure</a></li>
-    <li><a href="#revision">Revisions</a></li>
+
+    {% for bookmark in bookmarks %}
+        <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>
+    {% endfor %}
 
     <li class="chat-with-support">
         <a href="#">

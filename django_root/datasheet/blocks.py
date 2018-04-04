@@ -7,19 +7,30 @@ from wagtail.embeds.blocks import EmbedBlock, EmbedValue
 
 class DimensionBlock(blocks.StructBlock):
     title = blocks.CharBlock()
+    bookmark = blocks.CharBlock()
     image = ImageChooserBlock()
 
     class Meta:
         template = 'datasheet/blocks/dimension.html'
 
 
-class RevisionBlock(blocks.StructBlock):
+class RevisionDataBlock(blocks.StructBlock):
     date = blocks.DateBlock()
     revisions = blocks.ListBlock(blocks.StructBlock([
             ('title', blocks.CharBlock()),
             ('description', blocks.CharBlock())
         ],
         form_template='datasheet/blocks/editing/common/struct_inline.html'))
+
+
+class RevisionBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    bookmark = blocks.CharBlock()
+    data = blocks.ListBlock(RevisionDataBlock())
+
+    class Meta:
+        template = 'datasheet/blocks/revision.html'
+        form_classname = 'revision-block'
 
 
 class ProductCodeBlock(blocks.StructBlock):
@@ -43,6 +54,7 @@ class RelayProductCodeStructureBlock(blocks.StructBlock):
     Capture all of the parts of a product code, somewhat specific to TE
     """
     title = blocks.CharBlock()
+    bookmark = blocks.CharBlock()
     type = ProductCodeBlock()
     relay_version = ProductCodeBlock()
     coil_version = ProductCodeBlock()
@@ -96,6 +108,7 @@ class CarouselEmbedBlock(blocks.StructBlock):
 
     class Meta:
         template = 'datasheet/blocks/carousel_embed.html'
+
 
 class CarouselFusionEmbedBlock(blocks.StructBlock):
     """

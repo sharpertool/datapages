@@ -98,13 +98,7 @@ class DatasheetPage(Page):
         ('dimension', DimensionBlock()),
         ('contact_data', ContactDataBlock()),
         ('coil_data', CoilDataBlock()),
-        ('revisions', blocks.StructBlock([
-                ('title', blocks.CharBlock()),
-                ('data', blocks.ListBlock(RevisionBlock()))
-            ],
-            template='datasheet/blocks/revision.html',
-            form_classname='revision-block')
-        )
+        ('revisions', RevisionBlock())
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 
@@ -171,7 +165,6 @@ class DatasheetPage(Page):
         context['banner_mark'] = parent.banner_mark
 
         context['bookmarks'] = self.get_bookmarks()
-
         print(f"Logo is {parent.logo}")
         print(f"Primary Color: {parent.primary_color}")
         return context

@@ -25,10 +25,14 @@
     margin: 25px 0;
     list-style: none;
     display: flex;
+    right: auto;
+    top: 120%;
     li {
         padding: 6px;
         border-radius: 50%;
         margin-right: 8px;
+        width: auto;
+        height: auto;
         &.active {
             background: none !important;
         }

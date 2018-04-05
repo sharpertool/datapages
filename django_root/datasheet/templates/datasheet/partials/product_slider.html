@@ -4,7 +4,6 @@
     <div class="col-lg-6">
         <div class="card chart-card">
             <div class="card-body">
-
                 <a href="#" class="expand-btn">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
                 </a>
@@ -16,6 +15,11 @@
                             {{ slide }}
                         {% endfor %}
                     </div>
+                    <ol class="carousel-indicators card-carousel-indicator">
+                        {% for slide in page.carousel %}
+                            <li data-target="#carouselExampleIndicators" class="{% if forloop.first %}active{% endif %}" style="background: {{ primary_color }}; border: 1px solid {{primary_color}};" data-slide-to="{{forloop.counter0}}"></li>
+                        {% endfor %}
+                    </ol>
                 </div>
 
                 <div class="card-links">
@@ -27,11 +31,6 @@
 
             </div>
         </div>
-        <ul class="card-carousel-indicator">
-            {% for slide in page.carousel %}
-                <li data-target="#carouselExampleIndicators" class="{% if forloop.first %}active{% endif %}" style="background: {{ primary_color }}; border: 1px solid {{primary_color}};" data-slide-to="{{forloop.counter0}}"></li>
-            {% endfor %}
-        </ul>
     </div>
 
     <div class="col-lg-6" id="product_info">

@@ -299,7 +299,7 @@ jobs:
       - run:
           name: Copy deploy script to test server
           command: |
-            scp ./scripts/site_deploy_zip.sh deploy_host:datapages.io/site_deploy_zip.sh
+            scp ./scripts/site_deploy_zip.sh deploy_host:site_deploy_zip.sh
 
       - run:
           name: Copy zipfile to test server
@@ -315,7 +315,7 @@ jobs:
             export VERSION=${CIRCLE_TAG:-${CIRCLE_SHA1}}
             echo "Updating the version to ${VERSION}"
             ssh deploy_host \
-              "./datapages.io/site_deploy_zip.sh ${zipfile} ${VERSION}"
+              "./site_deploy_zip.sh ${zipfile} ${VERSION}"
 
       - run:
           name:  Remove circle ci server to security group for ec2 access

@@ -2,13 +2,11 @@
 
 zipfile=$1
 VERSION={$2:-''}
-APPPATH=${APPPATH:-/home/ec2-user/datapages.io}
-zipdir=${APPPATH}/zipdir
+APPPATH=${APPPATH:-/var/www/datapages.io}
+zipdir=~/zipdir
 
 # Put site into maintenance mode
 touch ${APPPATH}/maintenance.on
-
-cd ${APPPATH}
 
 echo "unzip ${zipfile} to ${zipdir}"
 rm -rf ${zipdir}
@@ -16,6 +14,8 @@ mkdir -p ${zipdir}
 pushd ${zipdir}
 unzip -uoq ~/deploy/${zipfile}
 popd
+
+cd ${APPPATH}
 
 echo "use rsync to synchronize the two paths"
 rsync -av ${zipdir}/ .

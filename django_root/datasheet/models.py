@@ -38,6 +38,7 @@ class DatasheetIndexPage(Page):
     page_logo = models.FileField(blank=True, null=True)
     primary_color = models.CharField(default='#000', max_length=20)
     secondary_color = models.CharField(default='#ddd', max_length=20)
+    chat_url = models.CharField(max_length=250, blank=True)
     banner_mark = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
         blank=True, null=True
@@ -48,6 +49,10 @@ class DatasheetIndexPage(Page):
     class Meta:
         verbose_name = "DataPages Index"
 
+    @property
+    def get_chat_url(self):
+        return self.chat_url + '?part_number={part_number}'
+
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(DatasheetIndexPage, self).get_context(request)
@@ -56,7 +61,10 @@ class DatasheetIndexPage(Page):
         return context
 
     content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full"),
+        MultiFieldPanel([
+            FieldPanel('intro', classname="full"),
+            FieldPanel('chat_url')
+        ], heading='Information'),
         FieldPanel('svglogo'),
         ImageChooserPanel('logo'),
 
@@ -76,6 +84,7 @@ class DatasheetPageTag(TaggedItemBase):
 class DatasheetPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250, blank=True)
+    part_number = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),
@@ -113,9 +122,10 @@ class DatasheetPage(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
+            FieldPanel('part_number'),
+            FieldPanel('intro'),
+            FieldPanel('body', classname="full")
         ], heading="DataSheet Information"),
-        FieldPanel('intro'),
-        FieldPanel('body', classname="full"),
         MultiFieldPanel([
             StreamFieldPanel('attributes', heading=None, classname="full"),
         ],
@@ -163,8 +173,9 @@ class DatasheetPage(Page):
         context['primary_color'] = parent.primary_color
         context['secondary_color'] = parent.secondary_color
         context['banner_mark'] = parent.banner_mark
-
+        context['chat_url'] = parent.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
+
         print(f"Logo is {parent.logo}")
         print(f"Primary Color: {parent.primary_color}")
         return context

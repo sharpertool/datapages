@@ -2,19 +2,20 @@
 
 {% load wagtailcore_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}homepage{% endblock %}
 
 {% block content %}
-    <h1>DataSheet.ai, a product of <a href="http://bigzeta.com">BigZeta, LLC<a/></h1>
 
-    <p>This is static text here... while the stuff on top is dynamic. More on this later.</p>
-
-    <p>You can access the admin interface <a href="{% url 'wagtailadmin_home' %}">here</a> (make sure you have run
-        "./manage.py createsuperuser" in the console first).</p>
-
-    <p>If you haven't already given the documentation a read, head over to <a href="http://docs.wagtail.io/">http://docs.wagtail.io</a>
-        to start building on Wagtail</p>
+    <h1>{{ page.title }}</h1>
 
     {{ page.body|richtext }}
+
+    <footer>
+        {% if page.copyright %}
+            {{ page.copyright|richtext }}
+        {% else %}
+            <p>Copyright 2018</p>
+        {% endif %}
+    </footer>
 
 {% endblock %}

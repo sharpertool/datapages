@@ -43,6 +43,9 @@ template_version=$(grep DATAPAGES_VERSION django_root/production.env.j2  | sed '
 version=${VERSION:-template_version}
 sed -i -e "s/DATAPAGES_VERSION=.*/DATAPAGES_VERSION=${version}/" .env
 
+# Update app directory user and group values
+sudo chown -R ec2-user:www ${APPPATH}
+
 echo -e "\n Reloading uWSGI web service.."
 
 # Note: forcing a full reload.

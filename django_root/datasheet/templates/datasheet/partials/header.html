@@ -3,10 +3,9 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light" id="header">
   <div class="container">
     <a href="#" class="navbar-brand">
-        <img src="{{ vendor_logo.url }}"
-             alt="brand"
-             width="170px"
-             height="89px">
+        {% if vendor_logo %}
+            <img src="{{ vendor_logo.url }}" alt="brand" width="170px" height="89px">
+        {% endif %}
     </a>
     <button class="navbar-toggler"
             type="button"

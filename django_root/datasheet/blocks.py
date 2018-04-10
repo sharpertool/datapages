@@ -11,7 +11,7 @@ class DimensionBlock(blocks.StructBlock):
     image = ImageChooserBlock()
 
     class Meta:
-        template = 'datasheet/blocks/dimension.html'
+        template = 'datasheet/blocks/_dimension.html'
 
 
 class RevisionDataBlock(blocks.StructBlock):
@@ -20,7 +20,7 @@ class RevisionDataBlock(blocks.StructBlock):
             ('title', blocks.CharBlock()),
             ('description', blocks.CharBlock())
         ],
-        form_template='datasheet/blocks/editing/common/struct_inline.html'))
+        form_template='datasheet/blocks/editing/common/_struct_inline.html'))
 
 
 class RevisionBlock(blocks.StructBlock):
@@ -29,7 +29,7 @@ class RevisionBlock(blocks.StructBlock):
     data = blocks.ListBlock(RevisionDataBlock())
 
     class Meta:
-        template = 'datasheet/blocks/revision.html'
+        template = 'datasheet/blocks/_revision.html'
         form_classname = 'revision-block'
 
 
@@ -40,12 +40,12 @@ class ProductCodeBlock(blocks.StructBlock):
                 ('key', blocks.CharBlock()),
                 ('value', blocks.CharBlock())
             ],
-            form_template='datasheet/blocks/editing/common/struct_inline.html'
+            form_template='datasheet/blocks/editing/common/_struct_inline.html'
         ),
         required=False)
 
     class Meta:
-        template = 'datasheet/blocks/product_code_item.html'
+        template = 'datasheet/blocks/_product_code_item.html'
         form_classname = 'product-code-block'
 
 
@@ -76,7 +76,7 @@ class RelayProductCodeStructureBlock(blocks.StructBlock):
 
     class Meta:
         icon = 'user'
-        template = 'datasheet/blocks/product_code.html'
+        template = 'datasheet/blocks/_product_code.html'
         help_text = dedent("""
             Fill in the table with information about the Product Code.
         """)
@@ -93,7 +93,7 @@ class CarouselImageBlock(blocks.StructBlock):
     height = blocks.IntegerBlock(required=False)
 
     class Meta:
-        template = 'datasheet/blocks/carousel_image.html'
+        template = 'datasheet/blocks/_carousel_image.html'
 
 
 class CarouselEmbedBlock(blocks.StructBlock):
@@ -107,7 +107,7 @@ class CarouselEmbedBlock(blocks.StructBlock):
     allow_fullscreen = blocks.BooleanBlock(default=False)
 
     class Meta:
-        template = 'datasheet/blocks/carousel_embed.html'
+        template = 'datasheet/blocks/_carousel_embed.html'
 
 
 class CarouselFusionEmbedBlock(blocks.StructBlock):
@@ -121,7 +121,7 @@ class CarouselFusionEmbedBlock(blocks.StructBlock):
     allow_fullscreen = blocks.BooleanBlock(default=False)
 
     class Meta:
-        template = 'datasheet/blocks/carousel_fusion_embed.html'
+        template = 'datasheet/blocks/_carousel_fusion_embed.html'
 
 
 class CarouselStreamBlock(blocks.StreamBlock):
@@ -138,7 +138,7 @@ class FeaturesBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Features'
-        template = 'datasheet/blocks/features_list.html'
+        template = 'datasheet/blocks/_features_list.html'
 
 
 class ApplicationsBlock(blocks.StructBlock):
@@ -146,7 +146,7 @@ class ApplicationsBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Applications'
-        template = 'datasheet/blocks/applications_list.html'
+        template = 'datasheet/blocks/_applications_list.html'
 
 
 class ContactDataBlock(blocks.StructBlock):
@@ -160,7 +160,7 @@ class ContactDataBlock(blocks.StructBlock):
     })
 
     class Meta:
-        template = 'datasheet/blocks/contact_data.html'
+        template = 'datasheet/blocks/_contact_data.html'
 
 
 class CoilDataItemBlock(blocks.StructBlock):
@@ -183,4 +183,4 @@ class CoilDataBlock(blocks.StructBlock):
     coils = blocks.ListBlock(CoilDataItemBlock())
 
     class Meta:
-        template = 'datasheet/blocks/coil_data.html'
+        template = 'datasheet/blocks/_coil_data.html'

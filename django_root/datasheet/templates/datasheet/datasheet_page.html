@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "core/_base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load static %}
 {% block body_class %}template-datasheet{% endblock %}
@@ -24,20 +24,20 @@
 
 {% block content %}
 
-    {% include 'datasheet/partials/header.html' %}
+    {% include 'datasheet/partials/_header.html' %}
 
     <main id="top">
-        {% include 'datasheet/partials/jumbotron.html' %}
+        {% include 'datasheet/partials/_jumbotron.html' %}
 
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    {% include 'datasheet/partials/sidebar.html' %}
+                    {% include 'datasheet/partials/_sidebar.html' %}
                 </div>
 
                 <div class="col-lg-9">
                     <div class="product-slider block">
-                        {% include 'datasheet/partials/product_slider.html' %}
+                        {% include 'datasheet/partials/_product_slider.html' %}
                     </div>
 
                     {% for block in page.stream1 %}
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            {% include 'datasheet/partials/footer.html' %}
+            {% include 'datasheet/partials/_footer.html' %}
 
         </div>
     </main>

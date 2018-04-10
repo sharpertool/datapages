@@ -98,7 +98,7 @@ class DatasheetPage(Page):
     stream1 = StreamField([
         ('heading', blocks.CharBlock(
             classname="full title",
-            template="datasheet/blocks/heading.html"
+            template="datasheet/blocks/_heading.html"
         )),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),

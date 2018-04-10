@@ -5,6 +5,13 @@
   padding-top: 60px;
   padding-bottom: 113px;
   position: relative;
+  background-position-x: 16%;
+  background-position-y: 100%;
+
+  @media (min-width: 1441px) {
+    background-position-x: 33%;
+  }
+
   img {
     position: absolute;
     top: 0;

@@ -175,6 +175,7 @@ class DatasheetPage(Page):
         context['banner_mark'] = parent.banner_mark
         context['chat_url'] = parent.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
+        context['company_name'] = parent.title
 
         print(f"Logo is {parent.logo}")
         print(f"Primary Color: {parent.primary_color}")

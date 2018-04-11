@@ -4,11 +4,11 @@
 {% block body_class %}template-datasheet{% endblock %}
 
 {% block extra_css %}
-    {% comment %}
+    <!--
     Inject custom styles and values for the page in usign css variables.
     These are not supported on IE11.. but who is using that anymore anyway?
     There is < 6% worldwide share, and about 8.5% US share.. go figure.
-    {% endcomment %}
+    -->
     <style>
         body {
             --primary_color: {{ primary_color }};

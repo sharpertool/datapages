@@ -134,17 +134,6 @@ class ToNunjucks:
                 for line in fp:
                     line = self.filter_line(line)
 
-                    # line = re.sub(r"\{\%(\s*load\s+.*)\%\}", r"<!-- DJANGO_REQUIRED \1 -->", line)
-                    # line = re.sub(r"\{\%(\s*include_block\s+.*)\%\}", r"<!-- DJANGO_REQUIRED \1 -->", line)
-                    # line = re.sub(r"\{\%(\s*image\s+.*)\%\}", r"<!-- DJANGO_IMAGE \1 -->", line)
-                    #
-                    # pat = re.compile(r"href=\"\{\%\s*static\s+[\"'](.*?)[\"']\s*\%\}\"")
-                    # m = pat.search(line)
-                    # if m:
-                    #     url = m.group(1)
-                    #     purl = os.path.splitext(url)[0] + '.processed.css'
-                    #     line = pat.sub(f'<!-- STATICHREF {url} --> href="{purl}"', line)
-
                     fp2.write(line)
 
     def filter_load(self, line):
@@ -170,23 +159,6 @@ def to_nunjucks(src, dest):
     p = ToNunjucks()
     p.filter(src, dest)
 
-    # Path(os.path.dirname(dest)).mkdir(parents=True, exist_ok=True)
-    #
-    # with open(src, 'r') as fp:
-    #     with open(dest, 'w') as fp2:
-    #         for line in fp:
-    #             line = re.sub(r"\{\%(\s*load\s+.*)\%\}", r"<!-- DJANGO_REQUIRED \1 -->", line)
-    #             line = re.sub(r"\{\%(\s*include_block\s+.*)\%\}", r"<!-- DJANGO_REQUIRED \1 -->", line)
-    #             line = re.sub(r"\{\%(\s*image\s+.*)\%\}", r"<!-- DJANGO_IMAGE \1 -->", line)
-    #
-    #             pat = re.compile(r"href=\"\{\%\s*static\s+[\"'](.*?)[\"']\s*\%\}\"")
-    #             m = pat.search(line)
-    #             if m:
-    #                 url = m.group(1)
-    #                 purl = os.path.splitext(url)[0] + '.processed.css'
-    #                 line = pat.sub(f'<!-- STATICHREF {url} --> href="{purl}"', line)
-    #
-    #             fp2.write(line)
 
 def to_django(src, dest):
     """
@@ -252,6 +224,13 @@ def main():
 
     parser.add_argument("dest",
                         help="Destination folder")
+
+    parser.add_argument("--main_file",
+                        default="django_root/datasheet/templates/datasheet/datasheet_page.html")
+
+    parser.add_argument("--context_file",
+                        default="datasheet_codepen_context.njk")
+
 
     args = parser.parse_args()
 

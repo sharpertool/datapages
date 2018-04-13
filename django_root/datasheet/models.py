@@ -23,8 +23,9 @@ from .blocks import (RelayProductCodeStructureBlock,
                      CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
                      CarouselFusionEmbedBlock,
                      FeaturesBlock, ApplicationsBlock,
-                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock
+                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock, FileFieldBlock
                      )
+
 
 # Create your models here.
 class DatasheetIndexPage(Page):
@@ -43,7 +44,6 @@ class DatasheetIndexPage(Page):
         'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
         blank=True, null=True
     )
-
     subpage_types = ['DatasheetPage']
 
     class Meta:
@@ -107,7 +107,8 @@ class DatasheetPage(Page):
         ('dimension', DimensionBlock()),
         ('contact_data', ContactDataBlock()),
         ('coil_data', CoilDataBlock()),
-        ('revisions', RevisionBlock())
+        ('revisions', RevisionBlock()),
+        ('json_data', FileFieldBlock())
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 

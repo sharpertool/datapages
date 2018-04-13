@@ -1,8 +1,22 @@
+from django import forms
+
 from textwrap import dedent
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock, EmbedValue
+
+
+class FileFieldBlock(blocks.FieldBlock):
+    def __init__(self, required=True, help_text=None, max_length=None, allow_empty_file=False, **kwargs):
+        self.field = forms.FileField(
+            required=required,
+            help_text=help_text,
+            max_length=max_length,
+            allow_empty_file=allow_empty_file
+        )
+        print(self)
+        super().__init__(**kwargs)
 
 
 class DimensionBlock(blocks.StructBlock):

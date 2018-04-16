@@ -1,13 +1,44 @@
+import json
+
+from django.core.exceptions import ValidationError
+
 from textwrap import dedent
+
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock, EmbedValue
 
 
-class DimensionBlock(blocks.StructBlock):
+class BaseBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     bookmark = blocks.CharBlock()
+
+
+class SelectorBlock(BaseBlock):
+    json_data = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/_selector.html'
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['json_data'] = json.loads(value['json_data'])
+        return context
+
+    def clean(self, value):
+        results = super(SelectorBlock, self).clean(value)
+        if value['json_data']:
+            try:
+                json.loads(value['json_data'])
+            except ValueError:
+                raise ValidationError('Validation error in selector block.', params={
+                    'json_data': ['Must be valid json value.']
+                })
+        return results
+
+
+class DimensionBlock(BaseBlock):
     image = ImageChooserBlock()
 
     class Meta:
@@ -23,9 +54,7 @@ class RevisionDataBlock(blocks.StructBlock):
         form_template='datasheet/blocks/editing/common/_struct_inline.html'))
 
 
-class RevisionBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    bookmark = blocks.CharBlock()
+class RevisionBlock(BaseBlock):
     data = blocks.ListBlock(RevisionDataBlock())
 
     class Meta:
@@ -49,12 +78,10 @@ class ProductCodeBlock(blocks.StructBlock):
         form_classname = 'product-code-block'
 
 
-class RelayProductCodeStructureBlock(blocks.StructBlock):
+class RelayProductCodeStructureBlock(BaseBlock):
     """
     Capture all of the parts of a product code, somewhat specific to TE
     """
-    title = blocks.CharBlock()
-    bookmark = blocks.CharBlock()
     type = ProductCodeBlock()
     relay_version = ProductCodeBlock()
     coil_version = ProductCodeBlock()
@@ -149,9 +176,7 @@ class ApplicationsBlock(blocks.StructBlock):
         template = 'datasheet/blocks/_applications_list.html'
 
 
-class ContactDataBlock(blocks.StructBlock):
-    title = blocks.CharBlock()
-    bookmark = blocks.CharBlock()
+class ContactDataBlock(BaseBlock):
     data = TableBlock(table_options={
         'startCols': 2,
         'startRows': 1,
@@ -174,12 +199,10 @@ class CoilDataItemBlock(blocks.StructBlock):
     image = ImageChooserBlock()
 
 
-class CoilDataBlock(blocks.StructBlock):
+class CoilDataBlock(BaseBlock):
     """
     Block definition to capture coil data, as seen in TE datasheet
     """
-    title = blocks.CharBlock()
-    bookmark = blocks.CharBlock()
     coils = blocks.ListBlock(CoilDataItemBlock())
 
     class Meta:

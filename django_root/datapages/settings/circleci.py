@@ -5,7 +5,8 @@ from os.path import exists, join
 
 env = environ.Env()
 
-ROOT_DIR = environ.Path(__file__) - 4
+BASE_DIR = environ.Path(__file__) - 3
+ROOT_DIR = BASE_DIR - 1
 print(f"RootDir: {ROOT_DIR}")
 
 # Allow testing to override a lot of variables at once.
@@ -25,6 +26,10 @@ from .common import *
 
 STATIC_ROOT = join(HOME_DIR, "collectedstatic")
 MEDIA_ROOT = join(HOME_DIR, 'media')
+
+STATICFILES_DIRS = [
+    BASE_DIR('static')
+]
 
 POSTGRES_HOST = env('POSTGRES_HOST', default='localhost')
 POSTGRES_PORT = env('POSTGRES_PORT', default='5432')

@@ -23,7 +23,8 @@ from .blocks import (RelayProductCodeStructureBlock,
                      CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
                      CarouselFusionEmbedBlock,
                      FeaturesBlock, ApplicationsBlock,
-                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock, SelectorBlock
+                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock, SelectorBlock,
+                     ChartBlock
                      )
 
 # Create your models here.
@@ -108,7 +109,8 @@ class DatasheetPage(Page):
         ('contact_data', ContactDataBlock()),
         ('coil_data', CoilDataBlock()),
         ('revisions', RevisionBlock()),
-        ('selector', SelectorBlock())
+        ('selector', SelectorBlock()),
+        ('chart', ChartBlock())
     ])
     tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 

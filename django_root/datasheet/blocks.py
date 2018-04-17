@@ -37,6 +37,28 @@ class SelectorBlock(BaseBlock):
                 })
         return results
 
+class ChartBlock(BaseBlock):
+    json_data = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/_chart.html'
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['json_data'] = json.dumps(value['json_data'])
+        return context
+
+    def clean(self, value):
+        results = super(ChartBlock, self).clean(value)
+        if value['json_data']:
+            try:
+                json.loads(value['json_data'])
+            except ValueError:
+                raise ValidationError('Validation error in selector block.', params={
+                    'json_data': ['Must be valid json value.']
+                })
+        return results
+
 
 class DimensionBlock(BaseBlock):
     image = ImageChooserBlock()

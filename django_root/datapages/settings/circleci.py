@@ -5,8 +5,7 @@ from os.path import exists, join
 
 env = environ.Env()
 
-BASE_DIR = environ.Path(__file__) - 3
-ROOT_DIR = BASE_DIR - 1
+ROOT_DIR = environ.Path(__file__) - 4
 print(f"RootDir: {ROOT_DIR}")
 
 # Allow testing to override a lot of variables at once.
@@ -20,7 +19,7 @@ DEBUG = env.bool("DJANGO_DEBUG", default=False)
 HOME_DIR = '/home/circleci/build'
 if not exists(HOME_DIR):
     root = environ.Path(__file__) - 4
-    HOME_DIR = str(root)
+    HOME_DIR = root()
 
 from .common import *
 
@@ -28,7 +27,7 @@ STATIC_ROOT = join(HOME_DIR, "collectedstatic")
 MEDIA_ROOT = join(HOME_DIR, 'media')
 
 STATICFILES_DIRS = [
-    BASE_DIR('static')
+    PROJECT_DIR('static')
 ]
 
 POSTGRES_HOST = env('POSTGRES_HOST', default='localhost')

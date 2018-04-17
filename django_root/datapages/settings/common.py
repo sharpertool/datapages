@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'datasheet',
     'home',
     'search',
+    'teconn',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

@@ -1,0 +1,11 @@
+{% load utility_tags %}
+
+{% with block.value|lookup:index as item %}
+    <div class="head">
+        <h5 class="name">{{ item.value }}</h5>
+        <p class="description">{{ index|replace:'search=_&replacement= '|capfirst }}</p>
+    </div>
+
+    {% include 'teconn/blocks/_product_code_dropdown.html' %}
+{% endwith %}
+

@@ -1,33 +1,39 @@
 import collections
 from django.db import models
 
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.contrib.taggit import ClusterTaggableManager
-
-from taggit.models import TaggedItemBase
-
-from wagtail.core.models import Page, Orderable
+from wagtail.core.models import Page, PageManager
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
-    InlinePanel,
     StreamFieldPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.search import index
 
 
-from .blocks import (RelayProductCodeStructureBlock,
-                     CarouselStreamBlock, CarouselImageBlock, CarouselEmbedBlock,
-                     CarouselFusionEmbedBlock,
-                     FeaturesBlock, ApplicationsBlock,
-                     ContactDataBlock, CoilDataBlock, DimensionBlock, RevisionBlock, SelectorBlock
-                     )
+from .blocks import (CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock,
+                     FeaturesBlock, ApplicationsBlock)
 
-# Create your models here.
-class DatasheetIndexPage(Page):
+# ('heading', blocks.CharBlock(
+#             classname="full title",
+#             template="datasheet/blocks/_heading.html"
+#         )),
+#         ('paragraph', blocks.RichTextBlock()),
+#         ('image', ImageChooserBlock()),
+#         ('product_code', RelayProductCodeStructureBlock()),
+#         ('carousel', CarouselStreamBlock()),
+#         ('dimension', DimensionBlock()),
+#         ('contact_data', ContactDataBlock()),
+#         ('coil_data', CoilDataBlock()),
+#         ('revisions', RevisionBlock()),
+#         ('selector', SelectorBlock())
+
+
+class IndexBasePage(Page):
+    """
+    Abstract superclass for datapage index Page.
+    """
     intro = RichTextField(blank=True)
     logo = models.ForeignKey(
         'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
@@ -44,27 +50,11 @@ class DatasheetIndexPage(Page):
         blank=True, null=True
     )
 
-    subpage_types = ['DatasheetPage']
-
-    class Meta:
-        verbose_name = "DataPages Index"
-
-    @property
-    def get_chat_url(self):
-        return self.chat_url + '?part_number={part_number}'
-
-    def get_context(self, request):
-        # Update context to include only published posts, ordered by reverse-chron
-        context = super(DatasheetIndexPage, self).get_context(request)
-        datasheets = self.get_children().live().order_by('-first_published_at')
-        context['datasheets'] = datasheets
-        return context
-
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('intro', classname="full"),
             FieldPanel('chat_url')
-        ], heading='Information'),
+        ], heading='General Information'),
         FieldPanel('svglogo'),
         ImageChooserPanel('logo'),
 
@@ -73,16 +63,30 @@ class DatasheetIndexPage(Page):
             FieldPanel('primary_color'),
             FieldPanel('secondary_color'),
             ImageChooserPanel('banner_mark'),
-        ], heading='DataPage Common Values')
+        ], heading="Sheet Page Common Values")
     ]
 
+    subpage_types = ['SheetPage']
 
-class DatasheetPageTag(TaggedItemBase):
-    content_object = ParentalKey('DatasheetPage', related_name='tagged_items')
+    @property
+    def get_chat_url(self):
+        return self.chat_url + '?part_number={part_number}'
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context['datasheets'] = self.get_children().live().order_by('-first_published_at')
+        return context
+
+    class Meta:
+        abstract = True
+        verbose_name = "Index Page"
 
 
-class DatasheetPage(Page):
-    date = models.DateField("Post date")
+class SheetBasePage(Page):
+    """
+    Abstract superclass for datapage sheet Page.
+    """
+    date = models.DateField("Post Date")
     intro = models.CharField(max_length=250, blank=True)
     part_number = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=True)
@@ -95,24 +99,8 @@ class DatasheetPage(Page):
         ('embed', CarouselEmbedBlock()),
         ('fusion360', CarouselFusionEmbedBlock()),
     ], blank=True)
-    stream1 = StreamField([
-        ('heading', blocks.CharBlock(
-            classname="full title",
-            template="datasheet/blocks/_heading.html"
-        )),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('product_code', RelayProductCodeStructureBlock()),
-        ('carousel', CarouselStreamBlock()),
-        ('dimension', DimensionBlock()),
-        ('contact_data', ContactDataBlock()),
-        ('coil_data', CoilDataBlock()),
-        ('revisions', RevisionBlock()),
-        ('selector', SelectorBlock())
-    ])
-    tags = ClusterTaggableManager(through=DatasheetPageTag, blank=True)
 
-    parent_page_types = ['DatasheetIndexPage']
+    parent_page_types = ['IndexPage']
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -126,17 +114,16 @@ class DatasheetPage(Page):
             FieldPanel('part_number'),
             FieldPanel('intro'),
             FieldPanel('body', classname="full")
-        ], heading="DataSheet Information"),
+        ], heading="General Sheet Information"),
         MultiFieldPanel([
-            StreamFieldPanel('attributes', heading=None, classname="full"),
-        ],
+                StreamFieldPanel('attributes', heading=None, classname="full"),
+            ],
             heading="Attributes and Applications",
             classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
-        StreamFieldPanel('stream1',
-                         heading='Datasheet Blocks'),
-        InlinePanel('related_links', label="Related Links"),
     ]
+
+    objects = PageManager()
 
     def get_bookmarks(self):
         """
@@ -150,11 +137,10 @@ class DatasheetPage(Page):
         ToDo: Extract this to a re-usable Mixin or base class so it can be re-used easier.
         :return:
         """
-
         Bookmark = collections.namedtuple('Bookmark', ['title', 'id'])
         bookmarks = []
 
-        for block in self.stream1:
+        for block in self.sheet_blocks:
             val = block.value
             if isinstance(val, blocks.StructValue):
                 if 'bookmark' in val and val['bookmark'] and 'title' in val:
@@ -182,26 +168,6 @@ class DatasheetPage(Page):
         print(f"Primary Color: {parent.primary_color}")
         return context
 
-
-class Features(Orderable):
-    page = ParentalKey(DatasheetPage, related_name='features')
-    feature = RichTextField()
-
-    panels = [
-        FieldPanel('feature', classname="full")
-    ]
-
-
-class Revisions(Orderable):
-    date = models.DateField()
-
-
-class RelatedLinks(Orderable):
-    page = ParentalKey(DatasheetPage, related_name='related_links')
-    name = models.CharField(max_length=255)
-    url = models.URLField()
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('url')
-    ]
+    class Meta:
+        abstract = True
+        verbose_name = "Sheet Page"

@@ -1,4 +1,4 @@
-{% load utility_tags wagtailcore_tags %}
+{% load wagtailcore_tags %}
 
 <div class="row">
     <div class="col-lg-6">
@@ -10,10 +10,15 @@
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        {% for slide in page.carousel %}
-                            <!-- Doing a slider -->
-                            {{ slide }}
-                        {% endfor %}
+                        {% if frontend_testing %}
+                            <-- Inject Custom testing ->
+                            {% include "partials/_product_slider.njk" %}
+                        {% else %}
+                            {% for slide in page.carousel %}
+                                <!-- Doing a slider -->
+                                {{ slide }}
+                            {% endfor %}
+                        {% endif %}
                     </div>
                     <ol class="carousel-indicators card-carousel-indicator">
                         {% for slide in page.carousel %}

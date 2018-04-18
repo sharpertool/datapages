@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+
+{% block body_class %}template-datasheet-index{% endblock %}
+
+{% block content %}
+    {% if page.page_logo %}
+        <img src="{{ page.page_logo.url }}" alt="TE Logo">
+    {% endif %}
+    <h1>{{ page.title }}</h1>
+
+    <div class="intro">{{ page.intro|richtext }}</div>
+
+    {% for sheet in datasheets %}
+        {% with sheet=sheet.specific %}
+            <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
+
+            <p>{{ sheet.intro }}</p>
+{#            {{ sheet.body|richtext }}#}
+        {% endwith %}
+    {% endfor %}
+
+    {% wagtailuserbar %}
+
+{% endblock %}
+

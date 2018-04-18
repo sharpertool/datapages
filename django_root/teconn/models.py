@@ -2,7 +2,7 @@ from django.db import models
 
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, MultiFieldPanel
-from wagtail.core.models import Orderable
+from wagtail.core.models import Page, Orderable
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -22,6 +22,9 @@ class IndexPage(IndexBasePage):
     """
     The index or home page for TE Connectivity.
     """
+    page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
+                                    related_name='teconn_index')
+
     class Meta:
         verbose_name = "TE Connectivity Index Page"
 
@@ -31,9 +34,12 @@ class SheetPage(SheetBasePage):
     The product page and details. Common fields are already declared in SheetBasePage abstract class
     so you just have to declare here the sheet_blocks field base on TE connectivity requirements.
     """
+    page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
+                                    related_name='teconn_sheet')
+
     sheet_blocks = StreamField([
         ('contact_data', ContactDataBlock()),
-        ('coild_data', CoilDataBlock()),
+        ('coil_data', CoilDataBlock()),
         ('dimension', DimensionBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
         ('revisions', RevisionBlock())
@@ -50,7 +56,7 @@ class SheetPage(SheetBasePage):
 
     parent_page_types = ['IndexPage']
 
-    tags = ClusterTaggableManager(through=SheetPageTag, blank=True)
+    tags = ClusterTaggableManager(through=SheetPageTag, blank=True, related_name='teconn_sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
         MultiFieldPanel([

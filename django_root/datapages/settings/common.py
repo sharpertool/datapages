@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'home',
     'search',
     'teconn',
+    'panasonic',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

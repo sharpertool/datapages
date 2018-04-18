@@ -2,6 +2,7 @@ from textwrap import dedent
 from wagtail.core import blocks
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 
 from datasheet.blocks import BaseBlock
 
@@ -107,3 +108,70 @@ class RevisionBlock(BaseBlock):
     class Meta:
         template = 'teconn/blocks/_revision.html'
         form_classname = 'revision-block'
+
+
+class FeaturesBlock(blocks.StructBlock):
+    features = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
+
+    class Meta:
+        label = 'Features'
+        template = 'teconn/blocks/_features_list.html'
+
+
+class ApplicationsBlock(blocks.StructBlock):
+    applications = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
+
+    class Meta:
+        label = 'Applications'
+        template = 'teconn/blocks/_applications_list.html'
+
+
+class CarouselImageBlock(blocks.StructBlock):
+    """
+    Image that fits into a carousel
+    """
+    subtitle = blocks.CharBlock()
+    image = ImageChooserBlock()
+    alt = blocks.CharBlock(required=False)
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+
+    class Meta:
+        template = 'teconn/blocks/_carousel_image.html'
+
+
+class CarouselEmbedBlock(blocks.StructBlock):
+    """
+    Embed option for the carousel
+    """
+    subtitle = blocks.CharBlock()
+    embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
+
+    class Meta:
+        template = 'teconn/blocks/_carousel_embed.html'
+
+
+class CarouselFusionEmbedBlock(blocks.StructBlock):
+    """
+    Embed option for the carousel
+    """
+    subtitle = blocks.CharBlock()
+    embed = EmbedBlock()
+    width = blocks.IntegerBlock(required=False)
+    height = blocks.IntegerBlock(required=False)
+    allow_fullscreen = blocks.BooleanBlock(default=False)
+
+    class Meta:
+        template = 'teconn/blocks/_carousel_fusion_embed.html'
+
+
+class CarouselStreamBlock(blocks.StreamBlock):
+    image = CarouselImageBlock()
+    embed = CarouselEmbedBlock()
+    fusion360 = CarouselFusionEmbedBlock()
+
+    class Meta:
+        icon = 'cogs'

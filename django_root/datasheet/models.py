@@ -11,10 +11,6 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 
-
-from .blocks import (CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock,
-                     FeaturesBlock, ApplicationsBlock)
-
 # ('heading', blocks.CharBlock(
 #             classname="full title",
 #             template="datasheet/blocks/_heading.html"
@@ -90,17 +86,6 @@ class SheetBasePage(Page):
     intro = models.CharField(max_length=250, blank=True)
     part_number = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=True)
-    attributes = StreamField([
-        ('features', FeaturesBlock()),
-        ('applications', ApplicationsBlock())
-    ], blank=True)
-    carousel = StreamField([
-        ('image', CarouselImageBlock()),
-        ('embed', CarouselEmbedBlock()),
-        ('fusion360', CarouselFusionEmbedBlock()),
-    ], blank=True)
-
-    parent_page_types = ['IndexPage']
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -114,13 +99,7 @@ class SheetBasePage(Page):
             FieldPanel('part_number'),
             FieldPanel('intro'),
             FieldPanel('body', classname="full")
-        ], heading="General Sheet Information"),
-        MultiFieldPanel([
-                StreamFieldPanel('attributes', heading=None, classname="full"),
-            ],
-            heading="Attributes and Applications",
-            classname="collapsible collapsed"),
-        StreamFieldPanel('carousel'),
+        ], heading="General Sheet Information")
     ]
 
     objects = PageManager()

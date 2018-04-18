@@ -1,0 +1,69 @@
+{% extends "core/_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% block body_class %}template-datasheet{% endblock %}
+
+{% block extra_css %}
+    <!--
+    Inject custom styles and values for the page in usign css variables.
+    These are not supported on IE11.. but who is using that anymore anyway?
+    There is < 6% worldwide share, and about 8.5% US share.. go figure.
+    -->
+    <style>
+        body {
+            --primary_color: {{ primary_color }};
+            --secondary_color: {{ secondary_color }};
+        }
+        .jumbotron {
+            {% image banner_mark original as banner %}
+            background: url({{ banner.url }}) no-repeat, {{ primary_color }};
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+    {% include 'datasheet/partials/_header.html' %}
+
+    <main id="top">
+        {% include 'datasheet/partials/_jumbotron.html' %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    {% include 'datasheet/partials/_sidebar.html' %}
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="product-slider block">
+                        {% include 'datasheet/partials/_product_slider.html' %}
+                    </div>
+
+                    {% for block in page.sheet_blocks %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% include 'datasheet/partials/_footer.html' %}
+
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/carouselequalheights.js' %}"></script>
+    <script type="text/javascript">
+        (function($) {
+            $("a[data-action='anchor']").click(function(e) {
+                var target = $(this.getAttribute('href'))
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 100
+                }, 1000);
+               e.preventDefault();
+            });
+        })($);
+    </script>
+{% endblock %}

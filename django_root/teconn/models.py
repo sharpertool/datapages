@@ -33,7 +33,7 @@ class SheetPage(SheetBasePage):
     """
     sheet_blocks = StreamField([
         ('contact_data', ContactDataBlock()),
-        ('coild_data', CoilDataBlock()),
+        ('coil_data', CoilDataBlock()),
         ('dimension', DimensionBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
         ('revisions', RevisionBlock())
@@ -50,7 +50,7 @@ class SheetPage(SheetBasePage):
 
     parent_page_types = ['IndexPage']
 
-    tags = ClusterTaggableManager(through=SheetPageTag, blank=True)
+    tags = ClusterTaggableManager(through=SheetPageTag, blank=True, related_name='teconn_sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
         MultiFieldPanel([

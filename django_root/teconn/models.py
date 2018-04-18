@@ -1,7 +1,7 @@
 from django.db import models
 
 from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel
+from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Orderable
 
 from taggit.models import TaggedItemBase
@@ -10,7 +10,8 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import SheetBasePage, IndexBasePage
 from datasheet.blocks import DimensionBlock
-from .blocks import ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock
+from .blocks import (ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock, FeaturesBlock,
+                     ApplicationsBlock, CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -37,10 +38,27 @@ class SheetPage(SheetBasePage):
         ('product_code', RelayProductCodeStructureBlock()),
         ('revisions', RevisionBlock())
     ], blank=True)
+    attributes = StreamField([
+        ('features', FeaturesBlock()),
+        ('applications', ApplicationsBlock())
+    ], blank=True)
+    carousel = StreamField([
+        ('image', CarouselImageBlock()),
+        ('embed', CarouselEmbedBlock()),
+        ('fusion360', CarouselFusionEmbedBlock()),
+    ], blank=True)
+
+    parent_page_types = ['IndexPage']
 
     tags = ClusterTaggableManager(through=SheetPageTag, blank=True)
 
     content_panels = SheetBasePage.content_panels + [
+        MultiFieldPanel([
+            StreamFieldPanel('attributes', heading=None, classname="full"),
+        ],
+            heading="Attributes and Applications",
+            classname="collapsible collapsed"),
+        StreamFieldPanel('carousel'),
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
     ]

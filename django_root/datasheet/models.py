@@ -10,6 +10,7 @@ from wagtail.admin.edit_handlers import (
     StreamFieldPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
+from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 # ('heading', blocks.CharBlock(
 #             classname="full title",
@@ -26,6 +27,30 @@ from wagtail.search import index
 #         ('selector', SelectorBlock())
 
 
+@register_setting
+class SiteSettings(BaseSetting):
+    primary_color = models.CharField(default='#000', max_length=20)
+    secondary_color = models.CharField(default='#ddd', max_length=20)
+    logo = models.FileField(blank=True, null=True)
+    banner_mark = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
+        blank=True, null=True
+    )
+    chat_url = models.CharField(max_length=250, blank=True)
+
+    panels = [
+        FieldPanel('primary_color'),
+        FieldPanel('secondary_color'),
+        FieldPanel('logo'),
+        ImageChooserPanel('banner_mark'),
+        FieldPanel('chat_url'),
+    ]
+
+    @property
+    def get_chat_url(self):
+        return self.chat_url + '?part_number={part_number}'
+
+
 class IndexBasePage(Page):
     """
     Abstract superclass for datapage index Page.
@@ -37,36 +62,15 @@ class IndexBasePage(Page):
     )
     svglogo = models.FileField(blank=True, null=True)
 
-    page_logo = models.FileField(blank=True, null=True)
-    primary_color = models.CharField(default='#000', max_length=20)
-    secondary_color = models.CharField(default='#ddd', max_length=20)
-    chat_url = models.CharField(max_length=250, blank=True)
-    banner_mark = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.SET_NULL, related_name='+',
-        blank=True, null=True
-    )
-
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('intro', classname="full"),
-            FieldPanel('chat_url')
         ], heading='General Information'),
         FieldPanel('svglogo'),
-        ImageChooserPanel('logo'),
-
-        MultiFieldPanel([
-            FieldPanel('page_logo'),
-            FieldPanel('primary_color'),
-            FieldPanel('secondary_color'),
-            ImageChooserPanel('banner_mark'),
-        ], heading="Sheet Page Common Values")
+        ImageChooserPanel('logo')
     ]
 
     subpage_types = ['SheetPage']
-
-    @property
-    def get_chat_url(self):
-        return self.chat_url + '?part_number={part_number}'
 
     def get_context(self, request):
         context = super().get_context(request)
@@ -131,20 +135,21 @@ class SheetBasePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
 
+        settings = SiteSettings.for_site(request.site)
         parent = self.get_ancestors().last()
         parent = parent.specific
 
         # Add common page elements
-        context['vendor_logo'] = parent.page_logo
-        context['primary_color'] = parent.primary_color
-        context['secondary_color'] = parent.secondary_color
-        context['banner_mark'] = parent.banner_mark
-        context['chat_url'] = parent.get_chat_url.format(part_number=self.part_number)
+        context['vendor_logo'] = settings.logo
+        context['primary_color'] = settings.primary_color
+        context['secondary_color'] = settings.secondary_color
+        context['banner_mark'] = settings.banner_mark
+        context['chat_url'] = settings.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
         context['company_name'] = parent.title
 
-        print(f"Logo is {parent.logo}")
-        print(f"Primary Color: {parent.primary_color}")
+        print(f"Logo is {settings.logo}")
+        print(f"Primary Color: {settings.primary_color}")
         return context
 
     class Meta:

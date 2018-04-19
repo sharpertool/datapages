@@ -19,12 +19,16 @@ DEBUG = env.bool("DJANGO_DEBUG", default=False)
 HOME_DIR = '/home/circleci/build'
 if not exists(HOME_DIR):
     root = environ.Path(__file__) - 4
-    HOME_DIR = str(root)
+    HOME_DIR = root()
 
 from .common import *
 
 STATIC_ROOT = join(HOME_DIR, "collectedstatic")
 MEDIA_ROOT = join(HOME_DIR, 'media')
+
+STATICFILES_DIRS = [
+    PROJECT_DIR('static')
+]
 
 POSTGRES_HOST = env('POSTGRES_HOST', default='localhost')
 POSTGRES_PORT = env('POSTGRES_PORT', default='5432')

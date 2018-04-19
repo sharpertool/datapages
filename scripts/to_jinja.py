@@ -14,7 +14,7 @@ class Filter:
     def __init__(self):
         self.spat = re.compile(self.search_pat)
 
-    def to_template(self, line):
+    def to_jinja2(self, line):
         m = self.spat.search(line)
         if m:
             return self.spat.sub(self.replace_pat, line)
@@ -92,11 +92,11 @@ class IncludeFileFilter(Filter):
     def to_jinja2(self, line):
         m = self.spat.search(line)
         if m:
-            line = re.sub('\.html', '.njk', line)
+            line = re.sub('\.html', '.j2', line)
 
         return line
 
-class ToNunjucks:
+class ToJinja2:
 
     def __init__(self):
 
@@ -105,8 +105,8 @@ class ToNunjucks:
             IncludeFilter(),
             ImageFilter(),
             HrefFilter(),
-            WithFilter(),
-            EndWithFilter(),
+            #WithFilter(),
+            #EndWithFilter(),
             IncludeFileFilter(),
             StaticSrcFilter(),
             WagtailFilter(),
@@ -150,19 +150,19 @@ class ToNunjucks:
 
 def to_jinja2(src, dest):
     """
-    Open the sourc, and write to dest, with some filter operations
+    Open the source, and write to dest, with some filter operations
     :param src:
     :param dest:
     :return:
     """
 
-    p = ToNunjucks()
+    p = ToJinja2()
     p.filter(src, dest)
 
 
 def to_django(src, dest):
     """
-    Open the sourc, and write to dest, with some filter operations
+    Open the source, and write to dest, with some filter operations
     :param src:
     :param dest:
     :return:
@@ -177,33 +177,25 @@ def to_django(src, dest):
                 fp2.write(line)
 
 
-def django_to_nunjucks(top, dest):
+def django_to_jinja2(top, dest):
     print(f"Descending into {top}")
-    # Delete everything reachable from the directory named in "top",
-    # assuming there are no symbolic links.
-    # CAUTION:  This is dangerous!  For example, if top == '/', it
-    # could delete all your disk files.
     for root, dirs, files in os.walk(top, topdown=False):
         rel_root = os.path.relpath(root, top)
 
         for name in [f for f in files if f.endswith('.html')]:
-            njname = os.path.splitext(name)[0] + '.njk'
+            njname = os.path.splitext(name)[0] + '.j2'
             src_file = os.path.join(root, name)
             dest_file = os.path.join(dest, rel_root, njname)
             print(f"Stream {src_file}  {dest_file}")
             to_jinja2(src_file, dest_file)
 
 
-def nunjucks_to_django(njkdir, djdir):
+def jinja2_to_django(j2dir, djdir):
     print(f"Descending into {top}")
-    # Delete everything reachable from the directory named in "top",
-    # assuming there are no symbolic links.
-    # CAUTION:  This is dangerous!  For example, if top == '/', it
-    # could delete all your disk files.
-    for root, dirs, files in os.walk(njkdir, topdown=False):
-        rel_root = os.path.relpath(root, njkdir)
+    for root, dirs, files in os.walk(j2dir, topdown=False):
+        rel_root = os.path.relpath(root, j2dir)
 
-        for name in [f for f in files if f.endswith('.njk')]:
+        for name in [f for f in files if f.endswith('.j2')]:
             njname = os.path.splitext(name)[0] + '.html'
             src_file = os.path.join(root, name)
             dest_file = os.path.join(djdir, rel_root, njname)
@@ -217,7 +209,7 @@ def main():
 
     """
 
-    parser = argparse.ArgumentParser(description="Copy templates to njk format")
+    parser = argparse.ArgumentParser(description="Copy templates to jinja2 format")
 
     parser.add_argument("root",
                         help="Root Path to start from.")
@@ -229,13 +221,13 @@ def main():
                         default="django_root/datasheet/templates/datasheet/datasheet_page.html")
 
     parser.add_argument("--context_file",
-                        default="datasheet_codepen_context.njk")
+                        default="datasheet_codepen_context.j2")
 
 
     args = parser.parse_args()
 
-    django_to_nunjucks(args.root, args.dest)
-    django_to_nunjucks("django_root/templates", args.dest)
+    django_to_jinja2(args.root, args.dest)
+    django_to_jinja2("django_root/templates", args.dest)
 
 
 if __name__ == "__main__":

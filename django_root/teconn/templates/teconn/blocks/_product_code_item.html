@@ -1,3 +1,4 @@
+{% load utility_tags %}
 
 {% with block.value|lookup:index as item %}
     <div class="head">
@@ -5,6 +6,6 @@
         <p class="description">{{ index|replace:'search=_&replacement= '|capfirst }}</p>
     </div>
 
-    {% include 'datasheet/blocks/_product_code_dropdown.html' %}
+    {% include 'teconn/blocks/_product_code_dropdown.html' %}
 {% endwith %}
 

@@ -45,14 +45,14 @@ class ChartBlock(BaseBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['json_data'] = json.dumps(value['json_data'])
+        context['json_data'] = value['json_data']
         return context
 
     def clean(self, value):
         results = super(ChartBlock, self).clean(value)
         if value['json_data']:
             try:
-                json.loads(value['json_data'])
+                json.dumps(value['json_data'])
             except ValueError:
                 raise ValidationError('Validation error in selector block.', params={
                     'json_data': ['Must be valid json value.']

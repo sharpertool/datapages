@@ -1,2 +1,6 @@
-<div class="block dp-chart" id="{{ block.value.bookmark }}" data-target="{{ block.value.bookmark }}" data-items="{{ json_data }}">
+<div class="block">
+    <h1 class="title"><span>{{block.value.title}}</span></h1>
+    <div class="dp-chart" id="{{ block.value.bookmark }}" data-target="{{ block.value.bookmark }}" data-items="{% spaceless %}{{ json_data }}{% endspaceless%}">
+
+    </div>
 </div>

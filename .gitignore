@@ -48,3 +48,4 @@ django_root/static/
 !/codepen/datasheet_codepen_context.njk
 
 
+collectedstatic

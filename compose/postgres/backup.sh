@@ -20,6 +20,7 @@ export PGPASSWORD=$POSTGRES_PASSWORD
 echo "creating backup"
 echo "---------------"
 
+# Calculate a default filename
 FILENAME=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
 pg_dump -h postgres -U $POSTGRES_USER $POSTGRES_DB >> /backups/$FILENAME
 

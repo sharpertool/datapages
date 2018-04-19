@@ -18,11 +18,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
     env.read_env('.env.local')
     from datapages.settings.test import *
 else:
-    if env.bool('DJANGO_DOCKER', False):
-        env.read_env('.env.local.docker')
-    else:
-        env.read_env('.env.local')
-
+    env.read_env('.env.local')
     from datapages.settings.dev import *
 
 ###################

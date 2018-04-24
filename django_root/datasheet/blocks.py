@@ -38,6 +38,9 @@ class SelectorBlock(BaseBlock):
         return results
 
 class ChartBlock(BaseBlock):
+    legend = blocks.CharBlock(required=False)
+    x_axis = blocks.CharBlock(required=False)
+    y_axis = blocks.CharBlock(required=False)
     json_data = blocks.CharBlock(required=False)
 
     class Meta:

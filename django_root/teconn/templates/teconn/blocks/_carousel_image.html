@@ -1,7 +1,17 @@
 {% load wagtailcore_tags wagtailimages_tags %}
-{% image value.image original as carousel_image %}
-<div class="carousel-item active">
 
-    <img class="d-block img-fluid ml-auto mr-auto"src="{{carousel_image.url}}" width="{{value.width}}"
-     height="{{value.height}}" alt="{{carousel_image.alt}}"/>
+<div class="card chart-card carousel-item active">
+    <div class="card-body">
+        {% image value.image original as carousel_image %}
+        <img class="d-block img-fluid ml-auto mr-auto"
+             src="{{carousel_image.url}}"
+             alt="{{carousel_image.alt}}"/>
+
+        <div class="card-links">
+            <a href="#" class="card-link"><i class="fa fa-search-plus"></i></a>
+            <a href="#" class="card-link"><i class="fa fa-pencil-alt"></i></a>
+            <a href="#" class="card-link"><i class="fa fa-download"></i></a>
+            <a href="#" class="card-link"><i class="fa fa-share"></i></a>
+        </div>
+    </div>
 </div>

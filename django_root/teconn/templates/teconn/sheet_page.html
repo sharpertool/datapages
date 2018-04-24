@@ -14,9 +14,8 @@
             --primary_color: {{ primary_color }};
             --secondary_color: {{ secondary_color }};
         }
-        .jumbotron {
-            {% image banner_mark original as banner %}
-            background: url({{ banner.url }}) no-repeat, {{ primary_color }};
+        .hero-banner {
+            background-color: {{ primary_color }};
         }
     </style>
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
@@ -27,19 +26,23 @@
     {% include 'datasheet/partials/_header.html' %}
 
     <main id="top">
-        {% include 'datasheet/partials/_jumbotron.html' %}
+        {% image banner_mark original as banner %}
+        {% include 'datasheet/partials/_jumbotron.html' with banner=banner %}
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3 col-md-12 order-2 order-lg-1 sidebar">
                     {% include 'datasheet/partials/_sidebar.html' %}
                 </div>
 
-                <div class="col-lg-9">
-                    <div class="product-slider block">
+                <div class="col-lg-9 col-md-12 order-1 order-lg-2">
+                    <div class="product-slider block row">
                         {% include 'datasheet/partials/_product_slider.html' %}
                     </div>
-
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-lg-3 col-lg-9 col-md-12">
                     {% for block in page.sheet_blocks %}
                         {% include_block block %}
                     {% endfor %}
@@ -47,22 +50,40 @@
             </div>
 
             {% include 'datasheet/partials/_footer.html' %}
-
         </div>
     </main>
 
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'js/carouselequalheights.js' %}"></script>
     <script type="text/javascript">
         (function($) {
+            //jump-to-section
             $("a[data-action='anchor']").click(function(e) {
                 var target = $(this.getAttribute('href'))
                 $('html, body').animate({
                     scrollTop: $(target).offset().top - 100
                 }, 1000);
+                $(this).parents('li').addClass('active').siblings('li').removeClass('active');
+                $('.jump-section-wrapper').trigger('click');
                e.preventDefault();
+            });
+
+            //jump-to-section-dropdown
+            $('.sidebar').on('click', '.jump-section-wrapper', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                if ($this.parents('.sidebar').find('ul').is(':not(":animated")')) {
+                    $this.toggleClass('open');
+                    $this.parents('.sidebar').find('ul').slideToggle('500');
+                } else {
+                    console.log('alreadt animating');
+                }
+            });
+
+            $(window).on('load resize', function(){
+              var headerHeight =  $('#header').height();
+              $('main').css('margin-top',headerHeight);
             });
         })($);
     </script>

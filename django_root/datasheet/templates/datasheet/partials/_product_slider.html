@@ -1,81 +1,88 @@
 {% load wagtailcore_tags %}
 
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card chart-card">
-            <div class="card-body">
-                <a href="#" class="expand-btn">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
-                </a>
+<div class="col-md-6">
+    <div id="productSlider" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators card-carousel-indicator">
+            {% for slide in page.carousel %}
+                <li data-target="#productSlider"
+                    data-slide-to="{{ forloop.counter0 }}"
+                    {% if forloop.first %}class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        {% if frontend_testing %}
-                            <-- Inject Custom testing ->
-                            {% include "partials/_product_slider.njk" %}
-                        {% else %}
-                            {% for slide in page.carousel %}
-                                <!-- Doing a slider -->
-                                {{ slide }}
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <ol class="carousel-indicators card-carousel-indicator">
-                        {% for slide in page.carousel %}
-                            <li data-target="#carouselExampleIndicators" class="{% if forloop.first %}active{% endif %}" style="background: {{ primary_color }}; border: 1px solid {{primary_color}};" data-slide-to="{{forloop.counter0}}"></li>
-                        {% endfor %}
-                    </ol>
-                </div>
+        <a href="#" class="expand-btn">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
+        </a>
 
-                <div class="card-links">
-                    <a href="#" class="card-link"><i class="fa fa-search-plus"></i></a>
-                    <a href="#" class="card-link"><i class="fa fa-pencil-alt"></i></a>
-                    <a href="#" class="card-link"><i class="fa fa-download"></i></a>
-                    <a href="#" class="card-link"><i class="fa fa-share"></i></a>
-                </div>
-
-            </div>
+        <div class="carousel-inner flex-row d-flex align-items-end">
+            {% if frontend_testing %}
+                <-- Inject Custom testing ->
+                {% include "partials/_product_slider.njk" %}
+            {% else %}
+                {% for slide in page.carousel %}
+                    <!-- Doing a slider -->
+                    {{ slide }}
+                {% endfor %}
+            {% endif %}
         </div>
+
+        <a class="carousel-control-prev"
+           href="#productSlider"
+           role="button"
+           data-slide="prev"
+        >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="carousel-control-next"
+           href="#productSlider"
+           role="button"
+           data-slide="next"
+        >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div class="col-lg-6" id="product_info">
+    <ul class="nav nav-pills">
+        {% for attribute in page.attributes %}
+            <li class="nav-item">
+                <a href="#{{ attribute.block_type }}"
+                   class="nav-link {% if forloop.first %}active{% endif %}"
+                   data-toggle="tab">{{ attribute.block_type|capfirst }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+        {% for block in page.attributes %}
+            <ul class="tab-pane fade show {% if forloop.first %}active{% endif %}" id="{{ block.block_type }}">
+                {% include_block block %}
+            </ul>
+        {% endfor %}
     </div>
 
-    <div class="col-lg-6" id="product_info">
-        <ul class="nav nav-pills">
-            {% for attribute in page.attributes %}
-                <li class="nav-item">
-                    <a href="#{{ attribute.block_type }}"
-                       class="nav-link {% if forloop.first %}active{% endif %}"
-                       data-toggle="tab">{{ attribute.block_type|capfirst }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-
-        <div class="tab-content">
-            {% for block in page.attributes %}
-                <ul class="tab-pane fade show {% if forloop.first %}active{% endif %}" id="{{ block.block_type }}">
-                    {% include_block block %}
-                </ul>
-            {% endfor %}
-        </div>
-
-        <div class="card" id="distributors">
-            <div class="card-header">
-                <h5>Shop our Distributors</h5>
-                <p>Request pricing, availability and customization options</p>
-                <div class="form-row">
-                    <div class="col-9">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-block dropdown-toggle" data-toggle="dropdown">
-                                North America
-                            </button>
-                            <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">North America</a>
-                            </div>
+    <div class="card" id="distributors">
+        <div class="card-header">
+            <h5>Shop our Distributors</h5>
+            <p>Request pricing, availability and customization options</p>
+            <div class="form-row">
+                <div class="col-9">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-block dropdown-toggle" data-toggle="dropdown">
+                            North America
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">North America</a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col">
-                        <button class="btn btn-primary btn-block">Shop</button>
-                    </div>
+                <div class="col">
+                    <button class="btn btn-primary btn-block">Shop</button>
                 </div>
             </div>
         </div>

@@ -1,17 +1,41 @@
 .footer {
-  margin: 100px 0;
-  .back-to-top {
-    color: var(--primary_color);
-    float: left;
-    font-size: 12px;
-    text-align: center;
-    > img {
-      display: block;
-      margin-bottom: 10px;
+    padding: 0 30px;
+    position:relative;
+    .back-to-top {
+        color: var(--primary_color);
+        float: left;
+        font-size: 12px;
+        z-index: 10;
+        text-align: center;
+        > img {
+            display: block;
+            margin-bottom: 10px;
+            height: 40px;
+        }
+        @media screen and (max-width:1024px){
+            padding: 111px 0 30px 0;
+            width: 100%;
+            img{
+                margin: auto;
+                margin-bottom: 10px;
+            }
+        }
+        @media screen and (max-width:767px){
+            padding: 70px 0 40px 0;
+        }
     }
-  }
-  > img {
-    display: block;
-    margin: 0 auto;
-  }
+    > img {
+        display: block;
+        margin: 0 auto;
+        height: 40px;
+    }
+    .bottom-gradient{
+        height: 264px;
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        right: 0;
+        left: 0;
+        background: linear-gradient(170.93deg, rgba(0,102,161,0) 0%, rgba(0,102,161,0.1) 100%);
+    }
 }

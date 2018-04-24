@@ -2,6 +2,8 @@
   Include a bunch of partials for better code management.
   R3
  */
+@import "partials/variables";
+@import "partials/common";
 @import "partials/navbar";
 @import "partials/grid";
 @import "partials/jumbotron";

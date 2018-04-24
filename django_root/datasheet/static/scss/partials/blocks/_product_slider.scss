@@ -1,75 +1,188 @@
 .product-slider {
-  margin-top: -72px;
-  .carousel {
-    background: #fff;
-  }
-  
-  #product_info {
-    padding-left: 25px;
-  }
-  
-  .nav-pills {
-    .nav-link {
-      border-radius: 0px;
-      padding: 0 1rem;
-      color: var(--secondary_color);
-      margin-bottom: 20px;
-      font-size: 24px;
-      &.active {
-        background: transparent;
-        border-bottom: 3px solid #fff;
-        color: #fff;
-      }
-    }
-    
-    & + .tab-content {
-      margin-bottom: 50px;
-      .tab-pane {
-        margin: 0;
-        padding-left: 15px;
-        li {
-          line-height: 30px;
-          p {
-            margin-bottom: 0px;
-          }
+    margin-top: -45px;
+    margin-bottom: 105px;
+    .carousel {
+        height: 100%;
+        bottom: 0;
+        top: 0;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow:$box-shadow-light;
+        .carousel-inner{
+            height: 100%;
+            min-height: 100%;
+            max-height: 100%;
+            .card-body > *:not(.card-links){
+                @extend .absolute-center;
+            }
         }
-      }
-    }
-  }
-  
-  #distributors {
-    border-radius: 0px;
-    .card-header {
-      padding: 20px;
-      h5, p {
-        font-size: 14px;
-      }
-      h5 {
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-      p {
-        margin-bottom: 20px;
-      }
-      .dropdown {
-        .btn {
-          text-align: left;
-          padding: 17px 20px;
-          border: 1px solid #ddd;
-          &:after {
+        @media screen and (min-width:768px) {
             position: absolute;
-            right: 16px;
-            top: 29px;
-          }
+            width: calc(100% - 20px);
+            min-height: 100%;
         }
-        .dropdown-menu {
-          width: 100%;
+        .carousel-control-prev, .carousel-control-next{
+            span{
+                display: none
+            }
         }
-      }
-      .btn {
-        padding-top: 17px;
-        padding-bottom: 17px;
-      }
+        .carousel-indicators{
+            bottom: -35px;
+            justify-content:flex-start;
+            margin:0;
+            width:100%;
+            li{
+                height: 14px;
+                width: 14px;
+                background:#fff;
+                cursor:pointer;
+                border-radius:50%;
+                border: 1px solid var(--primary_color);
+                &.active{
+                    background: var(--primary_color);
+                }
+            }
+            @media screen and (max-width:1024px){
+                width: 100%;
+                padding:0px;
+                bottom: -48px;
+            }
+            @media screen and (max-width:767px){
+                bottom: -22px;
+                padding:0px;
+                li{
+                    width: 10px;
+                    height:10px;
+                    padding: 0;
+                }
+            }
+        }
+        .expand-btn{
+            position:absolute;
+            top:8px;
+            right:12px;
+            z-index:2;
+        }
+        @media screen and (max-width:767px){
+            height:360px;
+        }
     }
-  }
+    #product_info {
+        padding-left: 28px;
+        @media screen and (max-width:1024px){
+            padding-left: 15px;
+        }
+        @media screen and (max-width:767px){
+            padding: 38px 18px 0 18px;
+        }
+    }
+    .nav-pills {
+        .nav-item{
+            padding:0 30px 0 0px;
+        }
+        .nav-link {
+            border-radius: 0px;
+            padding: 0;
+            color: var(--secondary_color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            position:relative;
+            &.active {
+                background: transparent;
+                color: #fff;
+                &:before{
+                    height:3px;
+                    content: '';
+                    width: 100%;
+                    bottom: -9px;
+                    position: absolute;
+                    background-color: #fff;
+                }
+            }
+            @media screen and (max-width:767px){
+                margin-bottom: 15px;
+                &.active{
+                    color: var(--primary_color);
+                    font-weight:600;
+                    font-size: 20px;
+                    &:before{
+                        background-color: var(--primary_color);
+                        bottom: -5px;
+                    }
+                }
+            }
+        }
+
+        & + .tab-content {
+            margin-bottom: 50px;
+            .tab-pane {
+                margin: 0;
+                padding-left: 15px;
+                li {
+                    line-height: 30px;
+                    p {
+                        margin-bottom: 0px;
+                    }
+                }
+            }
+        }
+    }
+
+    #distributors {
+        border-radius: 0px;
+        .card-header {
+            padding: 20px;
+            h5, p {
+                font-size: 14px;
+            }
+            h5 {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            p {
+                margin-bottom: 20px;
+            }
+            .dropdown {
+                .btn {
+                    text-align: left;
+                    border: 1px solid #ddd;
+                    &:after {
+                        position: absolute;
+                        right: 16px;
+                        top: 18px;
+                    }
+                    @media screen and (max-width:767px){
+                        &:after{
+                            right: 15px;
+                            top: 18px;
+                        }
+                    }
+                }
+                .dropdown-menu {
+                    width: 100%;
+                }
+            }
+            .btn {
+                width:100%;
+                padding: 6px 10px 8px 10px;
+                &.btn-white{
+                    background-color: #fff;
+                }
+                &.btn-blue{
+                    background-color: var(--navbar_color);
+                    color: #fff;
+                }
+            }
+        }
+    }
+    @media screen and (max-width:1024px){
+        margin-bottom: 90px;
+        padding: 0 25px;
+    }
+    @media screen and (max-width:767px){
+        margin-bottom:42px;
+        padding: 0 2px;
+    }
+    /*overflow: hidden;*/
 }
+

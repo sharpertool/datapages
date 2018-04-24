@@ -1,49 +1,53 @@
 .card {
-  &.chart-card {
-    box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 20px 0 rgba(0,0,0,0.33);
-    .card-body {
-      position: relative;
-      padding-top: 37px;
-      .expand-btn {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        z-index: 1;
-        color: #CCCCCC;
-      }
-      .card-links {
-        margin-top: 25px;
-        text-align: center;
-        a {
-          color: #CCCCCC;
-        }
-      }
-    }
-  }
-  &-carousel-indicator{
-    padding: 0;
-    margin: 25px 0;
-    list-style: none;
-    display: flex;
-    right: auto;
-    left: -5%;
-    top: 120%;
-    li {
-        padding: 6px;
-        border-radius: 50%;
-        margin-right: 8px;
-        width: auto;
-        height: auto;
-        &.active {
-            background: none !important;
+    &.chart-card {
+        height:100%;
+        box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 20px 0 rgba(0,0,0,0.33);
+        box-sizing:border-box;
+        flex-grow: 1;
+        flex-basis: 1px;
+        .card-body {
+            position: relative;
+            padding-top: 37px;
+            height: 100%;
+            .expand-btn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                z-index: 1;
+                color: #CCCCCC;
+            }
+            .card-links {
+                margin-top: 25px;
+                text-align: center;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translate(-50%, 0);
+                -webkit-transform: translate(-50%, 0);
+                -moz-transform: translate(-50%, 0);
+                a {
+                    color: #CCCCCC;
+                }
+            }
         }
     }
-  }
-}
-
-
-.dp {
-    &-chart {
-        height: 500px;
+    &-carousel-indicator{
+        padding: 0;
+        margin: 25px 0;
+        list-style: none;
+        display: flex;
+        right: auto;
+        /*        left: -5%;
+                top: 120%;*/
+        li {
+            padding: 6px;
+            border-radius: 50%;
+            margin-right: 8px;
+            width: auto;
+            height: auto;
+            &.active {
+                /*background: none !important;*/
+            }
+        }
     }
 }

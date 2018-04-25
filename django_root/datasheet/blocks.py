@@ -41,6 +41,7 @@ class ChartBlock(BaseBlock):
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
+    chart_header = blocks.CharBlock(require=False)
     chart_values = blocks.CharBlock(required=False)
 
     class Meta:

@@ -37,6 +37,7 @@ class SelectorBlock(BaseBlock):
                 })
         return results
 
+
 class ChartBlock(BaseBlock):
     json_data = blocks.CharBlock(required=False)
 
@@ -65,3 +66,22 @@ class DimensionBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_dimension.html'
+
+
+class GridDataBlock(BaseBlock):
+    subtitle = blocks.CharBlock(required=False)
+    json_data = blocks.CharBlock(required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/_grid_data.html'
+
+    def clean(self, value):
+        results = super(GridDataBlock, self).clean(value)
+        if value['json_data']:
+            try:
+                json.loads(value['json_data'])
+            except ValueError:
+                raise ValidationError('Validation error in selector block.', params={
+                    'json_data': ['Must be valid json value.']
+                })
+        return results

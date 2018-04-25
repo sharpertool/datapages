@@ -54,9 +54,9 @@ class ChartBlock(BaseBlock):
 
     def clean(self, value):
         results = super(ChartBlock, self).clean(value)
-        if value['chart_values']:
+        if value['chart_props']:
             try:
-                json.dumps(value['chart_values'])
+                json.dumps(value['chart_props'])
             except ValueError:
                 raise ValidationError('Validation error in selector block.', params={
                     'json_data': ['Must be valid json value.']

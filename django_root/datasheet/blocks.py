@@ -38,10 +38,10 @@ class SelectorBlock(BaseBlock):
         return results
 
 class ChartBlock(BaseBlock):
+    subtitle = blocks.CharBlock(require=False)
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
-    chart_header = blocks.CharBlock(require=False)
     chart_values = blocks.CharBlock(required=False)
 
     class Meta:
@@ -54,9 +54,9 @@ class ChartBlock(BaseBlock):
 
     def clean(self, value):
         results = super(ChartBlock, self).clean(value)
-        if value['chart_props']:
+        if value['chart_values']:
             try:
-                json.dumps(value['chart_props'])
+                json.dumps(value['chart_values'])
             except ValueError:
                 raise ValidationError('Validation error in selector block.', params={
                     'json_data': ['Must be valid json value.']

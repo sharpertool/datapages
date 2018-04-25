@@ -48,7 +48,7 @@ class ChartBlock(BaseBlock):
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['json_data'] = value['json_data']
+        context['chart_fields'] = json.dumps(value)
         return context
 
     def clean(self, value):

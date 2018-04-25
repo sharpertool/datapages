@@ -37,26 +37,37 @@ class SelectorBlock(BaseBlock):
                 })
         return results
 
+
 class ChartBlock(BaseBlock):
-    json_data = blocks.CharBlock(required=False)
+    subtitle = blocks.CharBlock(require=False)
+    legend = blocks.CharBlock(required=False)
+    x_axis = blocks.CharBlock(required=False)
+    y_axis = blocks.CharBlock(required=False)
+    chart_values = blocks.TextBlock(required=False)
 
     class Meta:
         template = 'datasheet/blocks/_chart.html'
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['json_data'] = value['json_data']
+        context['chart_values'] = value.get('chart_values', '[]').strip()
+        context['chart_props'] = json.dumps(
+            {k: v for k, v in value.items() if k != 'chart_values'})
         return context
 
     def clean(self, value):
+        """
+        Insure we can parse the json value with loads, and then dumps it back
+        to remove any excess whitespace, and store as a compact format.
+        """
         results = super(ChartBlock, self).clean(value)
-        if value['json_data']:
-            try:
-                json.dumps(value['json_data'])
-            except ValueError:
-                raise ValidationError('Validation error in selector block.', params={
-                    'json_data': ['Must be valid json value.']
-                })
+        try:
+            data = json.loads(value['chart_values'])
+            results['chart_values'] = json.dumps(data)
+        except ValueError:
+            raise ValidationError('Validation error in selector block.', params={
+                'json_data': ['Must be valid json value.']
+            })
         return results
 
 

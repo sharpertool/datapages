@@ -9,7 +9,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import SheetBasePage, IndexBasePage
-from datasheet.blocks import DimensionBlock
+from datasheet.blocks import DimensionBlock, ChartBlock
 from .blocks import (ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock)
 
@@ -42,7 +42,8 @@ class SheetPage(SheetBasePage):
         ('coil_data', CoilDataBlock()),
         ('dimension', DimensionBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
-        ('revisions', RevisionBlock())
+        ('revisions', RevisionBlock()),
+        ('chart', ChartBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

@@ -41,21 +41,21 @@ class ChartBlock(BaseBlock):
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
-    json_data = blocks.CharBlock(required=False)
+    chart_values = blocks.CharBlock(required=False)
 
     class Meta:
         template = 'datasheet/blocks/_chart.html'
 
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
-        context['chart_fields'] = json.dumps(value)
+        context['chart_props'] = json.dumps(value)
         return context
 
     def clean(self, value):
         results = super(ChartBlock, self).clean(value)
-        if value['json_data']:
+        if value['chart_values']:
             try:
-                json.dumps(value['json_data'])
+                json.dumps(value['chart_values'])
             except ValueError:
                 raise ValidationError('Validation error in selector block.', params={
                     'json_data': ['Must be valid json value.']

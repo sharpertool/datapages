@@ -1,10 +1,16 @@
-var renderChart = function() {
-    const elem = document.querySelector('.dp-chart');
+(function(w, d, target) {
+    const elem = d.querySelector(target);
 
     const raw = elem.dataset.items;
 
-    const chart_object = JSON.parse(raw);
+    const props = JSON.parse(raw);
 
+    const chart_data = JSON.parse(props.chart_values);
+
+    const chart_title = props.title,
+        chart_legend = props.legend,
+        x_axis = props.x_axis,
+        y_axis = props.y_axis
 
     //hide data after
     delete elem.dataset.items;
@@ -86,7 +92,7 @@ var renderChart = function() {
         },
         "dataProvider": chart_object
     });
-}
+})(window, document, '.data-pages-chart')
 
 //@todo data formatter
 /*

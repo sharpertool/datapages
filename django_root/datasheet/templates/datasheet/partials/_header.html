@@ -1,52 +1,45 @@
 {% load wagtailimages_tags %}
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-light" id="header">
-  <div class="container">
-    <a href="#" class="navbar-brand">
-        {% if vendor_logo %}
-            <img src="{{ vendor_logo.url }}" alt="brand" width="170px" height="89px">
-        {% endif %}
-    </a>
-    <button class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#header_menu"><span class="navbar-toggler-icon"></span></button>
-
-    <div class="collapse navbar-collapse" id="header_menu">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-              <i class="fa fa-download"></i> Download
-    {#            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-download.png"> Download#}
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="javascript:void(0)" id="print" class="nav-link">
-              <i class="fa fa-print"></i> Print
-    {#            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-print.png"> Print#}
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-              <i class="fa fa-share"></i> Share
-    {#            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-share.png"> Share#}
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-              <i class="fa fa-list-alt"></i> Add to List
-{#            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-addtolist.png"> Add to List#}
-          </a>
-        </li>
-      </ul>
-
-      <div class="my-2 my-lg-0">
-        <a href="#" class="btn btn-outline-primary my-2 my-sm-0">Order Samples</a>
-        <a href="#" class="btn btn-primary my-2 my-sm-0">Buy Now</a>
-      </div>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light container-fluid" id="header">
+    <div class="col-lg-3 col-md-2 p-0 col-4">
+        <a href="#" class="navbar-brand">
+            {% if vendor_logo %}
+                <img src="{{ vendor_logo.url }}" alt="brand" width="170px" height="89px">
+            {% endif %}
+        </a>
     </div>
-  </div>
+    <div class="col-lg-9 col-md-10 col-8 p-0">
+        <div class="navbar-collapse" id="header_menu">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item col col-md-auto">
+                    <a href="#" class="nav-link">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-download.png"> <span>Download</span>
+                    </a>
+                </li>
+
+                <li class="nav-item col col-md-auto">
+                    <a href="#" class="nav-link" id="print">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-print.png"><span>Print</span>
+                    </a>
+                </li>
+
+                <li class="nav-item col col-md-auto">
+                    <a href="#" class="nav-link">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-share.png"> <span>Share</span>
+                    </a>
+                </li>
+
+                <li class="nav-item col col-md-auto">
+                    <a href="#" class="nav-link">
+                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-addtolist.png"><span> Add to List</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="right-links">
+                <a href="#" class="btn btn-outline-white my-2 my-sm-0"><span class="d-none d-md-inline-block">Order</span> Samples</a>
+                <a href="#" class="btn btn-blue my-2 my-sm-0">Buy <span class="d-none d-md-inline-block">Now</span></a>
+            </div>
+        </div>
+    </div>
 </nav>

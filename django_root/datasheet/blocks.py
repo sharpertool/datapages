@@ -47,16 +47,6 @@ class SelectorBlock(BaseBlock):
         context['json_data'] = json.loads(value['json_data'])
         return context
 
-    def clean(self, value):
-        results = super(SelectorBlock, self).clean(value)
-        if value['json_data']:
-            try:
-                json.loads(value['json_data'])
-            except ValueError:
-                raise ValidationError('Validation error in selector block.', params={
-                    'json_data': ['Must be valid json value.']
-                })
-        return results
 
 class JSONTextBlock(blocks.TextBlock):
     """ Custom TextBlock for JSON data that includes a json clean function """

@@ -1,0 +1,10 @@
+<div class="block grid-data" id="{{ block.value.bookmark }}">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+    Subtitle: {{ block.value.subtitle }}
+
+    <div data-display="grid"
+         data-json="{% spaceless %}{{  block.value.json_data }}{% endspaceless %}"
+         style="height: 600px;"
+         class="ag-theme-balham"></div>
+</div>

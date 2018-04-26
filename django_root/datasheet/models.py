@@ -12,6 +12,8 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
+from .blocks import GridDataBlock
+
 # ('heading', blocks.CharBlock(
 #             classname="full title",
 #             template="datasheet/blocks/_heading.html"
@@ -147,6 +149,12 @@ class SheetBasePage(Page):
         context['chat_url'] = settings.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
         context['company_name'] = parent.title
+        context['grid_included'] = False
+
+        for value in self.sheet_blocks:
+            if isinstance(value.block, GridDataBlock):
+                context['grid_included'] = True
+                break
 
         print(f"Logo is {settings.logo}")
         print(f"Primary Color: {settings.primary_color}")

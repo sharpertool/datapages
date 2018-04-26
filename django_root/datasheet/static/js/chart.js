@@ -1,19 +1,23 @@
-var renderChart = function() {
-    const elem = document.querySelector('.dp-chart');
+(function(w, d, target) {
+    const elem = d.querySelector(target);
 
-    const raw = elem.dataset.items;
+    const props = JSON.parse(elem.dataset.props);
+    // Expected values:
+    //      title,
+    //      y_axis -- contains the data item name for the y_axis
+    //      x_axis -- contains the data item name for the x_axis
+    //
+    const chart_data = JSON.parse(elem.dataset.values);
 
-    const chart_object = JSON.parse(raw);
-
-
-    //hide data after
-    delete elem.dataset.items;
+    // Remove elements to clean up DOM
+    delete elem.dataset.props;
+    delete elem.dataset.values;
 
     var chart = AmCharts.makeChart(elem, {
         "type": "serial",
         "theme": "light",
-        "marginRight": 40,
-        "marginLeft": 40,
+        "marginRight": 0,
+        "marginLeft": 80,
         "autoMarginOffset": 20,
         "mouseWheelZoomEnabled":true,
         "dataDateFormat": "YYYY-MM-DD",
@@ -40,26 +44,12 @@ var renderChart = function() {
             "bulletSize": 5,
             "hideBulletsCount": 50,
             "lineThickness": 2,
-            "title": "red line",
+            "title": props.title,
             "useLineColorForBulletBorder": true,
-            "valueField": "value",
+            "type": "smoothedLine",
+            "valueField": props.y_axis,
             "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
         }],
-        "chartScrollbar": {
-            "graph": "g1",
-            "oppositeAxis":false,
-            "offset":30,
-            "scrollbarHeight": 80,
-            "backgroundAlpha": 0,
-            "selectedBackgroundAlpha": 0.1,
-            "selectedBackgroundColor": "#888888",
-            "graphFillAlpha": 0,
-            "graphLineAlpha": 0.5,
-            "selectedGraphFillAlpha": 0,
-            "selectedGraphLineAlpha": 1,
-            "autoGridCount":true,
-            "color":"#AAAAAA"
-        },
         "chartCursor": {
             "pan": true,
             "valueLineEnabled": true,
@@ -70,12 +60,7 @@ var renderChart = function() {
             "valueLineAlpha":0.2,
             "valueZoomable":true
         },
-        "valueScrollbar":{
-          "oppositeAxis":false,
-          "offset":50,
-          "scrollbarHeight":10
-        },
-        "categoryField": "date",
+        "categoryField": props.x_axis,
         "categoryAxis": {
             "parseDates": true,
             "dashLength": 1,
@@ -84,9 +69,9 @@ var renderChart = function() {
         "export": {
             "enabled": true
         },
-        "dataProvider": chart_object
+        "dataProvider": chart_data
     });
-}
+})(window, document, '.data-pages-chart')
 
 //@todo data formatter
 /*

@@ -9,7 +9,11 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import IndexBasePage, SheetBasePage
+<<<<<<< HEAD
 from datasheet.blocks import SelectorBlock, DimensionBlock, GridDataBlock
+=======
+from datasheet.blocks import SelectorBlock, DimensionBlock, ChartBlock
+>>>>>>> 5af09030739a86b1c7b4c95f941532a8d3e49c4f
 
 
 class SheetPageTag(TaggedItemBase):
@@ -40,7 +44,8 @@ class SheetPage(SheetBasePage):
     sheet_blocks = StreamField([
         ('grid', GridDataBlock()),
         ('selector', SelectorBlock()),
-        ('dimension', DimensionBlock())
+        ('dimension', DimensionBlock()),
+        ('chart', ChartBlock())
     ])
 
     parent_page_types = ['panasonic.IndexPage']

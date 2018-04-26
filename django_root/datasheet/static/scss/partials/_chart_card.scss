@@ -51,3 +51,30 @@
         }
     }
 }
+
+.data {
+    &-pages {
+        &-chart {
+            height: 350px;
+        }
+    }
+}
+
+.chart {
+    &-container {
+        position: relative;
+    }
+    &-yaxis, &-xaxis {
+        text-transform: capitalize;
+        display: block;
+    }
+    &-yaxis {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        transform: rotate(-90deg);
+        text-align: center;
+        height: 20px;
+    }
+}

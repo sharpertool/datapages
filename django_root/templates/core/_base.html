@@ -35,6 +35,10 @@
     {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
     {% endblock %}
+
+    <!--[if IE]>
+        <script type="text/javascript" src="xcanvas.compiled.js"></script>
+    <![endif]-->
 </head>
 
     <body class="{% block body_class %}{% endblock %}">

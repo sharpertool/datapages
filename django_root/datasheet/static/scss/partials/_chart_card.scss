@@ -27,6 +27,9 @@
                 -moz-transform: translate(-50%, 0);
                 a {
                     color: #CCCCCC;
+                    &.active {
+                        color: var(--primary_color);
+                    }
                 }
             }
         }

@@ -51,6 +51,40 @@
             </div>
             <div class="row">
                 <div class="offset-lg-3 col-lg-9 col-md-12">
+                    {# Draw on image proof of concept #}
+                    <div style="max-width: 700px;">
+                        <div class="card chart-card">
+                            <div class="card-body">
+                                <a href="#" class="expand-btn">
+                                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
+                                </a>
+
+                                <div class="image">
+                                    {% image block.value.image original as photo %}
+                                </div>
+
+                                <div class="card-links">
+                                    <a href="javascript:void(0)"
+                                       class="card-link"
+                                       data-action="zoom"><i class="fa fa-search-plus"></i></a>
+
+                                    <a href="javascript:void(0)"
+                                       class="card-link"
+                                       data-action="draw"><i class="fa fa-pencil-alt"></i></a>
+
+                                    <a href="javascript:void(0)"
+                                       class="card-link"
+                                       data-action="download"><i class="fa fa-download"></i></a>
+
+                                    <a href="javascript:void(0)"
+                                       class="card-link"
+                                       data-action="share"><i class="fa fa-share"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# End #}
+
                     {% for block in page.sheet_blocks %}
                         {% include_block block %}
                     {% endfor %}
@@ -70,6 +104,7 @@
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.2.3/fabric.min.js"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -80,8 +115,9 @@
 {% endblock%}
 
 {% block extra_js %}
-    <script src="{% static 'js/chart.js' %}"></script>
+{#    <script src="{% static 'js/chart.js' %}"></script>#}
     <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/card.js' %}"></script>
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
     -->

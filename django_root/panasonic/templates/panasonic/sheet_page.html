@@ -79,16 +79,21 @@
     {% endif %}
 {% endblock%}
 
+{% block main_js %}
+    {{ block.super }}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+{% endblock%}
+
 {% block extra_js %}
     <script src="{% static 'js/chart.js' %}"></script>
     <script src="{% static 'js/print.js' %}"></script>
+
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
     -->
     {% if grid_included %}
         <script src="{% static 'js/grid.js' %}"></script>
     {% endif %}
-
     <script type="text/javascript">
         (function($) {
             //jump-to-section

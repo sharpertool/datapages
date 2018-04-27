@@ -47,6 +47,7 @@ class SelectorBlock(BaseBlock):
 
 class ChartBlock(BaseBlock):
     subtitle = blocks.CharBlock(require=False)
+    type = blocks.CharBlock(require=False)
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
@@ -62,8 +63,9 @@ class ChartBlock(BaseBlock):
             {k: v for k, v in value.items() if k != 'chart_values'})
         return context
 
-    def clean(self, *args, **kwargs):
-        return super().clean(*args, **kwargs)
+    def clean(self, value, *args, **kwargs):
+        print(value)
+        return super().clean(value, *args, **kwargs)
 
 
 class DimensionBlock(BaseBlock):

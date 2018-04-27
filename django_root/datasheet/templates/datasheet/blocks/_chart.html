@@ -1,20 +1,13 @@
 <div class="block">
     <h1 class="title"><span>{{block.value.title}}</span></h1>
     <div class="chart-section row">
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-            <h2 class="pl-5">{{block.value.subtitle}}</h2>
-            <p class="pl-5">{{block.value.legend}}</p>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div className="chart-container">
-                <div class="chart-yaxis">{{block.value.y_axis}}</div>
                 <div class="data-pages-chart"
                      id="{{ block.value.bookmark }}" data-target="{{ block.value.bookmark }}"
                      data-props="{% spaceless %}{{ chart_props }}{% endspaceless%}"
-                     data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}"
-                >
+                     data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}">
 
-                </div>
-                <div class="chart-xaxis text-center">
-                    {{block.value.x_axis}}
                 </div>
             </div>
         </div>

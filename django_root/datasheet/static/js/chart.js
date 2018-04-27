@@ -1,88 +1,103 @@
-(function(w, d, target) {
-    const elem = d.querySelector(target);
+class Chart {
+    constructor(target, props, series) {
+        this.title = props.title
+        this.xAxis = props.x_axis
+        this.yAxis = props.y_axis
+        this.series = series
+        this.type = props.type
+        this.target = target
+        this.legend = props.legend
+        this.subtitle = props.subtitle
+    }
 
-    const props = JSON.parse(elem.dataset.props);
-    // Expected values:
-    //      title,
-    //      y_axis -- contains the data item name for the y_axis
-    //      x_axis -- contains the data item name for the x_axis
-    //
-    const chart_data = JSON.parse(elem.dataset.values);
-
-    // Remove elements to clean up DOM
-    delete elem.dataset.props;
-    delete elem.dataset.values;
-
-    var chart = AmCharts.makeChart(elem, {
-        "type": "serial",
-        "theme": "light",
-        "marginRight": 0,
-        "marginLeft": 80,
-        "autoMarginOffset": 20,
-        "mouseWheelZoomEnabled":true,
-        "dataDateFormat": "YYYY-MM-DD",
-        "valueAxes": [{
-            "id": "v1",
-            "axisAlpha": 0,
-            "position": "left",
-            "ignoreAxisWidth":true
-        }],
-        "balloon": {
-            "borderThickness": 1,
-            "shadowAlpha": 0
-        },
-        "graphs": [{
-            "id": "g1",
-            "balloon":{
-              "drop":true,
-              "adjustBorderColor":false,
-              "color":"#ffffff"
+    render() {
+        const {
+            subtitle,
+            legend,
+            title,
+            xAxis,
+            yAxis,
+            series,
+            type,
+            target
+        } = this
+        const options = {
+            chart: {
+                type,
+                renderTo: target
             },
-            "bullet": "round",
-            "bulletBorderAlpha": 1,
-            "bulletColor": "#FFFFFF",
-            "bulletSize": 5,
-            "hideBulletsCount": 50,
-            "lineThickness": 2,
-            "title": props.title,
-            "useLineColorForBulletBorder": true,
-            "type": "smoothedLine",
-            "valueField": props.y_axis,
-            "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
-        }],
-        "chartCursor": {
-            "pan": true,
-            "valueLineEnabled": true,
-            "valueLineBalloonEnabled": true,
-            "cursorAlpha":1,
-            "cursorColor":"#258cbb",
-            "limitToGraph":"g1",
-            "valueLineAlpha":0.2,
-            "valueZoomable":true
-        },
-        "categoryField": props.x_axis,
-        "categoryAxis": {
-            "parseDates": true,
-            "dashLength": 1,
-            "minorGridEnabled": true
-        },
-        "export": {
-            "enabled": true
-        },
-        "dataProvider": chart_data
-    });
-})(window, document, '.data-pages-chart')
+            title: {
+                text: subtitle
+            },
+            subtitle: {
+                text: legend
+            },
+            xAxis: {
+                reversed: false,
+                title: {
+                    enabled: true,
+                    text: xAxis
+                },
+                labels: {
+                    format: '{value}'
+                },
+                maxPadding: 0.05,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: yAxis
+                },
+                labels: {
+                    format: '{value}°'
+                },
+                lineWidth: 2
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br/>',
+                pointFormat: '{point.x} km: {point.y}°C'
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enable: false
+                    }
+                }
+            },
+            series: [series]
+        }
 
-//@todo data formatter
-/*
-var DataShaper = function(chart_object) {
-    const { headings,  data } = chart_object
-    return data.map((values) => {
-        return values.map((value, i) => {
-            const a = {}
-            a[headings[i]] = values[i]
-            return a
-        })
-    })
+        return new Highcharts.Chart(options)
+    }
 }
-*/
+
+
+//Initialize charts
+(function(w, d, target) {
+    const elems = d.querySelectorAll(target);
+
+    return elems.forEach((elem, key) => {
+        if(elem.dataset.props && elem.dataset.values) {
+            const props = JSON.parse(elem.dataset.props);
+            // Expected values:
+            //      title,
+            //      y_axis -- contains the data item name for the y_axis
+            //      x_axis -- contains the data item name for the x_axis
+            //
+            const chart_data = JSON.parse(elem.dataset.values)
+            // Remove elements to clean up DOM
+            delete elem.dataset.props
+            delete elem.dataset.values
+
+            const chart = new Chart(elem, props, chart_data)
+
+            return chart.render()
+        }
+        console.error('No dataset')
+        return
+    })
+
+})(window, document, '.data-pages-chart')

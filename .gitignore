@@ -1,3 +1,4 @@
+*~
 *.pyc
 *.pyo
 *.db
@@ -46,6 +47,5 @@ django_root/static/
 !django_root/static/font
 /codepen/**/*.njk
 !/codepen/datasheet_codepen_context.njk
-
-
 collectedstatic
+yarn-error.log

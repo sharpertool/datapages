@@ -37,7 +37,7 @@ django-compressor
 pytz>=2017.2
 Pillow>=4.2.1
 
-django-suit
+django-suit==0.2.26
 
 # Deployment
 zappa

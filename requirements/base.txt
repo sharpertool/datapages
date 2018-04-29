@@ -18,7 +18,7 @@ django-environ==0.4.3
 django-secure==1.0.1
 
 # For caching
-django-redis
+django-redis==4.9.0
 
 # Utilities
 pytz==2017.2

@@ -1,7 +1,7 @@
 
 # Core tools
 django==1.11.3
-wagtail==1.11
+wagtail==2.0.1
 
 # Forms
 #django-braces

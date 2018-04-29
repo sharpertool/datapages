@@ -5,5 +5,5 @@ Werkzeug
 
 django-debug-toolbar
 
-ipython
+ipython==6.3.1
 

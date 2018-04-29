@@ -1,6 +1,6 @@
 
 # Core tools
-django==1.11.3
+django==2.0.4
 wagtail==1.11
 
 # Forms

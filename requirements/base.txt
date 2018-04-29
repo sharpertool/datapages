@@ -7,7 +7,7 @@ wagtail==1.11
 #django-braces
 #django-crispy-forms
 
-django-allauth==0.32.0
+django-allauth==0.35.0
 
 # Database
 psycopg2==2.7.1

@@ -4,7 +4,7 @@ coverage
 django_coverage_plugin
 
 django-test-plus
-factory_boy
+factory_boy==2.10.0
 model_mommy
 
 pytest-django

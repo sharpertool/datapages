@@ -10,7 +10,7 @@ wagtail==1.11
 django-allauth==0.32.0
 
 # Database
-psycopg2==2.7.1
+psycopg2==2.7.4
 #django-model-utils==2.4
 
 # Reading environment variables, secure enclaves

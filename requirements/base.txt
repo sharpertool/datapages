@@ -1,43 +1,43 @@
 
 # Core tools
-django>=2.0, <2.1
-wagtail>=2.0,<=2.1
+django==2.0.4
+wagtail==2.0.1
 
 # Forms
 #django-braces
 #django-crispy-forms
 
-django-allauth>=0.32.0
+django-allauth==0.35.0
 
 # Database
 # NOTE: version 2.7.4 is busted.. do not update.
 psycopg2==2.7.3
 
 # Logging, errors
-raven>=6.6.0
+raven==6.7.0
 
-django-model-utils>=3.1
+django-model-utils==3.1.1
 
 # Reading environment variables, secure enclaves
-django-environ>=0.4
-#django-secure>==1.0
+django-environ==0.4.4
+#django-secure==1.0.1
 
 # For caching
 #django-redis
 
 # Static and Media files
-django-storages>=1.6.5,<=1.7
-boto3>=1.6.4<=1.7
-django-pipeline>=1.6.14,<=1.7
+django-storages==1.6.6
+boto3==1.7.10
+django-pipeline==1.6.14
 
 # SCSS files
-django-compressor
+django-compressor==2.2
 
 # Utilities
-pytz>=2017.2
-Pillow>=4.2.1
+pytz==2018.4
+Pillow==5.1.0
 
-django-suit
+django-suit==0.2.26
 
 # Deployment
-zappa
+#zappa==0.45.1

@@ -14,7 +14,7 @@ psycopg2==2.7.1
 #django-model-utils==2.4
 
 # Reading environment variables, secure enclaves
-django-environ==0.4.3
+django-environ==0.4.4
 django-secure==1.0.1
 
 # For caching

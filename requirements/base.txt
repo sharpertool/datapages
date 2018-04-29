@@ -22,4 +22,4 @@ django-redis
 
 # Utilities
 pytz==2017.2
-Pillow==4.2.0
+Pillow==5.1.0

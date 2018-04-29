@@ -40,4 +40,4 @@ Pillow>=4.2.1
 django-suit==0.2.26
 
 # Deployment
-zappa
+zappa==0.45.1

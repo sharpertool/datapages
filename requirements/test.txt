@@ -5,7 +5,7 @@ django_coverage_plugin
 
 django-test-plus
 factory_boy
-model_mommy
+model_mommy==1.5.1
 
 pytest-django
 pytest-sugar

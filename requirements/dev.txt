@@ -1,6 +1,6 @@
 -r base.txt
 
 django-extensions
-Werkzeug
+Werkzeug==0.14.1
 
 django-debug-toolbar

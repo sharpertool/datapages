@@ -9,7 +9,7 @@ model_mommy
 
 pytest-django
 pytest-sugar
-flake8
+flake8==3.5.0
 
 django-nose
 unittest-xml-reporting

@@ -43,6 +43,14 @@
             </div>
             <div class="row">
                 <div class="offset-lg-3 col-lg-9 col-md-12">
+                    <div class="block">
+                        <h1 class="title"><span>Graphs</span></h1>
+                        <div class="chart-section row">
+                            {% for block in page.graphs %}
+                                {% include_block block %}
+                            {% endfor %}
+                        </div>
+                    </div>
                     {% for block in page.sheet_blocks %}
                         {% include_block block %}
                     {% endfor %}

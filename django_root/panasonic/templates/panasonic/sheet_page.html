@@ -51,6 +51,9 @@
             </div>
             <div class="row">
                 <div class="offset-lg-3 col-lg-9 col-md-12">
+                    {% for block in page.graphs %}
+                        {% include_block block %}
+                    {% endfor %}
                     {% for block in page.sheet_blocks %}
                         {% include_block block %}
                     {% endfor %}

@@ -1,5 +1,7 @@
 from django.db import models
 
+
+from wagtail.core import blocks
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Page, Orderable
@@ -43,7 +45,6 @@ class SheetPage(SheetBasePage):
         ('dimension', DimensionBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
         ('revisions', RevisionBlock()),
-        ('chart', ChartBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),
@@ -53,6 +54,11 @@ class SheetPage(SheetBasePage):
         ('image', CarouselImageBlock()),
         ('embed', CarouselEmbedBlock()),
         ('fusion360', CarouselFusionEmbedBlock()),
+    ], blank=True)
+
+    graphs = StreamField([
+        ('chart', ChartBlock()),
+        ('description', blocks.RichTextBlock(classname="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6"))
     ], blank=True)
 
     parent_page_types = ['IndexPage']
@@ -66,6 +72,7 @@ class SheetPage(SheetBasePage):
             heading="Attributes and Applications",
             classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
+        StreamFieldPanel('graphs'),
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
     ]

@@ -1,12 +1,19 @@
 {% load wagtailcore_tags %}
-<div class="characteristics_chart">
-    <h3>{{ value.title }}</h3>
-    <h4>{{ value.subtitle }}</h4>
-    <div className="chart-container">
+<div class="characteristics_chart container text-center">
+{#    <h3>{{ value.title }}</h3>#}
+{#    <h4>{{ value.subtitle }}</h4>#}
+    <span class="chart-subtitle">{{ value.subtitle }}</span>
+    <div class="chart-container container">
         <div class="data-pages-chart"
-             id="{{ value.bookmark }}" data-target="{{ value.bookmark }}"
-             data-props="{% spaceless %}{{ value.chart_props }}{% endspaceless%}"
-             data-values="{% spaceless %}{{ value.chart_values }}{% endspaceless%}">
+             id="{{ bookmark }}" data-target="{{ bookmark }}"
+             data-props="{% spaceless %}{{ chart_props }}{% endspaceless%}"
+             data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}">
+        </div>
+        <div class="chart-card-links">
+            <a href="#" class="chart-card-link"><i class="fa fa-search-plus"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-pencil-alt"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-download"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-share"></i></a>
         </div>
     </div>
 </div>

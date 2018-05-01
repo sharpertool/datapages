@@ -24,7 +24,8 @@ class Chart {
         const options = {
             chart: {
                 type,
-                renderTo: target
+                renderTo: target,
+                plotShadow:false,
             },
             title: {
                 text: subtitle
@@ -79,7 +80,7 @@ class Chart {
 (function(w, d, target) {
     const elems = d.querySelectorAll(target);
 
-    return elems.forEach((elem, key) => {
+    elems.forEach((elem, key) => {
         if(elem.dataset.props && elem.dataset.values) {
             const props = JSON.parse(elem.dataset.props);
             // Expected values:
@@ -94,10 +95,21 @@ class Chart {
 
             const chart = new Chart(elem, props, chart_data)
 
-            return chart.render()
+            chart.render()
+        } else {
+            console.error('No dataset')
         }
-        console.error('No dataset')
-        return
+    });
+
+    $('.chart-container').each(function(i) {
+        console.log('Register handlers on chart-container')
+        $(this).mouseenter(function() {
+            console.log("Mouse entered chart")
+            $(this).addClass('hovered')
+        }).mouseleave(function() {
+            console.log("Mouse left chart")
+            $(this).removeClass('hovered')
+        })
     })
 
 })(window, document, '.data-pages-chart')

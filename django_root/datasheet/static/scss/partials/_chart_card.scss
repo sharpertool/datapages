@@ -55,9 +55,51 @@
 .data {
 }
 
+.chart-subtitle {
+    height: 17px;
+    font-size: 14px;
+    font-family: BrixSansRegular-Italic;
+    line-height: 17px;
+}
+
+// Size of Charts
+// Stretch is the amount to exetend the bottom of the chart on hover
+$chart-height: 380px;
+$container-height: 405px;
+$chart-hover-stetch: 25px;
+
 .chart {
     &-container {
         position: relative;
+        //background: lightgrey;
+        //border: green 1px solid;
+        height: $container-height;
+        margin: 10px;
+        margin-top: 15px;
+        margin-bottom: $chart-hover-stetch;
+        padding: 2px;
+        box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 30px 0 rgba(0,0,0,0.1);
+
+        .chart-card-links {
+            display: none;
+        }
+
+        &.hovered {
+            margin-bottom: 0px;
+            height: $container-height + $chart-hover-stetch;
+
+            .chart-card-links {
+                display: inline-block;
+                height: 25px;
+                width: 50%;
+
+                .chart-card-link {
+                    margin: 0px 17.5px;
+                    color: #cccccc;
+                }
+            }
+        }
+
     }
     &-yaxis, &-xaxis {
         text-transform: capitalize;
@@ -73,3 +115,9 @@
         height: 20px;
     }
 }
+
+.data-pages-chart {
+    width: 100%;
+    height: $chart-height;
+}
+

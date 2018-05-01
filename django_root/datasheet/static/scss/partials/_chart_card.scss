@@ -79,6 +79,8 @@ $chart-hover-stetch: 25px;
         margin-bottom: $chart-hover-stetch;
         padding: 2px;
         box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 30px 0 rgba(0,0,0,0.1);
+        border-radius: 2px;
+        border: 1px solid #E5E5E5;
 
         .chart-card-links {
             display: none;
@@ -87,6 +89,7 @@ $chart-hover-stetch: 25px;
         &.hovered {
             margin-bottom: 0px;
             height: $container-height + $chart-hover-stetch;
+            box-shadow: 0 0 30px 0 rgba(0,159,189,0.05), 0 0 20px 0 rgba(0,0,0,0.33);
 
             .chart-card-links {
                 display: inline-block;
@@ -98,8 +101,11 @@ $chart-hover-stetch: 25px;
                     color: #cccccc;
                 }
             }
+            &.zoom {
+                width: 75vw;
+                height: 80vh;
+            }
         }
-
     }
     &-yaxis, &-xaxis {
         text-transform: capitalize;

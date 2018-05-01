@@ -101,14 +101,25 @@ class Chart {
         }
     });
 
+    // Add/remote hovered class so we can adjust the
+    // style of the chart when mouse is hovered
     $('.chart-container').each(function(i) {
-        console.log('Register handlers on chart-container')
+        //
         $(this).mouseenter(function() {
-            console.log("Mouse entered chart")
             $(this).addClass('hovered')
         }).mouseleave(function() {
-            console.log("Mouse left chart")
             $(this).removeClass('hovered')
+                .removeClass('zoom')
+        })
+    })
+
+    // When the zoom icon is clicked, add the 'zoom' class to the
+    // card identified by the id. ID is set in the template so it
+    // will be unique.
+    $('.chart-card-zoom').each(function(i) {
+        $(this).click(function() {
+            var id = $(this).data('cardid');
+            $(id).toggleClass('zoom')
         })
     })
 

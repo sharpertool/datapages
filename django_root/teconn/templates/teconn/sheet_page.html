@@ -14,6 +14,7 @@
             --primary_color: {{ primary_color }};
             --secondary_color: {{ secondary_color }};
         }
+
         .hero-banner {
             background-color: {{ primary_color }};
         }
@@ -58,7 +59,7 @@
 {% block main_js %}
     {{ block.super }}
     <script src="https://code.highcharts.com/highcharts.js"></script>
-{% endblock%}
+{% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'js/chart.js' %}"></script>
@@ -67,17 +68,17 @@
         (function($) {
             //jump-to-section
             $("a[data-action='anchor']").click(function(e) {
-                var target = $(this.getAttribute('href'))
+                var target = $(this.getAttribute('href'));
                 $('html, body').animate({
                     scrollTop: $(target).offset().top - 100
                 }, 1000);
                 $(this).parents('li').addClass('active').siblings('li').removeClass('active');
                 $('.jump-section-wrapper').trigger('click');
-               e.preventDefault();
+                e.preventDefault();
             });
 
             //jump-to-section-dropdown
-            $('.sidebar').on('click', '.jump-section-wrapper', function (e) {
+            $('.sidebar').on('click', '.jump-section-wrapper', function(e) {
                 e.preventDefault();
                 var $this = $(this);
                 if ($this.parents('.sidebar').find('ul').is(':not(":animated")')) {
@@ -88,9 +89,9 @@
                 }
             });
 
-            $(window).on('load resize', function(){
-              var headerHeight =  $('#header').height();
-              $('main').css('margin-top',headerHeight);
+            $(window).on('load resize', function() {
+                var headerHeight = $('#header').height();
+                $('main').css('margin-top', headerHeight);
             });
         })($);
     </script>

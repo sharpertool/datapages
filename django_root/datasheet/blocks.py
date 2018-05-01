@@ -68,6 +68,41 @@ class ChartBlock(BaseBlock):
         return super().clean(value, *args, **kwargs)
 
 
+class CharacteristicsChartBlock(blocks.StructBlock):
+    """ Single chart for a Chart Characteristics Block """
+    title = blocks.CharBlock(required=False)
+    subtitle = blocks.CharBlock(require=False)
+    type = blocks.CharBlock(require=False)
+    legend = blocks.CharBlock(required=False)
+    x_axis = blocks.CharBlock(required=False)
+    y_axis = blocks.CharBlock(required=False)
+    chart_values = JSONTextBlock(required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/_characteristics_chart.html'
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context['chart_values'] = value.get('chart_values', '[]').strip()
+        context['chart_props'] = json.dumps(
+            {k: v for k, v in value.items() if k != 'chart_values'})
+        return context
+
+
+class CharacteristicsBlock(blocks.StructBlock):
+    """
+    Characteristics Table that contains multiple
+    characteristics charts in a 2-up or 1-up pattern
+    """
+    title = blocks.CharBlock(default="Characteristics")
+    subtitle = blocks.CharBlock(require=False)
+    bookmark = blocks.CharBlock(default="characteristics")
+    charts = blocks.ListBlock(CharacteristicsChartBlock())
+
+    class Meta:
+        template = 'datasheet/blocks/_characteristics.html'
+
+
 class DimensionBlock(BaseBlock):
     image = ImageChooserBlock()
 

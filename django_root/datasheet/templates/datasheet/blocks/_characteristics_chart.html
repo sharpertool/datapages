@@ -1,0 +1,22 @@
+{% load wagtailcore_tags %}
+<div class="characteristics_chart container text-center">
+{#    <h3>{{ value.title }}</h3>#}
+{#    <h4>{{ value.subtitle }}</h4>#}
+    <span class="chart-subtitle">{{ value.subtitle }}</span>
+    <div class="chart-container container" id="chart-lightbox-{{ forloop.counter0 }}">
+        <div class="data-pages-chart"
+             id="{{ bookmark }}" data-target="{{ bookmark }}"
+             data-props="{% spaceless %}{{ chart_props }}{% endspaceless%}"
+             data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}">
+        </div>
+        <div class="chart-card-links">
+            <a data-cardid="#chart-lightbox-{{ forloop.counter0 }}"
+               class="chart-card-link chart-card-zoom">
+                <i class="fa fa-search-plus"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-pencil-alt"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-download"></i></a>
+            <a href="#" class="chart-card-link"><i class="fa fa-share"></i></a>
+        </div>
+    </div>
+</div>
+

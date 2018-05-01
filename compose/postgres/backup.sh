@@ -21,8 +21,13 @@ echo "creating backup"
 echo "---------------"
 
 # Calculate a default filename
-FILENAME=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
-pg_dump -h postgres -U $POSTGRES_USER $POSTGRES_DB >> /backups/$FILENAME
+DEFAULT=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
+FILENAME=${1:-$DEFAULT}
+if [[ $(dirname ${FILENAME}) == '.' ]];then
+    FILENAME=/backups/$(basename ${FILENAME})
+fi
+
+pg_dump -h postgres -U $POSTGRES_USER $POSTGRES_DB >> $FILENAME
 
 echo "successfully created backup $FILENAME"
 echo $FILENAME

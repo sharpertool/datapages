@@ -1,0 +1,15 @@
+{% load wagtailcore_tags %}
+<div class="characteristics_charts container-fluid">
+    <h2>Characteristics</h2>
+    <div class="row">
+        {% for chart in block.value.charts %}
+            <div class="col-lg-4 col-md-6">
+                <h1>Chart Here</h1>
+                {% include_block chart %}
+            </div>
+            
+        {% endfor %}
+    </div>
+    
+</div>
+

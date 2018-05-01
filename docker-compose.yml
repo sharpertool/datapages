@@ -14,6 +14,7 @@ services:
       # You can also modify this to point to your local Dropbox location where the shared
       # backups are stored. For me this is:
       - "~/Dropbox (Big Zeta)/Development/backups/datasheet:/backups"
+      - "./database/backups:/mybackups"
     environment:
       - POSTGRES_USER=datasheet_user
       - POSTGRES_DB=datasheetai

@@ -1,0 +1,13 @@
+{% load wagtailcore_tags %}
+<div class="characteristics_chart">
+    <h3>{{ value.title }}</h3>
+    <h4>{{ value.subtitle }}</h4>
+    <div className="chart-container">
+        <div class="data-pages-chart"
+             id="{{ value.bookmark }}" data-target="{{ value.bookmark }}"
+             data-props="{% spaceless %}{{ value.chart_props }}{% endspaceless%}"
+             data-values="{% spaceless %}{{ value.chart_values }}{% endspaceless%}">
+        </div>
+    </div>
+</div>
+

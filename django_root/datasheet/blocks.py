@@ -81,3 +81,11 @@ class GridDataBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_grid_data.html'
+
+
+class VideoBlock(BaseBlock):
+    title = blocks.CharBlock(required=False)
+    url = blocks.TextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_video.html'

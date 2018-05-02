@@ -10,6 +10,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import IndexBasePage, SheetBasePage
 from datasheet.blocks import SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock
+from teconn.blocks import CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock
 
 
 class SheetPageTag(TaggedItemBase):
@@ -44,11 +45,18 @@ class SheetPage(SheetBasePage):
         ('chart', ChartBlock())
     ])
 
+    carousel = StreamField([
+        ('image', CarouselImageBlock()),
+        ('embed', CarouselEmbedBlock()),
+        ('fusion360', CarouselFusionEmbedBlock()),
+    ], blank=True)
+
     parent_page_types = ['panasonic.IndexPage']
 
     tags = ClusterTaggableManager(through=SheetPageTag, blank=True, related_name='sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
+        StreamFieldPanel('carousel'),
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
     ]

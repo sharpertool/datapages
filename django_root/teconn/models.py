@@ -10,7 +10,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import SheetBasePage, IndexBasePage
-from datasheet.blocks import DimensionBlock, ChartBlock, CharacteristicsBlock, VideoBlock
+from datasheet.blocks import DimensionBlock, ChartBlock, CharacteristicsBlock, VideoBlock, Embed3DBlock
 from .blocks import (ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock)
 
@@ -47,6 +47,7 @@ class SheetPage(SheetBasePage):
         ('characteristics', CharacteristicsBlock()),
         ('chart', ChartBlock()),
         ('video', VideoBlock()),
+        ('embed_3d', Embed3DBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

@@ -9,6 +9,13 @@
             position: relative;
             padding-top: 37px;
             height: 100%;
+            .media {
+                @media (min-width: 992px) {
+                    .modal > .modal-dialog.modal-lg {
+                        max-width: 95%;
+                    }
+                }
+            }
             .expand-btn {
                 position: absolute;
                 right: 10px;

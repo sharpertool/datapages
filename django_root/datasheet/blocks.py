@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 
 
 class BaseBlock(blocks.StructBlock):
@@ -124,3 +125,11 @@ class VideoBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_video.html'
+
+
+class Embed3DBlock(BaseBlock):
+    embed = EmbedBlock()
+    share_url = blocks.TextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_embed_3d.html'

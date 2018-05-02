@@ -70,6 +70,7 @@
     <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -77,11 +78,6 @@
     {% if grid_included %}
         <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
     {% endif %}
-{% endblock%}
-
-{% block main_js %}
-    {{ block.super }}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
 {% endblock%}
 
 {% block extra_js %}

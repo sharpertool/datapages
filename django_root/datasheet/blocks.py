@@ -47,7 +47,11 @@ class SelectorBlock(BaseBlock):
 
 class ChartBlock(BaseBlock):
     subtitle = blocks.CharBlock(require=False)
-    type = blocks.CharBlock(require=False)
+    type = blocks.ChoiceBlock(require=True,
+                              choices=[
+                                  'spline',
+                                  ''
+                              ])
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)

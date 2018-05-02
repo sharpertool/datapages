@@ -25,7 +25,11 @@ if [[ $# -eq 0 ]] ; then
 fi
 
 # set the backupfile variable
-BACKUPFILE=/backups/$1
+# Calculate a default filename
+BACKUPFILE=$1
+if [[ $(dirname ${BACKUPFILE}) == '.' ]];then
+    BACKUPFILE=/backups/$(basename ${BACKUPFILE})
+fi
 
 # check that the file exists
 if ! [ -f $BACKUPFILE ]; then

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.core.models import Page, Orderable
@@ -9,7 +10,7 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import SheetBasePage, IndexBasePage
-from datasheet.blocks import DimensionBlock, ChartBlock
+from datasheet.blocks import DimensionBlock, ChartBlock, CharacteristicsBlock, VideoBlock
 from .blocks import (ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock)
 
@@ -43,7 +44,9 @@ class SheetPage(SheetBasePage):
         ('dimension', DimensionBlock()),
         ('product_code', RelayProductCodeStructureBlock()),
         ('revisions', RevisionBlock()),
-        ('chart', ChartBlock())
+        ('characteristics', CharacteristicsBlock()),
+        ('chart', ChartBlock()),
+        ('video', VideoBlock()),
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

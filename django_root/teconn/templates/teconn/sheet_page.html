@@ -44,17 +44,10 @@
             </div>
             <div class="row">
                 <div class="offset-lg-3 col-lg-9 col-md-12">
-                    <div class="col clara">
-                        <div id="clara-embed" style="width: 100%; height: 300px;background: lightgray;"></div>
-                        <button type="button" id="red-body">Button1</button>
-
-                    </div>
-
 {#                    <iframe src="https://clara.io/embed/9ef301db-ac76-4b74-a915-70736801b21f?renderer=webgl" width="800" height="600" allowfullscreen></iframe>#}
                     {% for block in page.sheet_blocks %}
                         {% include_block block %}
                     {% endfor %}
-
 
                 </div>
             </div>
@@ -72,25 +65,9 @@
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        var clara = claraplayer('clara-embed');
-        var cameras = clara.scene.filter({type: 'Camera'});
-
-        clara.on('loaded', function() {
-            console.log('Clara player is loaded and ready');
-        });
-
-        // Fetch and initialize the sceneId
-        var uuid = "9ef301db-ac76-4b74-a915-70736801b21f";
-        clara.sceneIO.fetchAndUse(uuid).then(function() {
-            console.log('scene:', uuid, 'has been loaded');
-        }).catch(function(err) {
-            console.log('There was an error loading:', uuid)
-        })
-    </script>
-
     <script src="{% static 'js/chart.js' %}"></script>
     <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/card.js' %}"></script>
     <script type="text/javascript">
         (function($) {
             //jump-to-section

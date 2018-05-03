@@ -2,7 +2,18 @@
     var cards = $('.card.chart-card');
 
     function zoomHandler () {
-        console.log('zoom button clicked');
+        if (!this.media.find('.modal').length) {
+            var lightbox = createLightbox(this.media);
+
+            // Register lightbox shown event
+            lightbox.on('shown.bs.modal', function (e) {
+                initializeClara(lightbox.find('.embed'));
+            });
+
+            this.media.append(lightbox);
+        }
+
+        this.media.find('.modal').modal('show');
     }
 
     function drawHandler () {
@@ -35,8 +46,8 @@
         buttonShare && buttonShare.on('click', shareHandler.bind({ media: media }));
         buttonExpand && buttonExpand.on('click', expandHandler.bind({ media: media }));
 
-        if (media.length && media.find('.embed').length) {
-            initializeClara(media.find('.embed'));
+        if (media.length && media.find('> .embed').length) {
+            initializeClara(media.find('> .embed'));
         }
     });
 
@@ -55,5 +66,24 @@
         }).catch(function (error) {
             console.log('There was an error loading:', uuid)
         });
+    }
+
+    function createLightbox (container) {
+        var uuid = container.find('> .embed').data('uuid');
+        
+        return $('<div></div>').addClass('modal fade')
+            .attr({ tabindex: '-1', role: 'dialog' })
+            .append(`
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="embed"
+                                 style="width: 100%; height: 900px;background: lightgray;"
+                                 data-uuid="${uuid}"></div>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `);
     }
 })($, claraplayer);

@@ -21,7 +21,7 @@
             {% else %}
                 {% for slide in page.carousel %}
                     <!-- Doing a slider -->
-                    {{ slide }}
+                    {% include_block slide with active=forloop.first %}
                 {% endfor %}
             {% endif %}
         </div>

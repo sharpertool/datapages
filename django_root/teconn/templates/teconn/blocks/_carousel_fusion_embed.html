@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailembeds_tags %}
 
-<div class="carousel-item card chart-card">
+<div class="carousel-item card chart-card {% if active %}active{% endif %}">
     <div class="card-body">
         <iframe src="{{ value.embed.url }}"
                 width="100%"

@@ -53,6 +53,7 @@ class ChartBlock(BaseBlock):
 
     type = blocks.ChoiceBlock(require=False, choices=[
         ('bar', 'Bar'),
+        ('column', 'Column'),
         ('line', 'Line'),
         ('spline', 'Spline')
     ])
@@ -134,3 +135,19 @@ class GridDataBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_grid_data.html'
+
+
+class VideoBlock(BaseBlock):
+    title = blocks.CharBlock(required=False)
+    url = blocks.TextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_video.html'
+
+
+class Embed3DBlock(BaseBlock):
+    uuid = blocks.CharBlock()
+    share_link = blocks.TextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_embed_3d.html'

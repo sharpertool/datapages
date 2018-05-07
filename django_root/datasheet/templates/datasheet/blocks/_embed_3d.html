@@ -1,0 +1,47 @@
+<div class="block embed-3d" id="{{ block.value.bookmark }}">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+    <div class="card chart-card">
+        <div class="card-body">
+            <a href="javascript:void(0)" class="expand-btn" data-action="expand">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
+            </a>
+
+            <div class="media">
+                <div class="embed"
+                     data-uuid="{{ block.value.uuid }}"
+                     style="width: 100%; height: 500px;background: lightgray;"></div>
+            </div>
+
+            <div class="card-links">
+                <a href="javascript:void(0)"
+                   class="card-link"
+                   data-action="zoom"
+                >
+                    <i class="fa fa-search-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)"
+                   class="card-link"
+                   data-action="draw"
+                >
+                    <i class="fa fa-pencil-alt"></i>
+                </a>
+
+                <a href="javascript:void(0)"
+                   class="card-link"
+                   data-action="download"
+                >
+                    <i class="fa fa-download"></i>
+                </a>
+
+                <a href="javascript:void(0)"
+                   class="card-link"
+                   data-action="share"
+                >
+                    <i class="fa fa-share"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

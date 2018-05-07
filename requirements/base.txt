@@ -1,6 +1,6 @@
 
 # Core tools
-django==2.0.4
+django==2.0.5
 wagtail==2.0.1
 
 # Forms
@@ -11,7 +11,7 @@ django-allauth==0.35.0
 
 # Database
 # NOTE: version 2.7.4 is busted.. do not update.
-psycopg2==2.7.3
+psycopg2==2.7.3 # pyup: ignore
 
 # Logging, errors
 raven==6.7.0
@@ -27,7 +27,7 @@ django-environ==0.4.4
 
 # Static and Media files
 django-storages==1.6.6
-boto3==1.7.11
+boto3==1.7.14
 django-pipeline==1.6.14
 
 # SCSS files

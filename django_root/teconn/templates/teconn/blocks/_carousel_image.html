@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<div class="card chart-card carousel-item active">
+<div class="card chart-card carousel-item {% if active %}active{% endif %}">
     <div class="card-body">
         {% image value.image original as carousel_image %}
         <img class="d-block img-fluid ml-auto mr-auto"

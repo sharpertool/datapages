@@ -47,7 +47,9 @@ class SelectorBlock(BaseBlock):
 
 class ChartBlock(BaseBlock):
     subtitle = blocks.CharBlock(require=False)
-    type = blocks.CharBlock(require=False)
+    type = blocks.ChoiceBlock(choices=[
+        ('spline', 'Spline'),
+    ], require=True)
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
@@ -124,3 +126,11 @@ class VideoBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_video.html'
+
+
+class Embed3DBlock(BaseBlock):
+    uuid = blocks.CharBlock()
+    share_link = blocks.TextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_embed_3d.html'

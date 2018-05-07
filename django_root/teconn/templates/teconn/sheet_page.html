@@ -59,11 +59,13 @@
 {% block main_js %}
     {{ block.super }}
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://clara.io/js/claraplayer.min.js"></script>
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'js/chart.js' %}"></script>
     <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/clara3d.js' %}"></script>
     <script type="text/javascript">
         (function($) {
             //jump-to-section
@@ -95,4 +97,5 @@
             });
         })($);
     </script>
+
 {% endblock %}

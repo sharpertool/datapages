@@ -20,7 +20,7 @@ class Chart {
         } = this
 
         const formatted_series = Array.isArray(series) ? [...series] : [series]
-        console.log(this)
+
         const options = {
             chart: {
                 type,
@@ -85,9 +85,6 @@ class Chart {
             delete elem.dataset.values
             delete elem.dataset.x_axis_config
             delete elem.dataset.y_axis_config
-
-            console.log(props)
-            console.log(chart_data)
 
             const chart = new Chart(elem, props, chart_data)
 

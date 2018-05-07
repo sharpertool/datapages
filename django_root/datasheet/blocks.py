@@ -1,5 +1,7 @@
 import json
 
+import pydash
+
 from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
@@ -46,10 +48,15 @@ class SelectorBlock(BaseBlock):
 
 
 class ChartBlock(BaseBlock):
+
     subtitle = blocks.CharBlock(require=False)
-    type = blocks.ChoiceBlock(choices=[
-        ('spline', 'Spline'),
-    ], require=True)
+
+    type = blocks.ChoiceBlock(require=False, choices=[
+        ('bar', 'Bar'),
+        ('line', 'Line'),
+        ('spline', 'Spline')
+    ])
+
     legend = blocks.CharBlock(required=False)
     x_axis = blocks.CharBlock(required=False)
     y_axis = blocks.CharBlock(required=False)
@@ -74,10 +81,17 @@ class CharacteristicsChartBlock(blocks.StructBlock):
     """ Single chart for a Chart Characteristics Block """
     title = blocks.CharBlock(required=False)
     subtitle = blocks.CharBlock(require=False)
-    type = blocks.CharBlock(require=False)
+
+    type = blocks.ChoiceBlock(require=False, choices=[
+        ('bar', 'Bar'),
+        ('column', 'Column'),
+        ('line', 'Line'),
+        ('spline', 'Spline')
+    ])
+
     legend = blocks.CharBlock(required=False)
-    x_axis = blocks.CharBlock(required=False)
-    y_axis = blocks.CharBlock(required=False)
+    x_axis_config = JSONTextBlock(required=False)
+    y_axis_config = JSONTextBlock(required=False)
     chart_values = JSONTextBlock(required=False)
 
     class Meta:
@@ -86,8 +100,10 @@ class CharacteristicsChartBlock(blocks.StructBlock):
     def get_context(self, value, parent_context=None):
         context = super().get_context(value, parent_context=parent_context)
         context['chart_values'] = value.get('chart_values', '[]').strip()
+        context['x_axis_config'] = value.get('x_axis_config', '[]').strip()
+        context['y_axis_config'] = value.get('y_axis_config', '[]').strip()
         context['chart_props'] = json.dumps(
-            {k: v for k, v in value.items() if k != 'chart_values'})
+            {k: v for k, v in value.items() if not pydash.includes(['chart_values', 'x_axis_config', 'y_axis_config'], k)})
         return context
 
 

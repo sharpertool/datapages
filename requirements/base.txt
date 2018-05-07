@@ -11,7 +11,7 @@ django-allauth==0.35.0
 
 # Database
 # NOTE: version 2.7.4 is busted.. do not update.
-psycopg2==2.7.4
+psycopg2==2.7.3 # pyup: ignore
 
 # Logging, errors
 raven==6.7.0

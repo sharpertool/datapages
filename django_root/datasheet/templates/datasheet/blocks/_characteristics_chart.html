@@ -7,7 +7,9 @@
         <div class="data-pages-chart"
              id="{{ bookmark }}" data-target="{{ bookmark }}"
              data-props="{% spaceless %}{{ chart_props }}{% endspaceless%}"
-             data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}">
+             data-values="{% spaceless %}{{ chart_values }}{% endspaceless%}"
+             data-x_axis_config="{% spaceless %}{{ x_axis_config }}{% endspaceless%}"
+             data-y_axis_config="{% spaceless %}{{ y_axis_config }}{% endspaceless%}">
         </div>
         <div class="chart-card-links">
             <a data-cardid="#chart-lightbox-{{ forloop.counter0 }}"
@@ -19,4 +21,3 @@
         </div>
     </div>
 </div>
-

@@ -1,13 +1,10 @@
 class Chart {
     constructor(target, props, series) {
-        this.title = props.title
-        this.xAxis = props.x_axis
-        this.yAxis = props.y_axis
-        this.series = series
-        this.type = props.type
         this.target = target
-        this.legend = props.legend
-        this.subtitle = props.subtitle
+        this.series = series
+        for(var i in props) {
+            this[i] = props[i]
+        }
     }
 
     render() {
@@ -21,11 +18,14 @@ class Chart {
             type,
             target
         } = this
+
+        const formatted_series = Array.isArray(series) ? [...series] : [series]
+
         const options = {
             chart: {
                 type,
                 renderTo: target,
-                plotShadow:false,
+                plotShadow: false,
             },
             title: {
                 text: subtitle
@@ -33,33 +33,14 @@ class Chart {
             subtitle: {
                 text: legend
             },
-            xAxis: {
-                reversed: false,
-                title: {
-                    enabled: true,
-                    text: xAxis
-                },
-                labels: {
-                    format: '{value}'
-                },
-                maxPadding: 0.05,
-                showLastLabel: true
-            },
-            yAxis: {
-                title: {
-                    text: yAxis
-                },
-                labels: {
-                    format: '{value}°'
-                },
-                lineWidth: 2
-            },
+            xAxis,
+            yAxis,
             legend: {
                 enabled: false
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br/>',
-                pointFormat: '{point.x} km: {point.y}°C'
+                pointFormat: '{point.x} {point.y}'
             },
             plotOptions: {
                 spline: {
@@ -68,7 +49,7 @@ class Chart {
                     }
                 }
             },
-            series: [series]
+            series: formatted_series
         }
 
         return new Highcharts.Chart(options)
@@ -82,7 +63,17 @@ class Chart {
 
     elems.forEach((elem, key) => {
         if(elem.dataset.props && elem.dataset.values) {
-            const props = JSON.parse(elem.dataset.props);
+            const basic_config = JSON.parse(elem.dataset.props)
+
+            const x_axis_config = JSON.parse(elem.dataset.x_axis_config)
+            const y_axis_config = JSON.parse(elem.dataset.y_axis_config)
+
+            const props = {
+                ...basic_config,
+                xAxis:  {...x_axis_config},
+                yAxis: {...y_axis_config}
+            }
+
             // Expected values:
             //      title,
             //      y_axis -- contains the data item name for the y_axis
@@ -92,6 +83,8 @@ class Chart {
             // Remove elements to clean up DOM
             delete elem.dataset.props
             delete elem.dataset.values
+            delete elem.dataset.x_axis_config
+            delete elem.dataset.y_axis_config
 
             const chart = new Chart(elem, props, chart_data)
 

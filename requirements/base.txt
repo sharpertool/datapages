@@ -39,8 +39,5 @@ Pillow==5.1.0
 
 django-suit==0.2.26
 
-#logic utils
-pydash==4.5.0
-
 # Deployment
 #zappa==0.45.1

@@ -1,7 +1,5 @@
 import json
 
-import pydash
-
 from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
@@ -53,6 +51,7 @@ class ChartBlock(BaseBlock):
 
     type = blocks.ChoiceBlock(require=False, choices=[
         ('bar', 'Bar'),
+        ('column', 'Column'),
         ('line', 'Line'),
         ('spline', 'Spline')
     ])
@@ -79,8 +78,8 @@ class ChartBlock(BaseBlock):
 
 class CharacteristicsChartBlock(blocks.StructBlock):
     """ Single chart for a Chart Characteristics Block """
-    title = blocks.CharBlock(required=False)
-    subtitle = blocks.CharBlock(require=False)
+    title = blocks.CharBlock(required=False, default='')
+    subtitle = blocks.CharBlock(require=False, default='')
 
     type = blocks.ChoiceBlock(require=False, choices=[
         ('bar', 'Bar'),
@@ -89,21 +88,37 @@ class CharacteristicsChartBlock(blocks.StructBlock):
         ('spline', 'Spline')
     ])
 
-    legend = blocks.CharBlock(required=False)
-    x_axis_config = JSONTextBlock(required=False)
-    y_axis_config = JSONTextBlock(required=False)
-    chart_values = JSONTextBlock(required=False)
+    legend = blocks.CharBlock(required=False, default='')
+    x_axis_config = JSONTextBlock(required=False, default='{}')
+    y_axis_config = JSONTextBlock(required=False, default='{}')
+    chart_values = JSONTextBlock(required=True, default='[]')
 
     class Meta:
         template = 'datasheet/blocks/_characteristics_chart.html'
 
     def get_context(self, value, parent_context=None):
+        """
+        Pull the chart values out and put them into context variables.
+        Provide defaults, and check for empty values in the database.
+        :param value:
+        :param parent_context:
+        :return:
+        """
         context = super().get_context(value, parent_context=parent_context)
-        context['chart_values'] = value.get('chart_values', '[]').strip()
-        context['x_axis_config'] = value.get('x_axis_config', '[]').strip()
-        context['y_axis_config'] = value.get('y_axis_config', '[]').strip()
+
+        context_keys = {
+            'chart_values': '[]',
+            'x_axis_config': '{}',
+            'y_axis_config': '{}'
+        }
+        for key, default in context_keys.items():
+            context[key] = value.get(key, default)
+            if context[key] is None:
+                context[key] = default
+
         context['chart_props'] = json.dumps(
-            {k: v for k, v in value.items() if not pydash.includes(['chart_values', 'x_axis_config', 'y_axis_config'], k)})
+            {k: v for k, v in value.items() if k not in context_keys})
+
         return context
 
 

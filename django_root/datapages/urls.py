@@ -41,56 +41,6 @@ urlpatterns = [
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
     #    url(r'^pages/', include(wagtail_urls)),
-
-    # Favicon URLS
-    url(
-        r'^apple-touch-icon.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/apple-touch-icon.png'),
-            permanent=False)
-    ),
-    url(
-        r'^safari-pinned-tab.svg$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/safari-pinned-tab.svg'),
-            permanent=False)
-    ),
-    url(
-        r'^android-chrome-192x192.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/android-chrome-192x192.png'),
-            permanent=False)
-    ),
-    url(
-        r'^android-chrome-256x256.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/android-chrome-256x256.png'),
-            permanent=False)
-    ),
-    url(
-        r'^favicon-16x16.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/favicon-16x16.png'),
-            permanent=False)
-    ),
-    url(
-        r'^favicon-32x32.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/favicon-32x32.png'),
-            permanent=False)
-    ),
-    url(
-        r'^favicon.ico$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/favicon.ico'),
-            permanent=False)
-    ),
-    url(
-        r'^mstile-150x150.png$',
-        RedirectView.as_view(
-            url=staticfiles_storage.url('favicon/mstile-150x150.png'),
-            permanent=False)
-    ),
 ]
 
 if settings.DEBUG:

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
-
+from wagtail.documents.blocks import DocumentChooserBlock
 
 class BaseBlock(blocks.StructBlock):
     title = blocks.CharBlock()
@@ -165,3 +165,23 @@ class Embed3DBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_embed_3d.html'
+
+
+class PDFBlock(BaseBlock):
+    file = DocumentChooserBlock()
+    height = blocks.IntegerBlock(default=550)
+    view = blocks.ChoiceBlock(choices=[
+        ('Fit', 'Fit'),
+        ('FitH', 'FitH'),
+        ('FitH,top', 'FitH,top'),
+        ('FitV', 'FitV'),
+        ('FitV,left', 'FitV,left'),
+        ('FitB', 'FitB'),
+        ('FitBH', 'FitBH'),
+        ('FitBH,top', 'FitBH,top'),
+        ('FitBV', 'FitBV'),
+        ('FitBV,left', 'FitBV,left')
+    ], required=False)
+
+    class Meta:
+        template = 'datasheet/blocks/_pdf.html'

@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
 
 {% block body_class %}template-datasheet-index{% endblock %}
 
 {% block content %}
-    {% if page.page_logo %}
-        <img src="{{ page.page_logo.url }}" alt="TE Logo">
-    {% endif %}
-    <h1>{{ page.title }}</h1>
-
-    <div class="intro">{{ page.intro|richtext }}</div>
-
+    <a href="/">
+        {% if main_logo %}
+            <img src="{{ main_logo.url }}" />
+        {% endif %}
+        {% if vendor_logo %}
+            <img src="{{ vendor_logo.url }}" alt="TE Logo" />
+        {% endif %}
+    </a>
     {% for sheet in datasheets %}
         {% with sheet=sheet.specific %}
             <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>

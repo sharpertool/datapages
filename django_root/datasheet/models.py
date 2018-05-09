@@ -4,6 +4,7 @@ from django.db import models
 from wagtail.core.models import Page, PageManager
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
+from wagtail.core.models import Site
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
@@ -40,9 +41,14 @@ class SiteSettings(BaseSetting):
     )
     chat_url = models.CharField(max_length=250, blank=True)
 
+
+    tile_background_color = models.CharField(default='#000', max_length=20)
+    active_area_background_color = models.CharField(default='#ddd', max_length=20)
     panels = [
         FieldPanel('primary_color'),
         FieldPanel('secondary_color'),
+        FieldPanel('tile_background_color'),
+        FieldPanel('active_area_background_color'),
         FieldPanel('logo'),
         ImageChooserPanel('banner_mark'),
         FieldPanel('chat_url'),
@@ -76,8 +82,29 @@ class IndexBasePage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
+        settings = SiteSettings.for_site(request.site)
+        main_site = Site.objects.get(is_default_site=True)
+        main_site_settings = SiteSettings.for_site(main_site)
+
+        parent = self.get_ancestors().last()
+        parent = parent.specific
+
+        #print(SiteSettings.for_site(parent.request))
+        # Add common page elements
+        context['main_logo'] = main_site_settings.logo
+        context['vendor_logo'] = settings.logo
+        context['primary_color'] = settings.primary_color
+        context['secondary_color'] = settings.secondary_color
+        context['banner_mark'] = settings.banner_mark
+        context['company_name'] = parent.title
+        context['grid_included'] = False
         context['datasheets'] = self.get_children().live().order_by('-first_published_at')
+
+        print(f"Logo is {settings.logo}")
+        print(f"Primary Color: {settings.primary_color}")
         return context
+
+
 
     class Meta:
         abstract = True

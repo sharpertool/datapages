@@ -7,7 +7,7 @@ wagtail==2.0.1
 #django-braces
 #django-crispy-forms
 
-django-allauth==0.35.0
+django-allauth==0.36.0
 
 # Database
 # NOTE: version 2.7.4 is busted.. do not update.

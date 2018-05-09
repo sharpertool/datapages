@@ -5,9 +5,14 @@
 {% block body_class %}template-datasheet-index{% endblock %}
 
 {% block content %}
-    {% if page.page_logo %}
-        <img src="{{ page.page_logo.url }}" alt="TE Logo">
-    {% endif %}
+    <a href="/">
+        {% if main_logo %}
+            <img src="{{ main_logo.url }}" />
+        {% endif %}
+        {% if vendor_logo %}
+            <img src="{{ vendor_logo.url }}" alt="TE Logo" />
+        {% endif %}
+    </a>
     <h1>{{ page.title }}</h1>
 
     <div class="intro">{{ page.intro|richtext }}</div>
@@ -24,4 +29,3 @@
     {% wagtailuserbar %}
 
 {% endblock %}
-

@@ -41,6 +41,14 @@ urlpatterns = [
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
     #    url(r'^pages/', include(wagtail_urls)),
+
+    # favicon.ico URL
+    url(
+        r'^favicon.ico$',
+        RedirectView.as_view(
+            url=staticfiles_storage.url('favicon/favicon.ico'),
+            permanent=False)
+    ),
 ]
 
 if settings.DEBUG:

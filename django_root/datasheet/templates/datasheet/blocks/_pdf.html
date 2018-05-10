@@ -1,12 +1,14 @@
 <div class="block selector" id="{{ block.value.bookmark }}">
     <h1 class="title"><span>{{ block.value.title }}</span></h1>
 
-    <div class="col" style="height: {{ block.value.height }}px;">
+    <div style="height: {{ block.value.height }}px;">
         <object data="{{ block.value.file.file.url }}{% if block.value.view %}#view={{ block.value.view }}{% endif %}"
-                type="application/pdf" width="100%" height="100%">
+                type="application/pdf"
+                width="100%"
+                height="100%"
+        >
             <p>
-                <b>Example fallback content</b>: This browser does not support PDFs. Please download the
-                PDF to view it: <a href="{{ block.value.file.file.url }}">Download PDF</a>.
+                <b>Something wen't wrong!</b> This browser does not support PDFs. Please check your browser settings. You can also <a href="{{ block.value.file.file.url }}">download</a> the file.
             </p>
         </object>
     </div>

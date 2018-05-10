@@ -75,7 +75,6 @@ class ChartBlock(BaseBlock):
         print(value)
         return super().clean(value, *args, **kwargs)
 
-
 class CharacteristicsChartBlock(blocks.StructBlock):
     """ Single chart for a Chart Characteristics Block """
     title = blocks.CharBlock(required=False, default='')

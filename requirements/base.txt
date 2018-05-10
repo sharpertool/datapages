@@ -16,7 +16,7 @@ psycopg2==2.7.3 # pyup: ignore
 # Logging, errors
 raven==6.7.0
 
-django-model-utils==3.1.1
+django-model-utils==3.1.2
 
 # Reading environment variables, secure enclaves
 django-environ==0.4.4

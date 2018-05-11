@@ -50,16 +50,16 @@
     <ul class="nav nav-pills">
         {% for attribute in page.attributes %}
             <li class="nav-item">
-                <a href="#{{ attribute.block_type }}"
+                <a href="javascript:void(0)"
                    class="nav-link {% if forloop.first %}active{% endif %}"
-                   data-toggle="tab">{{ attribute.block_type|capfirst }}</a>
+                   data-target="#{{ attribute.block_type }}">{{ attribute.block_type|capfirst }}</a>
             </li>
         {% endfor %}
     </ul>
 
-    <div class="tab-content">
+    <div class="row d-inline-flex content-div no-gutters atprop panes" data-height="10">
         {% for block in page.attributes %}
-            <ul class="tab-pane fade show {% if forloop.first %}active{% endif %}" id="{{ block.block_type }}">
+            <ul class="pane col {% if not forloop.first %}d-none{% endif %}" id="{{ block.block_type }}">
                 {% include_block block %}
             </ul>
         {% endfor %}

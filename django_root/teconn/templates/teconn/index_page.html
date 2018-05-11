@@ -13,15 +13,26 @@
             <img src="{{ vendor_logo.url }}" alt="TE Logo" />
         {% endif %}
     </a>
-    {% for sheet in datasheets %}
-        {% with sheet=sheet.specific %}
-            <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
-
-            <p>{{ sheet.intro }}</p>
-{#            {{ sheet.body|richtext }}#}
-        {% endwith %}
-    {% endfor %}
-
-    {% wagtailuserbar %}
-
+    <div class="container">
+        <div class="row">
+            {% for sheet in datasheets %}
+                {% with sheet=sheet.specific %}
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if sheet.main_image %}
+                                <img class="img-fluid mx-auto" src="{{ sheet.main_image.url }}" alt="TE Logo" />
+                            {% endif %}
+                            <p>{{ page.title }}</p>
+                            <h2><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
+                            <p>{{ sheet.subtitle }}</p>
+                            {#{{ sheet.body|richtext }}#}
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+        {% wagtailuserbar %}
+    </div>
 {% endblock %}

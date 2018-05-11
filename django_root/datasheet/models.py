@@ -125,13 +125,19 @@ class SheetBasePage(Page):
         index.SearchField('body'),
     ]
 
+    subtitle = models.CharField(max_length=250, blank=True)
+    main_image = models.FileField(blank=True, null=True)
+
+
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
             FieldPanel('part_number'),
             FieldPanel('intro'),
-            FieldPanel('body', classname="full")
+            FieldPanel('subtitle'),
+            FieldPanel('main_image'),
+            FieldPanel('body', classname="full"),
         ], heading="General Sheet Information")
     ]
 

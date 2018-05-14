@@ -91,6 +91,7 @@ class IndexBasePage(Page):
 
         #print(SiteSettings.for_site(parent.request))
         # Add common page elements
+        context['default_site_url'] = main_site.root_url
         context['main_logo'] = main_site_settings.logo
         context['vendor_logo'] = settings.logo
         context['primary_color'] = settings.primary_color

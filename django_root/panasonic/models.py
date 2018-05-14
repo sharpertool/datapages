@@ -9,7 +9,8 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import IndexBasePage, SheetBasePage
-from datasheet.blocks import SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock
+from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock, CharacteristicsBlock, VideoBlock,
+                            Embed3DBlock, PDFBlock)
 from teconn.blocks import CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock
 
 
@@ -42,8 +43,12 @@ class SheetPage(SheetBasePage):
         ('grid', GridDataBlock()),
         ('selector', SelectorBlock()),
         ('dimension', DimensionBlock()),
-        ('chart', ChartBlock())
-    ])
+        ('chart', ChartBlock()),
+        ('characteristics', CharacteristicsBlock()),
+        ('video', VideoBlock()),
+        ('embed_3d', Embed3DBlock()),
+        ('pdf', PDFBlock()),
+    ], blank=True)
 
     carousel = StreamField([
         ('image', CarouselImageBlock()),

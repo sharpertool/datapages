@@ -13,7 +13,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.search import index
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
-from .blocks import CharacteristicsBlock
+from .blocks import CharacteristicsBlock, GridDataBlock
 
 # ('heading', blocks.CharBlock(
 #             classname="full title",
@@ -186,7 +186,7 @@ class SheetBasePage(Page):
         context['grid_included'] = False
 
         for value in self.sheet_blocks:
-            if isinstance(value.block, CharacteristicsBlock):
+            if isinstance(value.block, GridDataBlock):
                 context['grid_included'] = True
                 break
 

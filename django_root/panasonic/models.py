@@ -1,6 +1,6 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import StreamFieldPanel, InlinePanel, FieldPanel
+from wagtail.admin.edit_handlers import StreamFieldPanel, InlinePanel, FieldPanel, MultiFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Orderable
 
@@ -11,7 +11,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from datasheet.models import IndexBasePage, SheetBasePage
 from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock, CharacteristicsBlock, VideoBlock,
                             Embed3DBlock, PDFBlock)
-from teconn.blocks import CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock
+from teconn.blocks import CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock, FeaturesBlock, ApplicationsBlock, ContactDataBlock
 
 
 class SheetPageTag(TaggedItemBase):
@@ -40,6 +40,7 @@ class SheetPage(SheetBasePage):
                                     related_name='panasonic_sheet')
 
     sheet_blocks = StreamField([
+        ('specification', ContactDataBlock()),
         ('grid', GridDataBlock()),
         ('selector', SelectorBlock()),
         ('dimension', DimensionBlock()),
@@ -48,6 +49,11 @@ class SheetPage(SheetBasePage):
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('pdf', PDFBlock()),
+    ], blank=True)
+
+    attributes = StreamField([
+        ('features', FeaturesBlock()),
+        ('applications', ApplicationsBlock())
     ], blank=True)
 
     carousel = StreamField([
@@ -61,6 +67,11 @@ class SheetPage(SheetBasePage):
     tags = ClusterTaggableManager(through=SheetPageTag, blank=True, related_name='sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
+        MultiFieldPanel([
+            StreamFieldPanel('attributes', heading=None, classname="full"),
+        ],
+            heading="Attributes and Applications",
+            classname="collapsible collapsed"),
         StreamFieldPanel('carousel'),
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")

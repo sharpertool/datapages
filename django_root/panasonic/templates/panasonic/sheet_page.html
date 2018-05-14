@@ -71,6 +71,7 @@
     <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://clara.io/js/claraplayer.min.js"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -82,7 +83,9 @@
 
 {% block extra_js %}
     <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/product_slider.js' %}"></script>
     <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/clara3d.js' %}"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -90,6 +93,7 @@
     {% if grid_included %}
         <script src="{% static 'js/grid.js' %}"></script>
     {% endif %}
+    
     <script type="text/javascript">
         (function($) {
             //jump-to-section

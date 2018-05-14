@@ -57,7 +57,7 @@
         {% endfor %}
     </ul>
 
-    <div class="row d-inline-flex content-div no-gutters atprop panes" data-height="10">
+    <div class="row d-inline-flex content-div no-gutters atprop panes" data-height="280">
         {% for block in page.attributes %}
             <ul class="pane col {% if not forloop.first %}d-none{% endif %}" id="{{ block.block_type }}">
                 {% include_block block %}

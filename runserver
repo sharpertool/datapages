@@ -1,11 +1,12 @@
 #!/bin/sh
 
+port=${1:-8000}
 
 base=`pwd`
 cd django_root
 while true
 do
-    ${base}/.venv3/bin/python manage.py runserver_plus
+    ${base}/.venv3/bin/python manage.py runserver_plus ${port}
     sleep 2
 done
 

@@ -1,17 +1,22 @@
 from django.db import models
 
 from wagtail.admin.edit_handlers import StreamFieldPanel, InlinePanel, FieldPanel, MultiFieldPanel
-from wagtail.core.fields import StreamField
+from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page, Orderable
+from wagtail.core import blocks
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import IndexBasePage, SheetBasePage
-from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock, CharacteristicsBlock, VideoBlock,
-                            Embed3DBlock, PDFBlock)
-from teconn.blocks import CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock, FeaturesBlock, ApplicationsBlock, ContactDataBlock
+from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock,
+                              CharacteristicsBlock, VideoBlock,
+                              Embed3DBlock, PDFBlock)
+from teconn.blocks import (CarouselEmbedBlock, CarouselFusionEmbedBlock,
+                           FeaturesBlock, ApplicationsBlock,
+                           ContactDataBlock, RelayProductCodeStructureBlock)
+from .blocks import PanasonicCarouselImageBlock
 
 
 class SheetPageTag(TaggedItemBase):
@@ -44,11 +49,13 @@ class SheetPage(SheetBasePage):
         ('grid', GridDataBlock()),
         ('selector', SelectorBlock()),
         ('dimension', DimensionBlock()),
+        ('product_code', RelayProductCodeStructureBlock()),
         ('chart', ChartBlock()),
         ('characteristics', CharacteristicsBlock()),
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('pdf', PDFBlock()),
+        ('richtext', blocks.RichTextBlock())
     ], blank=True)
 
     attributes = StreamField([
@@ -57,7 +64,7 @@ class SheetPage(SheetBasePage):
     ], blank=True)
 
     carousel = StreamField([
-        ('image', CarouselImageBlock()),
+        ('image', PanasonicCarouselImageBlock()),
         ('embed', CarouselEmbedBlock()),
         ('fusion360', CarouselFusionEmbedBlock()),
     ], blank=True)
@@ -76,6 +83,16 @@ class SheetPage(SheetBasePage):
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
     ]
+
+    def get_context(self, request):
+        """ calculate the max number of attributes, for styling. """
+        context = super().get_context(request)
+        max_length = 0
+        for block in self.attributes:
+            max_length = max(max_length, len(block.value[block.block_type]))
+
+        context['max_length'] = max_length
+        return context
 
 
 class RelatedLinks(Orderable):

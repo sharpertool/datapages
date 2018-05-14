@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'mathfilters',
 
     #'suit',
     'django.contrib.admin',

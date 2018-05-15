@@ -1,21 +1,34 @@
-{% extends "core/_base.html" %}
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
 
-{% load wagtailcore_tags %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/indexpage.css' %}">
+{% endblock %}
 
-{% block body_class %}homepage{% endblock %}
+{% block body_class %}template-datasheet-index{% endblock %}
 
 {% block content %}
 
-    <h1>{{ page.title }}</h1>
+    {% include 'datasheet/partials/_home_header.html' %}
 
-    {{ page.body|richtext }}
+    <main class="content container-fluid">
+        <div class="row">
+            {% for sheet in datasheets %}
+                {% with sheet=sheet.specific %}
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <div class="card product-card">
+                            <div class="card-body">
+                                <a href="{% pageurl sheet %}">
+                                    <img width="200" height="200" src="{{ sheet.settings.logo.url }}" alt="TE Logo" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+    </main>
 
-    <footer>
-        {% if page.copyright %}
-            {{ page.copyright|richtext }}
-        {% else %}
-            <p>Copyright 2018</p>
-        {% endif %}
-    </footer>
-
+    {% wagtailuserbar %}
 {% endblock %}

@@ -2,9 +2,10 @@ from __future__ import absolute_import, unicode_literals
 
 from django.db import models
 
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from datasheet.models import SiteSettings
 
 
 class HomePage(Page):
@@ -26,3 +27,21 @@ class HomePage(Page):
         ]),
         FieldPanel('copyright')
     ]
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        settings = SiteSettings.for_site(request.site)
+
+        parent = self.get_ancestors().last()
+        parent = parent.specific
+
+        #print(SiteSettings.for_site(parent.request))
+        # Add common page elements
+        context['main_logo'] = settings.logo
+        context['primary_color'] = settings.primary_color
+        context['secondary_color'] = settings.secondary_color
+        context['banner_mark'] = settings.banner_mark
+        context['company_name'] = parent.title
+        context['grid_included'] = False
+        context['datasheets'] = self.get_children().live().order_by('-first_published_at')
+        return context

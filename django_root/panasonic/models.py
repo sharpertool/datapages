@@ -16,7 +16,7 @@ from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, Char
 from teconn.blocks import (CarouselEmbedBlock, CarouselFusionEmbedBlock,
                            FeaturesBlock, ApplicationsBlock,
                            ContactDataBlock, RelayProductCodeStructureBlock)
-from .blocks import PanasonicCarouselImageBlock
+from .blocks import PanasonicCarouselImageBlock, PartSelectorBlock
 
 
 class SheetPageTag(TaggedItemBase):
@@ -55,7 +55,8 @@ class SheetPage(SheetBasePage):
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('pdf', PDFBlock()),
-        ('richtext', blocks.RichTextBlock())
+        ('richtext', blocks.RichTextBlock()),
+        ('part_selector', PartSelectorBlock())
     ], blank=True)
 
     attributes = StreamField([

@@ -1,3 +1,5 @@
+import json
+
 from django import template
 from django.http import QueryDict
 
@@ -17,3 +19,7 @@ def replace(value, args):
         return value.replace(qs['search'], qs['replacement'])
 
     return value
+
+@register.filter
+def jsondumps(value):
+    return json.dumps(value)

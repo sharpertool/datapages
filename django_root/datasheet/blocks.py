@@ -6,6 +6,7 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 
+
 class BaseBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     bookmark = blocks.CharBlock()
@@ -74,6 +75,7 @@ class ChartBlock(BaseBlock):
     def clean(self, value, *args, **kwargs):
         print(value)
         return super().clean(value, *args, **kwargs)
+
 
 class CharacteristicsChartBlock(blocks.StructBlock):
     """ Single chart for a Chart Characteristics Block """

@@ -14,6 +14,7 @@ from wagtail.search import index
 from wagtail.contrib.settings.models import BaseSetting, register_setting
 
 from .blocks import CharacteristicsBlock, GridDataBlock
+from panasonic.blocks import PartSelectorBlock
 
 # ('heading', blocks.CharBlock(
 #             classname="full title",
@@ -186,7 +187,7 @@ class SheetBasePage(Page):
         context['grid_included'] = False
 
         for value in self.sheet_blocks:
-            if isinstance(value.block, GridDataBlock):
+            if isinstance(value.block, GridDataBlock) or isinstance(value.block, PartSelectorBlock):
                 context['grid_included'] = True
                 break
 

@@ -5,27 +5,26 @@
 
     <ul>
         {% for type in json_data %}
-            <li style="margin-bottom:50px;">
+            <li>
                 <h5>{{ type.title }} <small>(Series: {{ type.series|join:", " }})</small></h5>
                 <br><br>
                 <div class="row">
                     {% for value in type.values %}
                         <div class="col ">
-                            <h5 style="background:var(--primary_color);padding:5px;text-align:center;color:#fff;">{{ value.name }}</h5>
-                            <p style="text-align:center;">{{ value.description }}</p>
+                            <h5 class="item-name">{{ value.name }}</h5>
+                            <p class="item-description">{{ value.description }}</p>
 
                             {% if value.data %}
                                 <div class="row">
                                     {% for grid in value.data %}
                                         <div data-display="grid"
                                              data-json="{% spaceless %}{{ grid|jsondumps }}{% endspaceless %}"
-                                             style="min-height:300px;"
                                              class="ag-theme-balham col-{% if value.data|length > 1 %}6{% else %}12{% endif %}"></div>
                                     {% endfor %}
                                 </div>
                             {% elif value.taping %}
                                 {% with value.taping as taping %}
-                                    <div style="border: 1px solid #ddd;padding:15px;">
+                                    <div class="taping">
                                         <p>{{ taping.title }}</p>
                                         {% for item in taping.data %}
                                             <p>{{ item.label }} : {{ item.value }}</p>

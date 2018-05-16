@@ -1,0 +1,25 @@
+.part-selector {
+  ul {
+    li {
+      margin-bottom: 50px;
+      .item-name {
+        background: var(--primary_color);
+        padding: 5px;
+        text-align: center;
+        color:#fff;
+      }
+      .item-description {
+        text-align: center;
+      }
+
+      [data-display="grid"] {
+        min-height: 300px;
+      }
+
+      .taping {
+        border: 1px solid #ddd;
+        padding: 15px;
+      }
+    }
+  }
+}

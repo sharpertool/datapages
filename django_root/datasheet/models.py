@@ -130,7 +130,6 @@ class SheetBasePage(Page):
     subtitle = models.CharField(max_length=250, blank=True)
     main_image = models.FileField(blank=True, null=True)
 
-
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
@@ -187,7 +186,7 @@ class SheetBasePage(Page):
         context['grid_included'] = False
 
         for value in self.sheet_blocks:
-            if isinstance(value.block, GridDataBlock) or isinstance(value.block, PartSelectorBlock):
+            if isinstance(value.block, (GridDataBlock, PartSelectorBlock)):
                 context['grid_included'] = True
                 break
 

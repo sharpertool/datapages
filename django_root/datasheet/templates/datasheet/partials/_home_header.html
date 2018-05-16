@@ -8,12 +8,14 @@
             {% endif %}
         </a>
 
-        <img src="{% static 'images/forwardslash.png' %}" alt="" class="nav-item separator">
+        {% if vendor_logo %}
+            <img src="{% static 'images/forwardslash.png' %}" alt="" class="nav-item separator">
 
-        <a href="{{ page.get_site.root_url }}" class="nav-item nav-link vendor-logo">
-            {% if vendor_logo %}
-                <img src="{{ vendor_logo.url }}" alt="{{ page.title }}"/>
-            {% endif %}
-        </a>
+            <a href="{{ page.get_site.root_url }}" class="nav-item nav-link vendor-logo">
+
+                    <img src="{{ vendor_logo.url }}" alt="{{ page.title }}"/>
+
+            </a>
+        {% endif %}
     </div>
 </nav>

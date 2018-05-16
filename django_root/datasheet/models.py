@@ -1,7 +1,7 @@
 import collections
 from django.db import models
 
-from wagtail.core.models import Page, PageManager
+from wagtail.core.models import Page, PageManager, Site
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core import blocks
 from wagtail.core.models import Site
@@ -79,6 +79,13 @@ class IndexBasePage(Page):
     ]
 
     subpage_types = ['SheetPage']
+
+    @property
+    def settings(self):
+        if Site.objects.filter(root_page=self).exists():
+            site = Site.objects.get(root_page=self)
+            return SiteSettings.for_site(site)
+        return None
 
     def get_context(self, request):
         context = super().get_context(request)

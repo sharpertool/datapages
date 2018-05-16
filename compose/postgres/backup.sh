@@ -22,10 +22,19 @@ echo "---------------"
 
 # Calculate a default filename
 DEFAULT=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
-FILENAME=${1:-$DEFAULT}
+if [ -z "$1" ]
+then
+	FILENAME=DEFAULT
+	echo "Using default filename"
+else
+	FILENAME=${1}_$(date +'%Y_%m_%dT%H_%M_%S').sql
+	echo "Used user-defined filename prefix ${1}"
+fi
+
 if [[ $(dirname ${FILENAME}) == '.' ]];then
     FILENAME=/backups/$(basename ${FILENAME})
 fi
+echo "Full backup filename ${FILENAME}"
 
 pg_dump -h postgres -U $POSTGRES_USER $POSTGRES_DB >> $FILENAME
 

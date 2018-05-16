@@ -18,12 +18,13 @@
                 {% with sheet=sheet.specific %}
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                         <div class="card product-card">
-                            <div class="card-body">
-                                <a href="{% pageurl sheet %}">
-                                    <img width="200" height="200" src="{{ sheet.settings.logo.url }}" alt="TE Logo" />
-                                    <h2 class="product-title">{{ sheet.title }}</h2>
-                                </a>
-                            </div>
+                            <a href="{% pageurl sheet %}">
+                                <div class="card-body">
+
+                                        <img width="200" height="200" src="{{ sheet.settings.logo.url }}" alt="TE Logo" />
+                                        <h2 class="product-title">{{ sheet.title }}</h2>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 {% endwith %}

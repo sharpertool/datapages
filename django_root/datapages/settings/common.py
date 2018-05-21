@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'teconn',
     'panasonic',
     'sager',
+    'avnet',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

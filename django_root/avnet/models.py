@@ -1,15 +1,16 @@
 from django.db import models
 
-from wagtail.admin.edit_handlers import (StreamFieldPanel, InlinePanel,
-                                         FieldPanel, MultiFieldPanel)
+
 from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import (StreamFieldPanel, FieldPanel,
+                                         InlinePanel, MultiFieldPanel)
 from wagtail.core.models import Page, Orderable
 
 from taggit.models import TaggedItemBase
-from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
 
-from datasheet.models import IndexBasePage, SheetBasePage
+from datasheet.models import SheetBasePage, IndexBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
                               Embed3DBlock, GridDataBlock,
@@ -19,28 +20,27 @@ from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
 
 
 class SheetPageTag(TaggedItemBase):
-    content_object = ParentalKey('SheetPage', related_name='sager_tagged_items')
+    content_object = ParentalKey('SheetPage', related_name='tagged_items')
 
 
 class IndexPage(IndexBasePage):
     """
-    The index or homepage of sager
+    The index or home page.
     """
     page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
-                                    related_name='sager_index')
-
-    subpage_types = ['sager.SheetPage']
+                                    related_name='avnet_index')
 
     class Meta:
-        verbose_name = "Sager Index Page"
+        verbose_name = "Avnet Index Page"
 
 
 class SheetPage(SheetBasePage):
     """
-    Subpage for sager indexpage
+    The product page and details. Common fields are already declared in SheetBasePage abstract class
+    so you just have to declare here the sheet_blocks field base on site requirements.
     """
     page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
-                                    related_name='sager_sheet')
+                                    related_name='avnet_sheet')
 
     sheet_blocks = StreamField([
         ('contact_data', ContactDataBlock()),
@@ -51,23 +51,20 @@ class SheetPage(SheetBasePage):
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('grid', GridDataBlock()),
-        ('grid', GridDataBlock()),
         ('pdf', PDFBlock()),
     ], blank=True)
-
     attributes = StreamField([
         ('features', FeaturesBlock()),
         ('applications', ApplicationsBlock())
     ], blank=True)
-
     carousel = StreamField([
-        ('embed', CarouselImageBlock()),
+        ('image', CarouselImageBlock()),
     ], blank=True)
 
-    parent_page_types = ['sager.IndexPage']
+    parent_page_types = ['IndexPage']
 
     tags = ClusterTaggableManager(through=SheetPageTag,
-                                  blank=True, related_name='sager_sheetpage_tags')
+                                  blank=True, related_name='avnet_sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
         MultiFieldPanel([
@@ -79,16 +76,6 @@ class SheetPage(SheetBasePage):
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
     ]
-
-    def get_context(self, request):
-        """ calculate the max number of attributes, for styling. """
-        context = super().get_context(request)
-        max_length = 0
-        for block in self.attributes:
-            max_length = max(max_length, len(block.value[block.block_type]))
-
-        context['max_length'] = max_length
-        return context
 
 
 class RelatedLinks(Orderable):

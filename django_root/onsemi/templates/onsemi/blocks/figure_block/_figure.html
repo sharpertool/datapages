@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+<div class="block figure" id="{{ block.value.bookmark }}">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+    {% for stream_block in block.value.stream_blocks %}
+        {% include_block stream_block %}
+    {% endfor %}
+</div>

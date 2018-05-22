@@ -186,3 +186,10 @@ class PDFBlock(BaseBlock):
 
     class Meta:
         template = 'datasheet/blocks/_pdf.html'
+
+
+class RichTextBlock(BaseBlock):
+    text = blocks.RichTextBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_richtext.html'

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'panasonic',
     'sager',
     'avnet',
+    'onsemi',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

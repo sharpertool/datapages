@@ -1,0 +1,102 @@
+{% extends "core/_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% block body_class %}template-datasheet{% endblock %}
+
+{% block extra_css %}
+    <!--
+    Inject custom styles and values for the page in usign css variables.
+    These are not supported on IE11.. but who is using that anymore anyway?
+    There is < 6% worldwide share, and about 8.5% US share.. go figure.
+    -->
+    <style>
+        body {
+            --primary_color: {{ primary_color }};
+            --secondary_color: {{ secondary_color }};
+        }
+
+        .hero-banner {
+            background-color: {{ primary_color }};
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+    {% include 'onsemi/partials/_datasheet_header.html' %}
+
+    <main id="top">
+        {% image banner_mark original as banner %}
+        {% include 'datasheet/partials/_jumbotron.html' with banner=banner %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-12 order-2 order-lg-1 sidebar">
+                    {% include 'datasheet/partials/_sidebar.html' %}
+                </div>
+
+                <div class="col-lg-9 col-md-12 order-1 order-lg-2">
+                    <div class="product-slider block row">
+                        {% include 'datasheet/partials/_product_slider.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-lg-3 col-lg-9 col-md-12">
+                    {% for block in page.sheet_blocks %}
+                        {% include_block block %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% include 'datasheet/partials/_footer.html' %}
+        </div>
+    </main>
+
+{% endblock %}
+
+{% block main_js %}
+    {{ block.super }}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://clara.io/js/claraplayer.min.js"></script>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/product_slider.js' %}"></script>
+    <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/clara3d.js' %}"></script>
+    <script type="text/javascript">
+        (function($) {
+            //jump-to-section
+            $("a[data-action='anchor']").click(function(e) {
+                var target = $(this.getAttribute('href'));
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 100
+                }, 1000);
+                $(this).parents('li').addClass('active').siblings('li').removeClass('active');
+                $('.jump-section-wrapper').trigger('click');
+                e.preventDefault();
+            });
+
+            //jump-to-section-dropdown
+            $('.sidebar').on('click', '.jump-section-wrapper', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                if ($this.parents('.sidebar').find('ul').is(':not(":animated")')) {
+                    $this.toggleClass('open');
+                    $this.parents('.sidebar').find('ul').slideToggle('500');
+                } else {
+                    console.log('already animating');
+                }
+            });
+
+            $(window).on('load resize', function() {
+                var headerHeight = $('#header').height();
+                $('main').css('margin-top', headerHeight);
+            });
+        })($);
+    </script>
+
+{% endblock %}

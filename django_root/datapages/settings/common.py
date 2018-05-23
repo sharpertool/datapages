@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sager',
     'avnet',
     'onsemi',
+    'epcos',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

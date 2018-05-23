@@ -1,0 +1,9 @@
+<section class="figure-stream list">
+    <h5 class="figure-stream-title">{{ value.title }} <small>{{ value.description }}</small></h5>
+
+    <ul>
+        {% for list in value.list %}
+            <li>{{ list }}</li>
+        {% endfor %}
+    </ul>
+</section>

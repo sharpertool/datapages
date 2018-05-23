@@ -14,9 +14,9 @@ from datasheet.models import SheetBasePage, IndexBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
                               Embed3DBlock, GridDataBlock,
-                              PDFBlock)
+                              PDFBlock, RichTextBlock)
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
-                     ApplicationsBlock, CarouselImageBlock)
+                     ApplicationsBlock, CarouselImageBlock, FigureBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -52,6 +52,8 @@ class SheetPage(SheetBasePage):
         ('embed_3d', Embed3DBlock()),
         ('grid', GridDataBlock()),
         ('pdf', PDFBlock()),
+        ('richtext', RichTextBlock()),
+        ('figure', FigureBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

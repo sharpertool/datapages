@@ -1,0 +1,19 @@
+<section class="figure-stream table">
+    <h5 class="figure-stream-title">{{ value.title }} <small>{{ value.description }}</small></h5>
+
+    <table class="table">
+        <tbody>
+            {% for row in value.data_table.data %}
+                <tr>
+                    {% for col in row %}
+                        {% if not col %}
+                            <td {% if forloop.counter == 1 %}class="borderless"{% endif %}>&nbsp;</td>
+                        {% else %}
+                            <td>{{ col }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>

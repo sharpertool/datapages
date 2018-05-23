@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sager',
     'avnet',
     'onsemi',
+    'epcos',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -73,7 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'pipeline',
-    'raven.contrib.django.raven_compat',
+    #'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [

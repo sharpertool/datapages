@@ -58,6 +58,14 @@ class ApplicationsBlock(blocks.StructBlock):
         template = 'sager/blocks/_applications_list.html'
 
 
+class HighlightsBlock(blocks.StructBlock):
+    highlights = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
+
+    class Meta:
+        label = 'Highlights'
+        template = 'sager/blocks/_highlights_list.html'
+
+
 class CarouselImageBlock(blocks.StructBlock):
     """
     Image that fits into a carousel

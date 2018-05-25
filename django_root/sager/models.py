@@ -13,9 +13,10 @@ from datasheet.models import IndexBasePage, SheetBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
                               Embed3DBlock, GridDataBlock,
-                              PDFBlock)
+                              PDFBlock, RichTextBlock)
+from onsemi.blocks import FigureBlock
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
-                     ApplicationsBlock, CarouselImageBlock)
+                     ApplicationsBlock, CarouselImageBlock, HighlightsBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -53,11 +54,14 @@ class SheetPage(SheetBasePage):
         ('grid', GridDataBlock()),
         ('grid', GridDataBlock()),
         ('pdf', PDFBlock()),
+        ('richtext', RichTextBlock()),
+        ('figure', FigureBlock())
     ], blank=True)
 
     attributes = StreamField([
         ('features', FeaturesBlock()),
-        ('applications', ApplicationsBlock())
+        ('applications', ApplicationsBlock()),
+        ('highlights', HighlightsBlock())
     ], blank=True)
 
     carousel = StreamField([

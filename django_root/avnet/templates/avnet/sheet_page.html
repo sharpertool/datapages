@@ -19,6 +19,14 @@
             background-color: {{ primary_color }};
         }
     </style>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
+    {% endif %}
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -58,8 +66,20 @@
 
 {% block main_js %}
     {{ block.super }}
+    <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="//www.amcharts.com/lib/3/serial.js"></script>
+    <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+    <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://clara.io/js/claraplayer.min.js"></script>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}
@@ -67,6 +87,14 @@
     <script src="{% static 'js/product_slider.js' %}"></script>
     <script src="{% static 'js/print.js' %}"></script>
     <script src="{% static 'js/clara3d.js' %}"></script>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <script src="{% static 'js/grid.js' %}"></script>
+    {% endif %}
+
     <script type="text/javascript">
         (function($) {
             //jump-to-section

@@ -17,6 +17,7 @@ MIDDLEWARE += [
 INSTALLED_APPS += [
     'debug_toolbar',
     'django_extensions',
+    'webpack_loader'
 ]
 
 DEBUG_TOOLBAR_CONFIG = {
@@ -31,3 +32,15 @@ INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 8026
 EMAIL_HOST = 'localhost'
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='js/'),
+        'STATS_FILE': join(CLIENT_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}

@@ -138,6 +138,7 @@ class CharacteristicsBlock(blocks.StructBlock):
 
 
 class DimensionBlock(BaseBlock):
+    enabled_drawing = blocks.BooleanBlock()
     image = ImageChooserBlock()
 
     class Meta:

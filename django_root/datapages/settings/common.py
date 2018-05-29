@@ -22,7 +22,7 @@ CONF_DIR = environ.Path(__file__)
 PROJECT_DIR = environ.Path(__file__) - 3
 BASE_DIR = PROJECT_DIR - 1
 
-CLIENT_DIR = env('CLIENT_DIR')
+CLIENT_DIR = env.str('CLIENT_DIR', default="/client")
 
 if DEBUG:
     print(f"Project Dir: {PROJECT_DIR} Bases dir: {BASE_DIR}")

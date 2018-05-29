@@ -10,9 +10,12 @@
             <a href="#" class="expand-btn">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
             </a>
-
             {% image block.value.image original as photo %}
-            <img src="{{ photo.url }}" alt="" width="100%">
+            {% if block.value.enabled_drawing %}
+                <div class="drawable" data-props="{{ photo.url }}"></d  iv>
+            {% else %}
+                <img src="{{ photo.url }}" alt="" width="100%">
+            {% endif %}
 
             <div class="card-links">
                 <a href="#" class="card-link"><i class="fa fa-search-plus"></i></a>

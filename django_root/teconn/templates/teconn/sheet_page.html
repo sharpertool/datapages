@@ -2,6 +2,9 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load static %}
 {% block body_class %}template-datasheet{% endblock %}
+{% if debug %}
+    {% load render_bundle from webpack_loader %}
+{% endif %}
 
 {% block extra_css %}
     <!--
@@ -126,5 +129,9 @@
             });
         })($);
     </script>
-
+    {% if debug %}
+        {% render_bundle 'app' %}
+    {% else %}
+        <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    {% endif %}
 {% endblock %}

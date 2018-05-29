@@ -22,7 +22,7 @@ CONF_DIR = environ.Path(__file__)
 PROJECT_DIR = environ.Path(__file__) - 3
 BASE_DIR = PROJECT_DIR - 1
 
-CLIENT_DIR = env.str('CLIENT_DIR', default="/client")
+CLIENT_DIR = environ.Path(env.str('CLIENT_DIR', default="/client"))
 
 if DEBUG:
     print(f"Project Dir: {PROJECT_DIR} Bases dir: {BASE_DIR}")
@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
     'mathfilters',
+    'webpack_loader',
 
     #'suit',
     'django.contrib.admin',
@@ -273,6 +274,17 @@ else:
 
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='js/'),
+        'STATS_FILE': CLIENT_DIR('webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
 
 # Get settings from environment. These are required to be set.
 RAVEN_CONFIG = {

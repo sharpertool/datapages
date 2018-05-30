@@ -129,7 +129,7 @@ class CharacteristicsBlock(blocks.StructBlock):
     characteristics charts in a 2-up or 1-up pattern
     """
     title = blocks.CharBlock(default="Characteristics")
-    subtitle = blocks.CharBlock(require=False)
+    subtitle = blocks.CharBlock(required=False)
     bookmark = blocks.CharBlock(default="characteristics")
     charts = blocks.ListBlock(CharacteristicsChartBlock())
 
@@ -138,7 +138,7 @@ class CharacteristicsBlock(blocks.StructBlock):
 
 
 class DimensionBlock(BaseBlock):
-    enabled_drawing = blocks.BooleanBlock()
+    enabled_drawing = blocks.BooleanBlock(default=False, required=False)
     image = ImageChooserBlock()
 
     class Meta:

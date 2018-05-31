@@ -12,7 +12,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from datasheet.models import IndexBasePage, SheetBasePage
 from datasheet.blocks import (SelectorBlock, DimensionBlock, GridDataBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
-                              Embed3DBlock, PDFBlock)
+                              Embed3DBlock, PDFBlock, RichTextBlock)
 from teconn.blocks import (CarouselEmbedBlock, CarouselFusionEmbedBlock,
                            FeaturesBlock, ApplicationsBlock,
                            ContactDataBlock, RelayProductCodeStructureBlock)
@@ -56,7 +56,8 @@ class SheetPage(SheetBasePage):
         ('embed_3d', Embed3DBlock()),
         ('pdf', PDFBlock()),
         ('richtext', blocks.RichTextBlock()),
-        ('part_selector', PartSelectorBlock())
+        ('part_selector', PartSelectorBlock()),
+        ('richtext', RichTextBlock()),
     ], blank=True)
 
     attributes = StreamField([

@@ -14,7 +14,7 @@ from datasheet.models import SheetBasePage, IndexBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
                               Embed3DBlock, GridDataBlock,
-                              PDFBlock)
+                              PDFBlock, RichTextBlock)
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock)
 
@@ -52,6 +52,7 @@ class SheetPage(SheetBasePage):
         ('embed_3d', Embed3DBlock()),
         ('grid', GridDataBlock()),
         ('pdf', PDFBlock()),
+        ('richtext', RichTextBlock()),
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

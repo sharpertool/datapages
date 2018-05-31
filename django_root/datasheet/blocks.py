@@ -54,7 +54,8 @@ class ChartBlock(BaseBlock):
         ('bar', 'Bar'),
         ('column', 'Column'),
         ('line', 'Line'),
-        ('spline', 'Spline')
+        ('spline', 'Spline'),
+        ('area', 'Area')
     ])
 
     legend = blocks.CharBlock(required=False)
@@ -86,7 +87,8 @@ class CharacteristicsChartBlock(blocks.StructBlock):
         ('bar', 'Bar'),
         ('column', 'Column'),
         ('line', 'Line'),
-        ('spline', 'Spline')
+        ('spline', 'Spline'),
+        ('area', 'Area')
     ])
 
     legend = blocks.CharBlock(required=False, default='')

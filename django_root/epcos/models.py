@@ -56,7 +56,8 @@ class SheetPage(SheetBasePage):
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),
-        ('applications', ApplicationsBlock())
+        ('applications', ApplicationsBlock()),
+        ('construction', ApplicationsBlock(label="Construction")),
     ], blank=True)
     carousel = StreamField([
         ('image', CarouselImageBlock()),

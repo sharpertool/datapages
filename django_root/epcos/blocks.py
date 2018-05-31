@@ -19,7 +19,7 @@ class ContactDataBlock(BaseBlock):
     })
 
     class Meta:
-        template = 'onsemi/blocks/_contact_data.html'
+        template = 'epcos/blocks/_contact_data.html'
 
 
 class RevisionDataBlock(blocks.StructBlock):
@@ -28,7 +28,7 @@ class RevisionDataBlock(blocks.StructBlock):
             ('title', blocks.CharBlock()),
             ('description', blocks.CharBlock())
         ],
-        form_template='onsemi/blocks/editing/common/_struct_inline.html'))
+        form_template='epcos/blocks/editing/common/_struct_inline.html'))
 
 
 class RevisionBlock(BaseBlock):
@@ -38,7 +38,7 @@ class RevisionBlock(BaseBlock):
     data = blocks.ListBlock(RevisionDataBlock())
 
     class Meta:
-        template = 'onsemi/blocks/_revision.html'
+        template = 'epcos/blocks/_revision.html'
         form_classname = 'revision-block'
 
 
@@ -47,7 +47,7 @@ class FeaturesBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Features'
-        template = 'onsemi/blocks/_features_list.html'
+        template = 'epcos/blocks/_features_list.html'
 
 
 class ApplicationsBlock(blocks.StructBlock):
@@ -55,7 +55,7 @@ class ApplicationsBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Applications'
-        template = 'onsemi/blocks/_applications_list.html'
+        template = 'epcos/blocks/_applications_list.html'
 
 
 class CarouselImageBlock(blocks.StructBlock):
@@ -69,7 +69,7 @@ class CarouselImageBlock(blocks.StructBlock):
     height = blocks.IntegerBlock(required=False)
 
     class Meta:
-        template = 'onsemi/blocks/_carousel_image.html'
+        template = 'epcos/blocks/_carousel_image.html'
 
 
 class CarouselStreamBlock(blocks.StreamBlock):

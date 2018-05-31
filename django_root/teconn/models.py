@@ -11,7 +11,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from datasheet.models import SheetBasePage, IndexBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock, CharacteristicsBlock, VideoBlock, Embed3DBlock, GridDataBlock,
-                              PDFBlock)
+                              PDFBlock, RichTextBlock)
 from .blocks import (ContactDataBlock, CoilDataBlock, RelayProductCodeStructureBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock, CarouselEmbedBlock, CarouselFusionEmbedBlock)
 
@@ -50,7 +50,8 @@ class SheetPage(SheetBasePage):
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('grid', GridDataBlock()),
-        ('pdf', PDFBlock())
+        ('pdf', PDFBlock()),
+        ('richtext', RichTextBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

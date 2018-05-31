@@ -15,7 +15,7 @@ django-allauth==0.36.0
 psycopg2==2.7.3 # pyup: ignore
 
 # Logging, errors
-raven==6.8.0
+raven==6.9.0
 
 django-model-utils==3.1.2
 

@@ -52,7 +52,6 @@ class SheetPage(SheetBasePage):
         ('video', VideoBlock()),
         ('embed_3d', Embed3DBlock()),
         ('grid', GridDataBlock()),
-        ('grid', GridDataBlock()),
         ('pdf', PDFBlock()),
         ('richtext', RichTextBlock()),
         ('figure', FigureBlock())

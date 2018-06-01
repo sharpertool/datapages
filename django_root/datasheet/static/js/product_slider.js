@@ -22,16 +22,11 @@
 
         $(targetPane).removeClass(cOther).addClass(cActive);
 
-        update_min_height(targetPane);
     });
 
     var tab = productinfo.find('.panes > .pane').filter(function () {
        return !$(this).hasClass('d-none');
     });
-
-    console.log(tab)
-
-    update_min_height(tab);
 
     function get_other_targets (targetPane) {
         var targets = navLinks.map(function () {
@@ -41,25 +36,6 @@
         var st = new Set(targets);
         st.delete(targetPane);
         return Array.from(st.values());
-    }
-
-    function update_min_height (targetPane) {
-        var me = $(targetPane);
-        var parent = me.parent();
-        var height = parent.data('height');
-        height = Math.max(me.height(), height);
-
-        var csstag = $(`<style type="text/css" id="setheight">
-            #product_info .panes > .pane { --attr_height: ${height}px; }
-        </style>`);
-
-        parent.data('height', height);
-
-        if ($("#setheight").length) {
-            $("#setheight").remove();
-        }
-
-        $('body').append(csstag);
     }
 
 })();

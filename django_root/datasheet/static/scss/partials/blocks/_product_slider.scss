@@ -78,9 +78,24 @@
 
         .panes {
             position: relative;
+            max-height: 375px;
+            min-height: 375px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                width: .5em;
+                border-radius: 100%;
+            }
 
+            &::-webkit-scrollbar-track {
+                background: none;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background-color: darkgrey;
+              outline: 1px solid slategrey;
+            }
             .pane {
-                min-height: var(--attr_height);
                 margin-top: 17px;
                 margin-left: 17px;
             }
@@ -195,4 +210,3 @@
     }
     /*overflow: hidden;*/
 }
-

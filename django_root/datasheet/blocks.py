@@ -146,6 +146,13 @@ class DimensionBlock(BaseBlock):
     class Meta:
         template = 'datasheet/blocks/_dimension.html'
 
+class BasicImageBlock(BaseBlock):
+    title = blocks.CharBlock(default="Image")
+    subtitle = blocks.CharBlock(required=False)
+    image = ImageChooserBlock()
+
+    class Meta:
+        template = 'datasheet/blocks/_basic_image.html'
 
 class GridDataBlock(BaseBlock):
     subtitle = blocks.CharBlock(required=False)

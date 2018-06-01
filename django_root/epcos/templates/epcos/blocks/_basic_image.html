@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+<div class="characteristics_charts block">
+    <h1 class="title"><span>{{ title }}}</span></h1>
+    {% image block.value.image original as photo %}
+    <img src="{{ photo.url }}" alt="" width="100%">
+</div>
+

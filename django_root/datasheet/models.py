@@ -34,6 +34,7 @@ from panasonic.blocks import PartSelectorBlock
 @register_setting
 class SiteSettings(BaseSetting):
     primary_color = models.CharField(default='#000', max_length=20)
+    feature_min_height = models.CharField(default='350', max_length=20)
     secondary_color = models.CharField(default='#ddd', max_length=20)
     logo = models.FileField(blank=True, null=True)
     banner_mark = models.ForeignKey(
@@ -51,6 +52,7 @@ class SiteSettings(BaseSetting):
         FieldPanel('tile_background_color'),
         FieldPanel('active_area_background_color'),
         FieldPanel('logo'),
+        FieldPanel('feature_min_height'),
         ImageChooserPanel('banner_mark'),
         FieldPanel('chat_url'),
     ]
@@ -104,6 +106,7 @@ class IndexBasePage(Page):
         context['vendor_logo'] = settings.logo
         context['primary_color'] = settings.primary_color
         context['secondary_color'] = settings.secondary_color
+        context['feature_min_height'] = settings.feature_min_height
         context['banner_mark'] = settings.banner_mark
         context['company_name'] = parent.title
         context['grid_included'] = False
@@ -188,6 +191,7 @@ class SheetBasePage(Page):
         context['primary_color'] = settings.primary_color
         context['secondary_color'] = settings.secondary_color
         context['banner_mark'] = settings.banner_mark
+        context['feature_min_height'] = settings.feature_min_height
         context['chat_url'] = settings.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
         context['company_name'] = parent.title

@@ -12,9 +12,14 @@ There is < 6% worldwide share, and about 8.5% US share.. go figure.
     .hero-banner {
         background-color: {{ primary_color }};
     }
+
     #product_info .panes {
         --attr_height: {{max_length}}px;
         min-height: var(--attr_height);
+        #--attr_height: {{feature_min_height}}px;
     }
 
+    #product_info .panes > .pane {
+        --attr_height: {{feature_min_height|add:"px"}};
+    }
 </style>

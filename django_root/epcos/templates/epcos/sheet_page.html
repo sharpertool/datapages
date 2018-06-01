@@ -7,17 +7,6 @@
 {% endif %}
 {% block extra_css %}
     {% include "datasheet/partials/_styles_vars.html" %}
-    <style>
-        body {
-            --primary_color: {{ primary_color }};
-            --secondary_color: {{ secondary_color }};
-        }
-
-        .hero-banner {
-            background-color: {{ primary_color }};
-        }
-    </style>
-
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
     -->
@@ -116,11 +105,6 @@
                 } else {
                     console.log('already animating');
                 }
-            });
-
-            $(window).on('load resize', function() {
-                var headerHeight = $('#header').height();
-                $('main').css('margin-top', headerHeight);
             });
         })($);
     </script>

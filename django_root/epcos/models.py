@@ -15,6 +15,7 @@ from datasheet.blocks import (DimensionBlock, ChartBlock,
                               CharacteristicsBlock, VideoBlock,
                               Embed3DBlock, GridDataBlock,
                               PDFBlock, RichTextBlock, BasicImageBlock)
+from onsemi.blocks import FigureBlock
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock)
 
@@ -54,6 +55,7 @@ class SheetPage(SheetBasePage):
         ('pdf', PDFBlock()),
         ('richtext', RichTextBlock()),
         ('basic_image', BasicImageBlock()),
+        ('figure', FigureBlock())
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

@@ -86,11 +86,6 @@ class SheetPage(SheetBasePage):
     def get_context(self, request):
         """ calculate the max number of attributes, for styling. """
         context = super().get_context(request)
-        max_length = 0
-        for block in self.attributes:
-            max_length = max(max_length, len(block.value[block.block_type]))
-
-        context['max_length'] = max_length
         return context
 
 

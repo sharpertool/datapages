@@ -6,11 +6,7 @@
     {% load render_bundle from webpack_loader %}
 {% endif %}
 {% block extra_css %}
-    <!--
-    Inject custom styles and values for the page in usign css variables.
-    These are not supported on IE11.. but who is using that anymore anyway?
-    There is < 6% worldwide share, and about 8.5% US share.. go figure.
-    -->
+    {% include "datasheet/partials/_styles_vars.html" %}
     <style>
         body {
             --primary_color: {{ primary_color }};

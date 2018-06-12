@@ -121,11 +121,17 @@ WSGI_APPLICATION = 'datapages.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 # DATABASE
+# Using pep-448 unpacking syntax, introduced in 3.5
+# https://www.python.org/dev/peps/pep-0448/
 DATABASES = {
-    'default': env.db("DATABASE_URL", default='postgresql://datasheet_user:@localhost/datasheetai'),
+    'default': {
+        **{
+            'ATOMIC_REQUESTS': True,
+            'CONN_MAX_AGE': 10,
+          },
+        **env.db("DATABASE_URL", default='postgresql://datasheet_user:@localhost/datasheetai'),
+    },
 }
-
-DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

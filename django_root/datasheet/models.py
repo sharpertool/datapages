@@ -177,10 +177,11 @@ class SheetBasePage(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-
+        max_length = 0
         settings = SiteSettings.for_site(request.site)
         parent = self.get_ancestors().last()
         parent = parent.specific
+
 
         # Add common page elements
         context['vendor_logo'] = settings.logo
@@ -192,10 +193,17 @@ class SheetBasePage(Page):
         context['company_name'] = parent.title
         context['grid_included'] = False
 
+
+
         for value in self.sheet_blocks:
             if isinstance(value.block, (GridDataBlock, PartSelectorBlock)):
                 context['grid_included'] = True
                 break
+
+        #max_length for all sheets
+        for block in self.attributes:
+            max_length = max(max_length, len(block.value[block.block_type]))
+            context['max_length'] = max_length
 
         print(f"Logo is {settings.logo}")
         print(f"Primary Color: {settings.primary_color}")

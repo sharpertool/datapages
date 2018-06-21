@@ -1,12 +1,37 @@
-(function($, claraplayer) {
+(function($, claraplayer, axios) {
     var card = $('.block.embed-3d > .chart-card.card');
     var buttonZoom = card.find('.card-links > [data-action=zoom]');
+    var buttonDownload = card.find('.card-links > [data-action=download]');
     var media = card.find('.card-body > .media');
 
     buttonZoom && buttonZoom.on('click', zoomHandler);
+    buttonDownload && buttonDownload.on('click', downloadHandler);
 
     if (media.length && media.find('> .embed').length) {
         initializeClara(media.find('> .embed'));
+    }
+
+    function downloadHandler (e) {
+        var uuid = $(this).data('uuid');
+
+        document.body.style.cursor = "wait"
+
+        axios.get(`/clara/download/${uuid}`, {
+                responseType: 'blob'
+            })
+            .then(function (response) {
+                document.body.style.cursor = "default"
+
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(response.data);
+                link.download = `${new Date().getTime()}.zip`
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
+            })
+            .catch(function (errors) {
+                console.log(errors)
+            })
     }
 
     function zoomHandler () {
@@ -59,4 +84,4 @@
                 </div>
             `);
     }
-})($, claraplayer);
+})($, claraplayer, axios);

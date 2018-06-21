@@ -3,13 +3,6 @@
     var buttonZoom = card.find('.card-links > [data-action=zoom]');
     var buttonDownload = card.find('.card-links > [data-action=download]');
     var media = card.find('.card-body > .media');
-    var credentials = {
-        user: card.data('user'),
-        token: card.data('token')
-    }
-
-    card.removeAttr('data-user');
-    card.removeAttr('data-token');
 
     buttonZoom && buttonZoom.on('click', zoomHandler);
     buttonDownload && buttonDownload.on('click', downloadHandler);
@@ -23,9 +16,7 @@
 
         document.body.style.cursor = "wait"
 
-        superagent
-            .get(`https://clara.io/api/scenes/${uuid}/export/json`)
-            .auth(credentials.user, credentials.token)
+        superagent.get(`/clara/download/${uuid}`)
             .responseType('blob')
             .then(function (response) {
                 document.body.style.cursor = "default"
@@ -37,8 +28,8 @@
                 link.click()
                 document.body.removeChild(link)
             })
-            .catch(function (error) {
-                console.log(error)
+            .catch(function (errors) {
+                console.log(errors)
             })
     }
 

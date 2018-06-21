@@ -38,6 +38,7 @@ SECRET_KEY = env.str('SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
+    'clara',
     'blog',
     'datasheet',
     'home',
@@ -346,3 +347,8 @@ LOGGING = {
         },
     },
 }
+
+# Credentials for Clara.io
+CLARA_EXPORT_ENDPOINT = env.str('CLARA_EXPORT_ENDPOINT', 'https://clara.io/api/scenes/{uuid}/export/json')
+CLARA_USERNAME = env.str('CLARA_USERNAME', 'sharpertool')
+CLARA_API_TOKEN = env.str('CLARA_API_TOKEN', '9502ff5a-22b1-470c-95b4-112d172c0d35')

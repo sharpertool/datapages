@@ -1,4 +1,4 @@
-(function($, claraplayer, superagent) {
+(function($, claraplayer, axios) {
     var card = $('.block.embed-3d > .chart-card.card');
     var buttonZoom = card.find('.card-links > [data-action=zoom]');
     var buttonDownload = card.find('.card-links > [data-action=download]');
@@ -16,13 +16,14 @@
 
         document.body.style.cursor = "wait"
 
-        superagent.get(`/clara/download/${uuid}`)
-            .responseType('blob')
+        axios.get(`/clara/download/${uuid}`, {
+                responseType: 'blob'
+            })
             .then(function (response) {
                 document.body.style.cursor = "default"
 
                 var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(response.body);
+                link.href = window.URL.createObjectURL(response.data);
                 link.download = `${new Date().getTime()}.zip`
                 document.body.appendChild(link)
                 link.click()
@@ -83,4 +84,4 @@
                 </div>
             `);
     }
-})($, claraplayer, superagent);
+})($, claraplayer, axios);

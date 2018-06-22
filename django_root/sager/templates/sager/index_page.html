@@ -1,37 +1,3 @@
-{% extends "base.html" %}
-{% load static %}
-{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% extends "datasheet/datasheet_index_page.html" %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/indexpage.css' %}">
-{% endblock %}
-
-{% block body_class %}template-datasheet-index{% endblock %}
-
-{% block content %}
-
-    {% include 'datasheet/partials/_home_header.html' %}
-
-    <main class="content container-fluid">
-        <div class="row">
-            {% for sheet in datasheets %}
-                {% with sheet=sheet.specific %}
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card product-card">
-                            <div class="card-body">
-                                {% if sheet.specific.main_image %}
-                                    <img class="img-fluid mx-auto" src="{{ sheet.specific.main_image.url }}"/>
-                                {% endif %}
-                                <p class="vendor-name">{{ page.title }}</p>
-                                <h2 class="product-title"><a href="{% pageurl sheet %}">{{ sheet.title }}</a></h2>
-                                <p class="product-subtitle">{{ sheet.subtitle }}</p>
-                            </div>
-                        </div>
-                    </div>
-                {% endwith %}
-            {% endfor %}
-        </div>
-    </main>
-
-    {% wagtailuserbar %}
-{% endblock %}
+{% block body_class %}{{ block.super }} sager-datasheet-index{% endblock %}

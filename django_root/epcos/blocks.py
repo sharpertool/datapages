@@ -63,7 +63,7 @@ class ConstructionBlock(blocks.StructBlock):
 
     class Meta:
         label = 'Construction'
-        template = 'epcos/blocks/_applications_list.html'
+        template = 'epcos/blocks/_construction_list.html'
 
 
 class CarouselImageBlock(blocks.StructBlock):

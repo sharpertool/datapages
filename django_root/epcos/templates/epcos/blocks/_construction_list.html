@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+{% with block.value as items %}
+    {% for item in value.construction %}
+        <li>{% include_block item %}</li>
+    {% endfor %}
+{% endwith %}

@@ -58,6 +58,14 @@ class ApplicationsBlock(blocks.StructBlock):
         template = 'epcos/blocks/_applications_list.html'
 
 
+class ConstructionBlock(blocks.StructBlock):
+    construction = blocks.ListBlock(blocks.RichTextBlock(features=['bold', 'italic']))
+
+    class Meta:
+        label = 'Construction'
+        template = 'epcos/blocks/_applications_list.html'
+
+
 class CarouselImageBlock(blocks.StructBlock):
     """
     Image that fits into a carousel

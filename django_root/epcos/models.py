@@ -17,7 +17,7 @@ from datasheet.blocks import (DimensionBlock, ChartBlock,
                               PDFBlock, RichTextBlock, BasicImageBlock)
 from onsemi.blocks import FigureBlock
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
-                     ApplicationsBlock, CarouselImageBlock)
+                     ApplicationsBlock, ConstructionBlock, CarouselImageBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -60,7 +60,7 @@ class SheetPage(SheetBasePage):
     attributes = StreamField([
         ('features', FeaturesBlock()),
         ('applications', ApplicationsBlock()),
-        ('construction', ApplicationsBlock(label="Construction")),
+        ('construction', ConstructionBlock()),
     ], blank=True)
     carousel = StreamField([
         ('image', CarouselImageBlock()),

@@ -20,7 +20,7 @@ raven==6.9.0
 django-model-utils==3.1.2
 
 # Reading environment variables, secure enclaves
-django-environ==0.4.4
+django-environ==0.4.5
 #django-secure==1.0.1
 
 # For caching

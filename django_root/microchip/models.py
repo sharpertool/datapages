@@ -26,10 +26,10 @@ class IndexPage(IndexBasePage):
     The index or home page.
     """
     page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
-                                    related_name='microship_index')
+                                    related_name='microchip_index')
 
     class Meta:
-        verbose_name = "Microship Index Page"
+        verbose_name = "Microchip Index Page"
 
 
 class SheetPage(SheetBasePage):
@@ -38,7 +38,7 @@ class SheetPage(SheetBasePage):
     so you just have to declare here the sheet_blocks field base on site requirements.
     """
     page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
-                                    related_name='microship_sheet')
+                                    related_name='microchip_sheet')
 
     sheet_blocks = StreamField([
         ('dimension', DimensionBlock()),
@@ -63,7 +63,7 @@ class SheetPage(SheetBasePage):
     parent_page_types = ['IndexPage']
 
     tags = ClusterTaggableManager(through=SheetPageTag,
-                                  blank=True, related_name='microship_sheetpage_tags')
+                                  blank=True, related_name='microchip_sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
         MultiFieldPanel([

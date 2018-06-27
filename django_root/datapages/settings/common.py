@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'avnet',
     'onsemi',
     'epcos',
+    'microchip',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

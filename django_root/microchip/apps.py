@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class MicroshipConfig(AppConfig):
+class MicrochipConfig(AppConfig):
     name = 'microchip'

@@ -5,7 +5,7 @@ references:
   container_config: &container_config
     working_directory: ~/build
     docker:
-      - image: bigzeta/ci_python3_node:1.0.0
+      - image: bigzeta/ci_python3_node:1.1.0
         environment:
           ZIP_PREFIX: datapages
 
@@ -91,7 +91,7 @@ references:
 
 jobs:
   checkout_code:
-    <<: *container_config
+    <<: *container_config_min
     steps:
       - *restore_repo
 
@@ -119,7 +119,7 @@ jobs:
             - .
 
   build_venv:
-    <<: *container_config
+    <<: *container_config_min
     steps:
       - *restore_repo
       - *restore_venv
@@ -137,7 +137,7 @@ jobs:
             - .venv
 
   compile_assets:
-    <<: *container_config
+    <<: *container_config_min
     steps:
       - *restore_repo
       - *restore_venv
@@ -180,7 +180,7 @@ jobs:
             - ./collectedstatic
 
   collectstatic:
-    <<: *container_config
+    <<: *container_config_min
     steps:
       - *restore_repo
       - *restore_venv
@@ -223,6 +223,18 @@ jobs:
       - *restore_repo
       - *restore_venv
       - *attach_workspace
+
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+            && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+            && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run:
           command: |
@@ -270,7 +282,7 @@ jobs:
             aws s3 cp zipout/${zipfile} ${s3path}
 
   deploy_to_test_server:
-    <<: *container_config
+    <<: *container_config_min
     steps:
       - *restore_repo
       - *disable_strict_type_checking
@@ -365,8 +377,6 @@ jobs:
 
       - *persist_manifest
       - *store_manifest
-
-
 
 workflows:
   version: 2

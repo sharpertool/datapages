@@ -5,7 +5,7 @@ references:
   container_config: &container_config
     working_directory: ~/build
     docker:
-      - image: bigzeta/ci_python3_node:1.1.0
+      - image: bigzeta/docker_ci_python3:1.1.0
         environment:
           ZIP_PREFIX: datapages
 
@@ -21,7 +21,7 @@ references:
   container_config_min: &container_config_min
     working_directory: ~/build
     docker:
-      - image: bigzeta/ci_python3_node:1.1.0
+      - image: bigzeta/docker_ci_python3:1.1.0
         environment:
           ZIP_PREFIX: datapages
           DEPLOY_BUCKET: datapages.io.deploy
@@ -223,14 +223,6 @@ jobs:
       - *restore_repo
       - *restore_venv
       - *attach_workspace
-
-      - run:
-          name: install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-            && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-            && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.3.0
 
       - run:
           name: Wait for db

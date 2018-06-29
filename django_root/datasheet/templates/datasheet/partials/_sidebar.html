@@ -17,7 +17,7 @@
                aria-describedby="find_document_addon">
     </li>
 
-    <li class="active"><a href="#">Introduction</a></li>
+    <li class="active"><a href="#top" data-action="anchor">Introduction</a></li>
 
     {% for bookmark in bookmarks %}
         <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>

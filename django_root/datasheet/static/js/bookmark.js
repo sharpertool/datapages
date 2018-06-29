@@ -21,9 +21,4 @@
             console.log('already animating');
         }
     });
-
-    $(window).on('load resize', function() {
-        var headerHeight = $('#header').height();
-        $('main').css('margin-top', headerHeight);
-    });
 })($);

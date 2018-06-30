@@ -49,3 +49,5 @@ django_root/static/
 !/codepen/datasheet_codepen_context.njk
 collectedstatic
 yarn-error.log
+
+django_root/\.env\.demosite

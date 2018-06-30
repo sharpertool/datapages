@@ -52,3 +52,5 @@ yarn-error.log
 
 django_root/\.env\.demosite
 media/
+
+django_root/\.env\.local\.bak

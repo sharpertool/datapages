@@ -51,3 +51,4 @@ collectedstatic
 yarn-error.log
 
 django_root/\.env\.demosite
+media/

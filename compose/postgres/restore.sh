@@ -29,14 +29,22 @@ fi
 BACKUPFILE=$1
 if [[ $(dirname ${BACKUPFILE}) == '.' ]];then
     BACKUPFILE=/backups/$(basename ${BACKUPFILE})
+    BACKUPFILE_LOCAL=/local_backups/$(basename ${BACKUPFILE})
 fi
 
 # check that the file exists
-if ! [ -f $BACKUPFILE ]; then
+if [[ ! -f "${BACKUPFILE}" ]] && [[ ! -f "${BACKUPFILE_LOCAL}" ]]
+then
     echo "backup file not found"
     echo 'to get a list of available backups, run:'
     echo '    docker-compose run postgres list-backups'
     exit 1
+fi
+
+# Prefer local version of backup file.
+if [[ -f "${BACKUPFILE_LOCAL}" ]]
+then
+    BACKUPFILE=${BACKUPFILE_LOCAL}
 fi
 
 echo "beginning restore from $1"

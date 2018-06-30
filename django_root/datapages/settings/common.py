@@ -199,8 +199,6 @@ STATICFILES_FINDERS = [
     'pipeline.finders.PipelineFinder',
 ]
 
-
-
 # Django Storages
 AWS_ACCESS_KEY_ID = env.str("AWS_ACCESS_KEY_ID", default=None)
 AWS_SECRET_ACCESS_KEY = env.str("AWS_SECRET_ACCESS_KEY", default=None)
@@ -218,7 +216,7 @@ STATIC_ROOT = PROJECT_DIR('static')
 STATIC_URL = '/static/'
 
 
-MEDIA_ROOT = PROJECT_DIR('media')
+MEDIA_ROOT = env.str("MEDIA_ROOT_LOCAL", default=BASE_DIR('media'))
 MEDIA_URL = '/media/'
 
 SASS_PROCESSOR_INCLUDE_DIRS = [
@@ -265,7 +263,7 @@ PIPELINE = {
 }
 
 # Make the AWS Configuration optional, for local development
-if (AWS_STORAGE_BUCKET_NAME is None):
+if AWS_STORAGE_BUCKET_NAME is None:
     print("Using Local Static and Media files")
 else:
     print("Setting up to use S3 storage.")
@@ -279,7 +277,6 @@ else:
     DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
     ADMIN_MEDIA_PREFIX = "{}admin/".format(CDN_URL)
-
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))
 

@@ -5,7 +5,7 @@ references:
   container_config: &container_config
     working_directory: ~/build
     docker:
-      - image: bigzeta/docker_ci_python3:1.1.0
+      - image: bigzeta/docker_ci_python3:1.1.1
         environment:
           ZIP_PREFIX: datapages
 
@@ -21,7 +21,7 @@ references:
   container_config_min: &container_config_min
     working_directory: ~/build
     docker:
-      - image: bigzeta/docker_ci_python3:1.1.0
+      - image: bigzeta/docker_ci_python3:1.1.1
         environment:
           ZIP_PREFIX: datapages
           DEPLOY_BUCKET: datapages.io.deploy

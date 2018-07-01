@@ -9,7 +9,7 @@
         var target = self.attr('href')
         // Return full height, with padding
         var nav_h = $('.navbar').css('height')
-        var h1 = $('.sidebar-mobile').css('height')
+        var h1 = $('.menu-mobile').css('height')
         console.log(`Height of the mobile sidebar is ${h1}`)
         $('html, body').animate({
             scrollTop: $(target).offset().top - (114 + parseInt(h1))
@@ -20,7 +20,7 @@
     })
     
     //jump-to-section-dropdown
-    $('.sidebar-mobile').on('click', '.jump-toggle', function(e) {
+    $('.menu-mobile').on('click', '.jump-toggle', function(e) {
         e.preventDefault();
         console.log('Toggling menu open/closed')
         var self = $(this)

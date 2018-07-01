@@ -38,25 +38,28 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 col-md-12 order-2 order-lg-1 sidebar">
+                <div class="col-12 col-lg-3 sidebar">
                     {% include 'datasheet/partials/_sidebar.html' %}
                 </div>
-
-                <div class="col-lg-9 col-md-12 order-1 order-lg-2">
-                    <div class="product-slider block row">
+                <div class="col-lg-9 col-md-12">
+                    <div class="product-slider row">
                         {% include 'datasheet/partials/_product_slider.html' %}
+                    </div>
+                    <div class="sidebar-mobile row d-lg-none sticky-top sticky-offset ">
+                        {% include 'datasheet/partials/_sidebar_mobile.html' %}
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {% for block in page.sheet_blocks %}
+                                {% include_block block %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="offset-lg-3 col-lg-9 col-md-12">
-                    {% for block in page.sheet_blocks %}
-                        {% include_block block %}
-                    {% endfor %}
-                </div>
+                {% include 'datasheet/partials/_footer.html' %}
             </div>
-
-            {% include 'datasheet/partials/_footer.html' %}
         </div>
     </main>
 {% endblock %}
@@ -75,7 +78,7 @@
     Include ag-grid when GridDataBlock exist in streamfields
     -->
     {% if grid_included %}
-       <script src="https://unpkg.com/ag-grid-enterprise@17.1.1/dist/ag-grid-enterprise.min.js"></script>
+        <script src="https://unpkg.com/ag-grid-enterprise@17.1.1/dist/ag-grid-enterprise.min.js"></script>
     {% endif %}
 {% endblock %}
 

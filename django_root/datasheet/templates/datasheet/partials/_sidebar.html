@@ -1,32 +1,32 @@
 {% load wagtailcore_tags %}
 
-<div class="col-12 col-md-6 offset-md-3 d-lg-none jump-section-wrapper">
-    <div class="w-100 jump-section">Jump to Section</div>
-</div>
-
-<ul>
-    <li class="input-group">
+<div class="sticky-top sticky-offset d-none d-lg-block">
+    <ul>
+        <li class="input-group">
         <span class="addon">
           <i class="fa fa-search"></i>
         </span>
 
-        <input type="text"
-               class="form-control"
-               placeholder="Find in Document"
-               aria-label="Find in Document"
-               aria-describedby="find_document_addon">
-    </li>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Find in Document"
+                   aria-label="Find in Document"
+                   aria-describedby="find_document_addon">
+        </li>
 
-    <li class="active"><a href="#top" data-action="anchor">Introduction</a></li>
+        <li class="active"><a href="#">Introduction</a></li>
 
-    {% for bookmark in bookmarks %}
-        <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>
-    {% endfor %}
+        {% for bookmark in bookmarks %}
+            <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>
+        {% endfor %}
 
-    <li class="chat-with-support">
-        <a href="{{ chat_url }}" target="_blank">
-          <p>Have any questions?</p>
-          <h5>Chat with support <i class="fa fa-chevron-right"></i></h5>
-        </a>
-    </li>
-</ul>
+        <li class="chat-with-support">
+            <a href="{{ chat_url }}" target="_blank">
+                <p>Have any questions?</p>
+                <h5>Chat with support <i class="fa fa-chevron-right"></i></h5>
+            </a>
+        </li>
+    </ul>
+
+</div>
+

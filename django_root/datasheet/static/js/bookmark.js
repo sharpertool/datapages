@@ -1,37 +1,33 @@
-(function(d, target, $) {
+(function($, openClass) {
+    
+    var jump_items = $('.jump-menu li')
+    var toggle = $('.jump-toggle')
 
-    const sidebar = d.querySelector(target)
-
-
-    $("a[data-action='anchor']").click(function(e) {
-        var target = $(this.getAttribute('href'));
+    $("a[data-action='anchor']").on('click', function(e) {
+        e.preventDefault()
+        var self = $(this)
+        var target = self.attr('href')
+        // Return full height, with padding
+        var nav_h = $('.navbar').css('height')
+        var h1 = $('.sidebar-mobile').css('height')
+        console.log(`Height of the mobile sidebar is ${h1}`)
         $('html, body').animate({
-            scrollTop: $(target).offset().top - 135
+            scrollTop: $(target).offset().top - (114 + parseInt(h1))
         }, 1000);
-        $(this).parents('li').addClass('active').siblings('li').removeClass('active');
-        $('.jump-section-wrapper').trigger('click');
-        e.preventDefault();
+        jump_items.removeClass('active')
+        $(this).parent().addClass('active')
+        toggle.trigger('click')
     })
+    
+    //jump-to-section-dropdown
+    $('.sidebar-mobile').on('click', '.jump-toggle', function(e) {
+        e.preventDefault();
+        console.log('Toggling menu open/closed')
+        var self = $(this)
+        var mnu = $('.jump-menu', self.parent())
 
-    const floatSideBar = (e) => {
-        const yCoordinate = window.pageYOffset
-        const yOffset = sidebar.offsetTop - 120
+        self.toggleClass(openClass)
+        mnu.toggleClass(openClass, self.hasClass(openClass))
+    });
 
-        if(yOffset <= yCoordinate) {
-            sidebar.classList.add('scrolled')
-            return
-        }
-
-        sidebar.classList.remove('scrolled')
-
-        return
-
-    }
-
-    const scrollObserver = () => {
-        floatSideBar()
-    }
-
-    document.addEventListener('scroll', scrollObserver)
-
-})(document, '.sidebar', jQuery);
+})(jQuery, 'open');

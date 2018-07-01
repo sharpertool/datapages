@@ -22,8 +22,6 @@ CONF_DIR = environ.Path(__file__)
 PROJECT_DIR = environ.Path(__file__) - 3
 BASE_DIR = PROJECT_DIR - 1
 
-CLIENT_DIR = environ.Path(env.str('CLIENT_DIR', default="/client"))
-
 if DEBUG:
     print(f"Project Dir: {PROJECT_DIR} Bases dir: {BASE_DIR}")
 
@@ -214,6 +212,7 @@ AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN",
 
 STATIC_ROOT = PROJECT_DIR('static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = []
 
 
 MEDIA_ROOT = env.str("MEDIA_ROOT_LOCAL", default=BASE_DIR('media'))
@@ -280,16 +279,23 @@ else:
 
     print("CDN Domain:{}".format(AWS_S3_CUSTOM_DOMAIN))
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='js/'),
-        'STATS_FILE': CLIENT_DIR('webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+# ReactJS Build import
+REACT_BUILD_DIR = env.str('REACT_BUILD_DIR', default='')
+if REACT_BUILD_DIR != '':
+    REACT_BUILD_DIR = environ.Path(REACT_BUILD_DIR)
+
+    STATICFILES_DIRS += [str(REACT_BUILD_DIR)]
+
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'CACHE': not DEBUG,
+            'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='js/'),
+            'STATS_FILE': REACT_BUILD_DIR('webpack-stats.json'),
+            'POLL_INTERVAL': 0.1,
+            'TIMEOUT': None,
+            'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        }
     }
-}
 
 # Get settings from environment. These are required to be set.
 RAVEN_CONFIG = {

@@ -49,7 +49,8 @@
         var target = mm.is(':hidden') ?
             '#sidebar_jump_list' : '#mobile_jump_list'
 
-        var offset = calc_offset()
+        // Add a couple of pixels to scroll spy from the scrollTop value
+        var offset = calc_offset() + 2
 
         // Update Active links when body scrolled
         $('body').scrollspy({

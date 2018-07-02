@@ -1,12 +1,15 @@
 {% load wagtailcore_tags %}
 
 <li class="active">
-    <a href="#" data-action="anchor">Introduction</a>
+    <a href="#bookmark_introduction"
+       class="list-group-item"
+       data-action="anchor">Introduction</a>
 </li>
 
 {% for bookmark in bookmarks %}
     <li>
         <a href="#{{ bookmark.id }}"
+           class="list-group-item"
            data-action="anchor">
             {{ bookmark.title }}
         </a>

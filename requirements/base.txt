@@ -36,7 +36,7 @@ django-compressor==2.2
 
 # Utilities
 pytz==2018.5
-Pillow==5.1.0
+Pillow==5.2.0
 
 django-suit==0.2.26
 

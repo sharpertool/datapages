@@ -14,11 +14,7 @@
                    aria-describedby="find_document_addon">
         </li>
 
-        <li class="active"><a href="#">Introduction</a></li>
-
-        {% for bookmark in bookmarks %}
-            <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>
-        {% endfor %}
+        {% include "datasheet/partials/_bookmarks.html" %}
 
         <li class="chat-with-support">
             <a href="{{ chat_url }}" target="_blank">

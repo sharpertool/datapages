@@ -10,9 +10,13 @@
         // Return full height, with padding
         var nav_h = $('.navbar').css('height')
         var h1 = $('.menu-mobile').css('height')
-        $('html, body').animate({
-            scrollTop: $(target).offset().top - (114 + parseInt(h1))
-        }, 1000)
+        if (target == '#bookmark_introduction') {
+            $('html, body').animate({scrollTop: 0}, 1000)
+        } else {
+            $('html, body').animate({
+                scrollTop: $(target).offset().top - (114 + parseInt(h1))
+            }, 1000)
+        }
         $(this).parent().addClass('active').siblings().removeClass('active')
         toggle.trigger('click')
     })

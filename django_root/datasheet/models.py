@@ -1,4 +1,5 @@
 import collections
+import uuid
 from django.db import models
 
 from wagtail.core.models import Page, PageManager, Site
@@ -153,7 +154,7 @@ class SheetBasePage(Page):
 
     def get_bookmarks(self):
         """
-        Iterate over the blocks and find ones that define a bookmarkk and title.
+        Iterate over the blocks and find ones that define a bookmark and title.
         Return turn each found bookmark as a namedtuple of id and title.
 
         Note: that we are just looking for StructValues here, so if the model
@@ -163,6 +164,17 @@ class SheetBasePage(Page):
         ToDo: Extract this to a re-usable Mixin or base class so it can be re-used easier.
         :return:
         """
+        bookmark_ids = set(['bookmark_introduction'])
+
+        def make_unique(bookmark, prefix='bookmark'):
+            """ Append unique suffix until bookmark is unique """
+            btest = f"{prefix}_{bookmark}"
+            while btest in bookmark_ids:
+                btest = f"{prefix}_{bookmark}_{str(uuid.uuid4())[:4]}"
+
+            bookmark_ids.add(btest)
+            return btest
+
         Bookmark = collections.namedtuple('Bookmark', ['title', 'id'])
         bookmarks = []
 
@@ -170,9 +182,9 @@ class SheetBasePage(Page):
             val = block.value
             if isinstance(val, blocks.StructValue):
                 if 'bookmark' in val and val['bookmark'] and 'title' in val:
+                    val['bookmark'] = make_unique(val['bookmark'])
                     bookmarks.append(Bookmark(val['title'], val['bookmark']))
 
-        print(f"Bookmarks {bookmarks}")
         return bookmarks
 
     def get_context(self, request):

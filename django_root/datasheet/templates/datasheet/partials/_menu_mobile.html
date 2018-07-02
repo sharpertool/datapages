@@ -5,11 +5,7 @@
         <div class="w-100 jump-section">Jump to Section <i class="fas fa-angle-down"></i></div>
     </div>
     <ul class="jump-menu">
-        <li class="active"><a href="#">Introduction</a></li>
-
-        {% for bookmark in bookmarks %}
-            <li><a href="#{{ bookmark.id }}" data-action="anchor">{{ bookmark.title }}</a></li>
-        {% endfor %}
+        {% include "datasheet/partials/_bookmarks.html" %}
     </ul>
 
 </div>

@@ -1,5 +1,5 @@
 (function($, openClass) {
-    
+
     var jump_items = $('.jump-menu li')
     var toggle = $('.jump-toggle')
 
@@ -10,15 +10,13 @@
         // Return full height, with padding
         var nav_h = $('.navbar').css('height')
         var h1 = $('.menu-mobile').css('height')
-        console.log(`Height of the mobile sidebar is ${h1}`)
         $('html, body').animate({
             scrollTop: $(target).offset().top - (114 + parseInt(h1))
-        }, 1000);
-        jump_items.removeClass('active')
-        $(this).parent().addClass('active')
+        }, 1000)
+        $(this).parent().addClass('active').siblings().removeClass('active')
         toggle.trigger('click')
     })
-    
+
     //jump-to-section-dropdown
     $('.menu-mobile').on('click', '.jump-toggle', function(e) {
         e.preventDefault();
@@ -30,4 +28,4 @@
         mnu.toggleClass(openClass, self.hasClass(openClass))
     });
 
-})(jQuery, 'open');
+})(jQuery, 'open')

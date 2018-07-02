@@ -1,5 +1,5 @@
 {% load wagtailcore_tags %}
-<div id="characteristics" class="characteristics_charts block">
+<div id="{{block.value.bookmark}}" class="characteristics_charts block">
     <h1 class="title"><span>Characteristics</span></h1>
     <div class="row">
         {% for chart in block.value.charts %}

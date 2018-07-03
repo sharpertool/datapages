@@ -1,6 +1,8 @@
 from os.path import exists
-from shutil import copy
 import re
+from shutil import copy
+from textwrap import dedent
+
 from django.core.management.base import BaseCommand
 from wagtail.core.models import Site
 
@@ -21,12 +23,7 @@ class Command(BaseCommand):
 
         hosts_lines = "\n".join(etc_hosts)
 
-        etc_data = """
-        
-            # Datapages.local begin
-            {hosts_lines}
-            # Datapages.local end
-        """
+        etc_data = "# Datapages.local begin\n" + hosts_lines + "\n# Datapages.local end\n"
 
         envfile = options.get('env', None)
         if envfile and exists(envfile):

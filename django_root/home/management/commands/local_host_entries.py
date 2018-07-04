@@ -11,8 +11,9 @@ class Command(BaseCommand):
     help = 'Generate output to be added to /etc/hosts file'
 
     def add_arguments(self, parser):
-        parser.add_argument('--env')
-        parser.add_argument('--etcfile')
+        parser.add_argument('--env', help='''
+        Point this to your .env.local file and it will update the allowed host entries
+        ''')
 
     def handle(self, *args, **options):
 
@@ -24,6 +25,8 @@ class Command(BaseCommand):
         hosts_lines = "\n".join(etc_hosts)
 
         etc_data = "# Datapages.local begin\n" + hosts_lines + "\n# Datapages.local end\n"
+        print("Insert the following lines into your /etc/hosts file:")
+        print(etc_data)
 
         envfile = options.get('env', None)
         if envfile and exists(envfile):
@@ -37,6 +40,3 @@ class Command(BaseCommand):
                         line = f"DJANGO_ALLOWED_HOSTS={','.join(allowed_hosts)}"
                     fp.write(line)
 
-        hostsfile = options.get('etcfile', None)
-        if hostsfile:
-            print(etc_data)

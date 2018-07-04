@@ -1,0 +1,19 @@
+{% extends 'microchip/sheet_sub_page_base.html' %}
+
+{% load wagtailuserbar %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+
+{% block body_class %}{{ block.super }} microchip-sub-sheetpage{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    
+{% endblock %}
+
+{% block extra_page_blocks %}
+    <p>Sub Page content</p>
+    {% for block in page.stream %}
+        {% include_block block %}
+    {% endfor %}
+{% endblock %}

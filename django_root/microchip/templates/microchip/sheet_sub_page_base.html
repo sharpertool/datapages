@@ -1,0 +1,103 @@
+{% extends 'core/_base.html' %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+{% block body_class %}template-datasheet{% endblock %}
+
+{% if debug %}
+    {% load render_bundle from webpack_loader %}
+{% endif %}
+
+{% block extra_css %}
+    {% include "datasheet/partials/_styles_vars.html" %}
+    <style>
+        body {
+            --primary_color: {{ primary_color }};
+            --secondary_color: {{ secondary_color }};
+        }
+
+        .hero-banner {
+            background-color: {{ primary_color }};
+        }
+    </style>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
+        <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    {% include 'datasheet/partials/_datasheet_header.html' %}
+
+    <main id="top">
+        {% image banner_mark original as banner %}
+        {% include 'datasheet/partials/_jumbotron.html' with banner=banner %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-3 sidebar">
+                    {% include 'datasheet/partials/_sidebar.html' %}
+                </div>
+                <div class="col-lg-9 col-md-12">
+                    <div class="menu-mobile row d-lg-none sticky-top sticky-offset ">
+                        {% include 'datasheet/partials/_menu_mobile.html' %}
+                    </div>
+                    <div class="row">
+                        {% block page_blocks %}
+                            <div class="col">
+                                {% for block in page.sheet_blocks %}
+                                    {% include_block block %}
+                                {% endfor %}
+                                {% block extra_page_blocks %}
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% include 'datasheet/partials/_footer.html' %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block main_js %}
+    {{ block.super }}
+    <script src="//www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="//www.amcharts.com/lib/3/serial.js"></script>
+    <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="//www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+    <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://clara.io/js/claraplayer.min.js"></script>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/product_slider.js' %}"></script>
+    <script src="{% static 'js/print.js' %}"></script>
+    <script src="{% static 'js/clara3d.js' %}"></script>
+    <script src="{% static 'js/bookmark.js' %}"></script>
+
+    <!--
+    Include ag-grid when GridDataBlock exist in streamfields
+    -->
+    {% if grid_included %}
+        <script src="{% static 'js/grid.js' %}"></script>
+    {% endif %}
+
+    {% if debug %}
+        {% render_bundle 'app' %}
+    {% endif %}
+{% endblock %}

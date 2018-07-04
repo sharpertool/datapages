@@ -54,3 +54,4 @@ django_root/\.env\.demosite
 media/
 
 django_root/\.env\.local\.bak
+.ipynb_checkpoints

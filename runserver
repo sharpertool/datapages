@@ -3,7 +3,7 @@
 port=${1:-8000}
 
 base=$(cd $(dirname $0);pwd)
-root=$(dirname $(find . -depth 2 -name 'manage.py'))
+root=$(dirname $(find . -depth -maxdepth 2 -name 'manage.py'))
 cd ${root}
 
 pluscheck=$(${base}/.venv3/bin/python manage.py | grep runserver_plus)

@@ -17,6 +17,7 @@ from datasheet.blocks import (DimensionBlock, ChartBlock,
                               PDFBlock, RichTextBlock)
 from onsemi.blocks import FeaturesBlock, ApplicationsBlock, CarouselImageBlock
 
+
 class SheetPageTag(TaggedItemBase):
     content_object = ParentalKey('SheetPage', related_name='tagged_items')
 
@@ -74,6 +75,32 @@ class SheetPage(SheetBasePage):
         StreamFieldPanel('carousel'),
         StreamFieldPanel('sheet_blocks', heading="Blocks"),
         InlinePanel('related_links', label="Related Links")
+    ]
+
+    subpage_types = ['microchip.SheetSubPage']
+
+
+class SheetSubPage(Page):
+
+    section_number = models.CharField(max_length=128, null=True, blank=True)
+
+    stream = StreamField([
+        ('dimension', DimensionBlock()),
+        ('characteristics', CharacteristicsBlock()),
+        ('chart', ChartBlock()),
+        ('video', VideoBlock()),
+        ('embed_3d', Embed3DBlock()),
+        ('grid', GridDataBlock()),
+        ('pdf', PDFBlock()),
+        ('richtext', RichTextBlock()),
+    ], blank=True)
+
+    parent_page_types = ['microchip.SheetPage', 'microchip.SheetSubPage']
+    subpage_types = ['microchip.SheetSubPage']
+
+    content_panels = Page.content_panels + [
+        FieldPanel('section_number'),
+        StreamFieldPanel('stream', heading="Blocks"),
     ]
 
 

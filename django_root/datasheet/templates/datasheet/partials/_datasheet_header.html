@@ -1,45 +1,51 @@
 {% load wagtailimages_tags %}
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-light container-fluid" id="header">
-    <div class="col-lg-3 col-md-2 p-0 col-4">
-        <a href="{{page.get_site.root_url}}" class="navbar-brand">
-            {% if vendor_logo %}
-                <img src="{{ vendor_logo.url }}" alt="brand">
-            {% endif %}
-        </a>
-    </div>
-    <div class="col-lg-9 col-md-10 col-8 p-0">
-        <div class="navbar-collapse" id="header_menu">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item col col-md-auto">
-                    <a href="#" class="nav-link">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-download.png"> <span>Download</span>
-                    </a>
-                </li>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light" id="header">
+        <div class="col-lg-3 col-md-2 p-0 col-4">
+            <a href="{{ page.get_site.root_url }}" class="navbar-brand">
+                {% if vendor_logo %}
+                    <img src="{{ vendor_logo.url }}" alt="brand">
+                {% endif %}
+            </a>
+        </div>
+        <div class="col-lg-9 col-md-10 col-8 p-0">
+            <div class="navbar-collapse" id="header_menu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item col col-md-auto">
+                        <a href="#" class="nav-link">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-download.png"> <span>Download</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item col col-md-auto">
-                    <a href="#" class="nav-link" id="print">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-print.png"><span>Print</span>
-                    </a>
-                </li>
+                    <li class="nav-item col col-md-auto">
+                        <a href="#" class="nav-link" id="print">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-print.png"><span>Print</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item col col-md-auto">
-                    <a href="#" class="nav-link">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-share.png"> <span>Share</span>
-                    </a>
-                </li>
+                    <li class="nav-item col col-md-auto">
+                        <a href="#" class="nav-link">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-share.png">
+                            <span>Share</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item col col-md-auto">
-                    <a href="#" class="nav-link">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-addtolist.png"><span> Add to List</span>
-                    </a>
-                </li>
-            </ul>
+                    <li class="nav-item col col-md-auto">
+                        <a href="#" class="nav-link">
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-addtolist.png"><span> Add to List</span>
+                        </a>
+                    </li>
+                </ul>
 
-            <div class="right-links">
-                <a href="#" class="btn btn-outline-white my-2 my-sm-0"><span class="d-none d-md-inline-block">Order</span> Samples</a>
-                <a href="#" class="btn btn-blue my-2 my-sm-0">Buy <span class="d-none d-md-inline-block">Now</span></a>
+                <div class="right-links">
+                    <a href="#" class="btn btn-outline-white my-2 my-sm-0"><span
+                            class="d-none d-md-inline-block">Order</span> Samples</a>
+                    <a href="#" class="btn btn-blue my-2 my-sm-0">Buy <span class="d-none d-md-inline-block">Now</span></a>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+
+</div>
+

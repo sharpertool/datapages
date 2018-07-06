@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 {% load mathfilters %}
 
-<div class="col-md-6" {% if not page.carousel %}style="display:none"{% endif %}>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" {% if not page.carousel %}style="display:none"{% endif %}>
     <div id="productSlider" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators card-carousel-indicator">
             {% for slide in page.carousel %}
@@ -15,7 +15,7 @@
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
         </a>
 
-        <div class="carousel-inner flex-row d-flex align-items-end">
+        <div class="carousel-inner">
             {% if frontend_testing %}
                 <-- Inject Custom testing ->
                 {% include "partials/_product_slider.njk" %}
@@ -47,7 +47,7 @@
     </div>
 </div>
 
-<div class="{% if not page.carousel %}col-md-12{% else %}col-md-6{% endif %}" id="product_info">
+<div class="{% if not page.carousel %}col-md-12{% else %}col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6{% endif %}" id="product_info">
     <ul class="nav nav-pills">
         {% for attribute in page.attributes %}
             <li class="nav-item">

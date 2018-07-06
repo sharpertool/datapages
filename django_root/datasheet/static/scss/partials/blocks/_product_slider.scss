@@ -78,7 +78,7 @@
 
         .panes {
             position: relative;
-            width: 100%;
+            width: 95%;
             overflow-y: scroll;
             /* width */
             &::-webkit-scrollbar {
@@ -109,6 +109,10 @@
 
             @media (max-width: 1080px) {
                 --attr_height: 160px;
+            }
+
+            @media (min-width: 992px) {
+                --attr_height: 85px;
             }
 
             @media (min-width: 1481px) {

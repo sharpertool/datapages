@@ -78,12 +78,54 @@
 
         .panes {
             position: relative;
-
-            .pane {
-                min-height: var(--attr_height);
-                margin-top: 17px;
-                margin-left: 17px;
+            width: 95%;
+            overflow-y: scroll;
+            /* width */
+            &::-webkit-scrollbar {
+                width: 5px;
             }
+
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: none;
+            }
+
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: var(--primary_color);
+            }
+
+            @media (max-width: 1480px) {
+                --attr_height: 200px;
+            }
+
+            @media (max-width: 1480px) {
+                --attr_height: 200px;
+            }
+
+            @media (max-width: 1200px) {
+                --attr_height: 180px;
+            }
+
+            @media (max-width: 1080px) {
+                --attr_height: 160px;
+            }
+
+            @media (min-width: 992px) {
+                --attr_height: 85px;
+            }
+
+            @media (min-width: 1481px) {
+                --attr_height: 300px;
+            }
+
+            @media (min-width: 1920px) {
+                --attr_height: 400px;
+            }
+
+            max-height: var(--attr_height);
+            margin-top: 17px;
+            margin-left: 17px;
         }
     }
     .nav-pills {
@@ -195,4 +237,3 @@
     }
     /*overflow: hidden;*/
 }
-

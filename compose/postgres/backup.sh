@@ -24,7 +24,7 @@ echo "---------------"
 DEFAULT=backup_$(date +'%Y_%m_%dT%H_%M_%S').sql
 if [ -z "$1" ]
 then
-	FILENAME=DEFAULT
+	FILENAME=${DEFAULT}
 	echo "Using default filename"
 else
 	FILENAME=${1}_$(date +'%Y_%m_%dT%H_%M_%S').sql

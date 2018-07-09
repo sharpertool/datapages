@@ -12,7 +12,7 @@
             </a>
             {% image block.value.image original as photo %}
             {% if block.value.enabled_drawing %}
-                <div class="drawable" data-props="{{ photo.url }}"></d  iv>
+                <div class="drawable" data-props="{{ photo.url }}"></div>
             {% else %}
                 <img src="{{ photo.url }}" alt="" width="100%">
             {% endif %}

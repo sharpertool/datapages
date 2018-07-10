@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     {% endif %}
+    <link rel="stylesheet" href="{% static 'draw_widget/app.css' %}">
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -73,6 +74,7 @@
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://clara.io/js/claraplayer.min.js"></script>
+    <script src="{% static 'draw_widget/app.js' %}"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields

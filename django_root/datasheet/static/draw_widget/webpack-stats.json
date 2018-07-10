@@ -1,0 +1,17 @@
+{
+    "status": "done",
+    "chunks": {
+        "app": [
+            {
+                "name": "app.css",
+                "path": "/Users/kinbasco/Desktop/Code/datapages_draw_widget/dist.prod/app.css"
+            },
+            {
+                "name": "app.js",
+                "path": "/Users/kinbasco/Desktop/Code/datapages_draw_widget/dist.prod/app.js"
+            }
+        ]
+    },
+    "startTime": 1531189623672,
+    "endTime": 1531189634297
+}

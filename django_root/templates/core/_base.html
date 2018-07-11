@@ -53,6 +53,10 @@
 
         {% block content %}{% endblock %}
 
+        {% if not debug and ga_tracking_id %}
+            {% include "datasheet/google_analytics.html" with tracking_id=ga_tracking_id %}
+        {% endif %}
+
         {% block main_js %}
             {# Global javascript #}
             <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -66,8 +70,6 @@
                   crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         {% endblock %}
-
-
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}

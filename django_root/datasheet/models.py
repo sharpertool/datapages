@@ -17,20 +17,6 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from .blocks import CharacteristicsBlock, GridDataBlock
 from panasonic.blocks import PartSelectorBlock
 
-# ('heading', blocks.CharBlock(
-#             classname="full title",
-#             template="datasheet/blocks/_heading.html"
-#         )),
-#         ('paragraph', blocks.RichTextBlock()),
-#         ('image', ImageChooserBlock()),
-#         ('product_code', RelayProductCodeStructureBlock()),
-#         ('carousel', CarouselStreamBlock()),
-#         ('dimension', DimensionBlock()),
-#         ('contact_data', ContactDataBlock()),
-#         ('coil_data', CoilDataBlock()),
-#         ('revisions', RevisionBlock()),
-#         ('selector', SelectorBlock())
-
 
 @register_setting
 class SiteSettings(BaseSetting):
@@ -42,10 +28,9 @@ class SiteSettings(BaseSetting):
         blank=True, null=True
     )
     chat_url = models.CharField(max_length=250, blank=True)
-
-
     tile_background_color = models.CharField(default='#000', max_length=20)
     active_area_background_color = models.CharField(default='#ddd', max_length=20)
+    ga_tracking_id = models.CharField(blank=True, null=True, max_length=200)
     panels = [
         FieldPanel('primary_color'),
         FieldPanel('secondary_color'),
@@ -54,6 +39,7 @@ class SiteSettings(BaseSetting):
         FieldPanel('logo'),
         ImageChooserPanel('banner_mark'),
         FieldPanel('chat_url'),
+        FieldPanel('ga_tracking_id'),
     ]
 
     @property
@@ -106,6 +92,7 @@ class IndexBasePage(Page):
         context['primary_color'] = settings.primary_color
         context['secondary_color'] = settings.secondary_color
         context['banner_mark'] = settings.banner_mark
+        context['ga_tracking_id'] = settings.ga_tracking_id
         context['company_name'] = parent.title
         context['grid_included'] = False
         context['datasheets'] = self.get_children().live().order_by('-first_published_at')
@@ -202,10 +189,9 @@ class SheetBasePage(Page):
         context['banner_mark'] = settings.banner_mark
         context['chat_url'] = settings.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
+        context['ga_tracking_id'] = settings.ga_tracking_id
         context['company_name'] = parent.title
         context['grid_included'] = False
-
-
 
         for value in self.sheet_blocks:
             if isinstance(value.block, (GridDataBlock, PartSelectorBlock)):

@@ -1,10 +1,11 @@
+import json
 from django.db import models
 
 
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import (StreamFieldPanel, FieldPanel,
                                          InlinePanel, MultiFieldPanel)
-from wagtail.core.models import Page, Orderable
+from wagtail.core.models import Page, Orderable, Site
 
 from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
@@ -83,6 +84,35 @@ class SheetPage(SheetBasePage):
         """ Return children, in section sort order. """
         children = [obj.specific for obj in self.get_children()]
         return children
+
+    def get_hierarchy_data(self):
+        children = self.get_children().order_by('title')
+
+        noprefix = lambda s: s if '::' not in s else s.partition('::')[2]
+        site = Site.objects.get(hostname__startswith='microchip.datapages')
+
+        def render(children):
+            out = []
+            for child in children:
+                d = {
+                    'name': noprefix(child.title),
+                    'children': render(child.get_children().order_by('title')),
+                    'url': child.get_url(current_site=site)
+                }
+                out.append(d)
+            return out
+
+        return {
+            'name': 'root',
+            'toggled': True,
+            'children': render(children)
+        }
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        hierarchy = self.get_hierarchy_data()
+        context['hierarchy_data'] = json.dumps(hierarchy)
+        return context
 
 
 class SheetSubPage(Page):

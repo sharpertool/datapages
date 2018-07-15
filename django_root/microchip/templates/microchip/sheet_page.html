@@ -5,3 +5,10 @@
 {% block sidebar %}
     {% include 'microchip/partials/_sidebar.html' %}
 {% endblock %}
+
+{% block script_data %}
+    {{ block.super }}
+    <script>
+        const hierarchy_data = {{ hierarchy_data|safe }};
+    </script>
+{% endblock %}

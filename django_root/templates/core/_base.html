@@ -71,6 +71,12 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         {% endblock %}
 
+        <!-- injected data -->
+        {% block script_data %}
+            {# Use to inject data into a page, before any extra scripts. #}
+        {% endblock %}
+        <!-- injected data end -->
+
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
         {% endblock %}

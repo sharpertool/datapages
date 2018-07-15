@@ -79,10 +79,16 @@ class SheetPage(SheetBasePage):
 
     subpage_types = ['microchip.SheetSubPage']
 
+    def my_children(self):
+        """ Return children, in section sort order. """
+        children = [obj.specific for obj in self.get_children()]
+        return children
+
 
 class SheetSubPage(Page):
 
     section_number = models.CharField(max_length=128, null=True, blank=True)
+    pdf_page = models.IntegerField(null=True, blank=True)
 
     stream = StreamField([
         ('dimension', DimensionBlock()),
@@ -100,6 +106,7 @@ class SheetSubPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('section_number'),
+        FieldPanel('pdf_page'),
         StreamFieldPanel('stream', heading="Blocks"),
     ]
 

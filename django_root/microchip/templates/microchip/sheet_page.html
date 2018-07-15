@@ -1,3 +1,7 @@
 {% extends 'datasheet/datasheet_page.html' %}
 
 {% block body_class %}{{ block.super }} microchip-sheetpage{% endblock %}
+
+{% block sidebar %}
+    {% include 'microchip/partials/_sidebar.html' %}
+{% endblock %}

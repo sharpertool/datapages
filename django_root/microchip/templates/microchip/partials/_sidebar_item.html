@@ -1,0 +1,17 @@
+{% load wagtailcore_tags %}
+
+<li class="">
+{#    <span>Child Section Number is {{ page.section_number }}</span>#}
+    <a href=""
+       class="list-group-item"
+       data-action="anchor">
+        {{ page.title }}
+    </a>
+    {% if page.get_children|length %}
+        <ul class="level-{{ level }}">
+            {% for child in page.get_children %}
+                {% include "microchip/partials/_sidebar_item.html" with page=child level=level|add:"1" %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

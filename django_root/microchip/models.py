@@ -86,6 +86,7 @@ class SheetPage(SheetBasePage):
 
 
 class SheetSubPage(Page):
+    ajax_template = 'microchip/sheet_sub_page_ajax.html'
 
     section_number = models.CharField(max_length=128, null=True, blank=True)
     pdf_page = models.IntegerField(null=True, blank=True)

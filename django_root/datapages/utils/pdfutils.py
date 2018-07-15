@@ -14,9 +14,9 @@ def load_toc_from_pdf(pdf_file):
     return toc
 
 
-def create_page(section, title, page):
+def create_page(index, section, title, page, sep="::"):
     p = SheetSubPage(section_number=section,
-                     title=title,
+                     title=f"{index:04x}{sep}{title}",
                      pdf_page=page)
     return p
 
@@ -49,9 +49,10 @@ def build_flat_hierarchy_from_toc(slug='', toc=None, clear=False):
     depth_previous = toc[0][0]
     curr_parent = parent
     parents_by_depth = {}
-    for depth, title, page in toc:
+    for idx, tocitem in enumerate(toc):
+        depth, title, page = tocitem
 
-        section_number = get_section_number(title)
+        section_number = get_section_number(title) or idx
 
         if depth < depth_previous:
             if depth == 1:
@@ -59,19 +60,19 @@ def build_flat_hierarchy_from_toc(slug='', toc=None, clear=False):
             else:
                 curr_parent = parents_by_depth[depth - 1]
 
-            newpage = create_page(section_number, title, page)
+            newpage = create_page(idx, section_number, title, page)
             page = curr_parent.add_child(instance=newpage)
             parents_by_depth[depth] = page
 
         elif depth == depth_previous:
-            newpage = create_page(section_number, title, page)
+            newpage = create_page(idx, section_number, title, page)
             page = curr_parent.add_child(instance=newpage)
             parents_by_depth[depth] = page
 
         elif depth > depth_previous:
             curr_parent = parents_by_depth[depth_previous]
 
-            newpage = create_page(section_number, title, page)
+            newpage = create_page(idx, section_number, title, page)
             page = curr_parent.add_child(instance=newpage)
             parents_by_depth[depth] = page
 

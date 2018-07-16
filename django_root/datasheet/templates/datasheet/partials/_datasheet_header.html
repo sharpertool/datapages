@@ -41,7 +41,11 @@
                 <div class="right-links">
                     <a href="#" class="btn btn-outline-white my-2 my-sm-0"><span
                             class="d-none d-md-inline-block">Order</span> Samples</a>
-                    <a href="#" class="btn btn-blue my-2 my-sm-0">Buy <span class="d-none d-md-inline-block">Now</span></a>
+                    <a href="{% if page.specific.buy_now_link %}{{ page.specific.buy_now_link }}{% else %}#{% endif %}"
+                       target="_blank"
+                       class="btn btn-blue my-2 my-sm-0">
+                        Buy <span class="d-none d-md-inline-block">Now</span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -110,7 +110,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'wagtail.contrib.settings.context_processors.settings'
+                'wagtail.contrib.settings.context_processors.settings',
+                'frontend.context.frontend_context',
             ],
         },
     },
@@ -282,10 +283,12 @@ else:
 
 # ReactJS Build import
 REACT_BUILD_DIR = env.str('REACT_BUILD_DIR', default='')
+RENDER_BUNDLES=False
 if REACT_BUILD_DIR != '':
     REACT_BUILD_DIR = environ.Path(REACT_BUILD_DIR)
 
     STATICFILES_DIRS += [str(REACT_BUILD_DIR)]
+    RENDER_BUNDLES=True
 
     WEBPACK_LOADER = {
         'DEFAULT': {

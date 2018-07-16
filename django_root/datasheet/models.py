@@ -31,6 +31,7 @@ class SiteSettings(BaseSetting):
     tile_background_color = models.CharField(default='#000', max_length=20)
     active_area_background_color = models.CharField(default='#ddd', max_length=20)
     ga_tracking_id = models.CharField(blank=True, null=True, max_length=200)
+    is_distributor = models.BooleanField(default=False)
     panels = [
         FieldPanel('primary_color'),
         FieldPanel('secondary_color'),
@@ -40,6 +41,7 @@ class SiteSettings(BaseSetting):
         ImageChooserPanel('banner_mark'),
         FieldPanel('chat_url'),
         FieldPanel('ga_tracking_id'),
+        FieldPanel('is_distributor'),
     ]
 
     @property
@@ -190,6 +192,7 @@ class SheetBasePage(Page):
         context['chat_url'] = settings.get_chat_url.format(part_number=self.part_number)
         context['bookmarks'] = self.get_bookmarks()
         context['ga_tracking_id'] = settings.ga_tracking_id
+        context['is_distributor'] = settings.is_distributor
         context['company_name'] = parent.title
         context['grid_included'] = False
 

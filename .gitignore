@@ -22,7 +22,6 @@ backups
 .virtualenv/*
 frontend_development_core
 react_project_base
-django_root/frontend/static
 /npm-debug.log
 /node_root
 /container_node_modules
@@ -55,3 +54,9 @@ media/
 
 django_root/\.env\.local\.bak
 .ipynb_checkpoints
+/django_root/datasheet/static/scss/partials/onsemi/blocks/_figure.css.map
+/django_root/datasheet/static/scss/partials/onsemi/blocks/_figure.css
+/django_root/datasheet/static/scss/partials/blocks/_part_selector.css.map
+/django_root/datasheet/static/scss/partials/blocks/_part_selector.css
+/django_root/datasheet/static/scss/partials/_panasonic.css.map
+/django_root/datasheet/static/scss/partials/_panasonic.css

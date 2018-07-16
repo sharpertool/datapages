@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'onsemi',
     'epcos',
     'microchip',
+    'frontend',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

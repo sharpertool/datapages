@@ -26,7 +26,8 @@
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     {% endif %}
-    <link rel="stylesheet" href="{% static 'draw_widget/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/draw_widget.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar_menu.css' %}">
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -76,7 +77,8 @@
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://clara.io/js/claraplayer.min.js"></script>
-    <script src="{% static 'draw_widget/app.js' %}"></script>
+    <script src="{% static 'js/draw_widget.js' %}"></script>
+    <script src="{% static 'js/sidebar_menu.js' %}"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -100,7 +102,17 @@
         <script src="{% static 'js/grid.js' %}"></script>
     {% endif %}
 
-    {% if debug %}
-        {% render_bundle 'app' %}
-    {% endif %}
+    <script>
+        //const BASE_URL = "{{ api_path|safe }}";
+        //const config = {BASE_URL: BASE_URL};
+        //const synoptic_editor = window.synoptic_editor;
+        console.log('Initialize draw widget')
+        var target = '.drawable'
+        var targets = document.querySelectorAll(target);
+        draw_widget.init(target);
+
+    </script>
+{#    {% if debug %}#}
+{#        {% render_bundle 'app' %}#}
+{#    {% endif %}#}
 {% endblock %}

@@ -150,6 +150,7 @@ class DimensionBlock(BaseBlock):
 class BasicImageBlock(BaseBlock):
     title = blocks.CharBlock(default="Image")
     subtitle = blocks.CharBlock(required=False)
+    enabled_drawing = blocks.BooleanBlock(default=False, required=False)
     image = ImageChooserBlock()
 
     class Meta:

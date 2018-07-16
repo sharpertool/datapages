@@ -93,6 +93,7 @@ class FigureTableBlock(FigureFieldBaseBlock):
 
 class FigureImageBlock(FigureFieldBaseBlock):
     image = ImageChooserBlock()
+    enabled_drawing = blocks.BooleanBlock(default=True, required=False)
 
     class Meta:
         template = 'onsemi/blocks/figure_block/_figure_image.html'

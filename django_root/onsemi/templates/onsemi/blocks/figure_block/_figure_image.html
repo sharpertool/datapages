@@ -4,5 +4,10 @@
     <h5 class="figure-stream-title">{{ value.title }} <small>{{ value.description }}</small></h5>
 
     {% image value.image original as figure_image %}
-    <img src="{{ figure_image.url }}" width="100%" class="img-thumbnail">
+    {% if value.enabled_drawing %}
+        <div class="drawable img-thumbnail" data-props="{{ figure_image.url }}"/>
+    {% else %}
+        <img src="{{ figure_image.url }}" width="100%" class="img-thumbnail">
+    {% endif %}
+
 </section>

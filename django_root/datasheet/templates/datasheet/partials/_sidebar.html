@@ -14,7 +14,9 @@
                    aria-describedby="find_document_addon">
         </li>
 
-        {% include "datasheet/partials/_bookmarks.html" %}
+        {% block sidebar_bookmarks %}
+            {% include "datasheet/partials/_bookmarks.html" %}
+        {% endblock %}
 
         <li class="chat-with-support">
             <a href="{{ chat_url }}" target="_blank">

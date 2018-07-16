@@ -9,7 +9,7 @@ from wagtail.documents.blocks import DocumentChooserBlock
 
 class BaseBlock(blocks.StructBlock):
     title = blocks.CharBlock()
-    bookmark = blocks.CharBlock()
+    bookmark = blocks.CharBlock(null=True, blank=True)
 
 
 class JSONTextBlock(blocks.TextBlock):

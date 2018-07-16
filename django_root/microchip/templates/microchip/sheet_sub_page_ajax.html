@@ -1,0 +1,8 @@
+{% load wagtailuserbar %}
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+<div class="col">
+    {% for block in page.stream %}
+        {% include_block block %}
+    {% endfor %}
+</div>

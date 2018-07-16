@@ -10,6 +10,10 @@ register = template.Library()
 def lookup(list, index):
     return list[index]
 
+@register.filter
+def noprefix(value):
+    sep = '::'
+    return value if sep not in value else value.partition(sep)[2]
 
 @register.filter
 def replace(value, args):

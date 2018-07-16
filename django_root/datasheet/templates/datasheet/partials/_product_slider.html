@@ -65,26 +65,28 @@
         {% endfor %}
     </div>
 
-    <div class="card" id="distributors">
-        <div class="card-header">
-            <h5>Shop our Distributors</h5>
-            <p>Request pricing, availability and customization options</p>
-            <div class="form-row">
-                <div class="col-9">
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-block dropdown-toggle" data-toggle="dropdown">
-                            North America
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">North America</a>
+    {% if not is_distributor %}
+        <div class="card" id="distributors">
+            <div class="card-header">
+                <h5>Shop our Distributors</h5>
+                <p>Request pricing, availability and customization options</p>
+                <div class="form-row">
+                    <div class="col-9">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-block dropdown-toggle" data-toggle="dropdown">
+                                North America
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item">North America</a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col">
-                    <button class="btn btn-primary btn-block">Shop</button>
+                    <div class="col">
+                        <button class="btn btn-primary btn-block">Shop</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 </div>

@@ -103,3 +103,32 @@ class CarouselStreamBlock(blocks.StreamBlock):
 
     class Meta:
         icon = 'cogs'
+
+
+class ProductCodeBlock(blocks.StructBlock):
+    value = blocks.CharBlock()
+    options = blocks.ListBlock(
+        blocks.StructBlock(
+            [
+                ('key', blocks.CharBlock()),
+                ('value', blocks.CharBlock())
+            ],
+            form_template='teconn/blocks/editing/common/_struct_inline.html'
+        ),
+        required=False
+    )
+
+    class Meta:
+        template = 'epcos/blocks/_product_code_item.html'
+        form_classname = 'product-code-block'
+
+
+class RelayProductCodeBlock(BaseBlock):
+    cde_type = ProductCodeBlock()
+    capacitance_code = ProductCodeBlock()
+    capacitance_tolerance = ProductCodeBlock()
+    wvdc_code = ProductCodeBlock()
+    packaging_code = ProductCodeBlock()
+
+    class Meta:
+        template = 'epcos/blocks/_product_code.html'

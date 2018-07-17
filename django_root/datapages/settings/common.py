@@ -293,7 +293,7 @@ if REACT_BUILD_DIR != '':
     WEBPACK_LOADER = {
         'DEFAULT': {
             'CACHE': not DEBUG,
-            'BUNDLE_DIR_NAME': '/',
+            'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='/'),
             'STATS_FILE': REACT_BUILD_DIR('webpack-stats.json'),
             'POLL_INTERVAL': 0.1,
             'TIMEOUT': None,
@@ -302,7 +302,6 @@ if REACT_BUILD_DIR != '':
     }
 
 
-print(REACT_BUILD_DIR)
 # Get settings from environment. These are required to be set.
 RAVEN_CONFIG = {
     'dsn': env.str('DJANGO_SENTRY_DSN', default=''),

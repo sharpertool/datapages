@@ -3,6 +3,16 @@
 
     <table class="table">
         <tbody>
+            <tr>
+                <th>Lead Type</th>
+                <th>Vpk, max (V)</th>
+                <th>VR (V)</th>
+                <th>Vop (v)</th>
+                <th>Cnom, typ (µF)</th>
+                <th>Ceff, typ (µF)</th>
+                <th>C0 (µF)</th>
+                <th>Ordering code</th>
+            </tr>
             {% for code in block.value.codes %}
                 <tr>
                     <td>{{ code.lead }}</td>
@@ -13,7 +23,8 @@
                     <td>{{ code.ceff }}</td>
                     <td>{{ code.co }}</td>
                     <td><a
-                            href="https://en.tdk.eu/tdk-en/529126/products/product-search/inventory-check/search-result?s={{ code.ordering_code }}">
+                            href="https://en.tdk.eu/tdk-en/529126/products/product-search/inventory-check/search-result?s={{ code.ordering_code }}"
+                    target="_blank">
                         {{ code.ordering_code }}
                     </a></td>
                 </tr>

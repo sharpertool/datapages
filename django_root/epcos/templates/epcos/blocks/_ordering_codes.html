@@ -1,0 +1,23 @@
+<div class="revision block" id="{{ block.value.bookmark }}">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+    <table class="table">
+        <tbody>
+            {% for code in block.value.codes %}
+                <tr>
+                    <td>{{ code.lead }}</td>
+                    <td>{{ code.vpk }}</td>
+                    <td>{{ code.vr }}</td>
+                    <td>{{ code.vop }}</td>
+                    <td>{{ code.cnom }}</td>
+                    <td>{{ code.ceff }}</td>
+                    <td>{{ code.co }}</td>
+                    <td><a
+                            href="https://en.tdk.eu/tdk-en/529126/products/product-search/inventory-check/search-result?s={{ code.ordering_code }}">
+                        {{ code.ordering_code }}
+                    </a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -22,6 +22,24 @@ class ContactDataBlock(BaseBlock):
         template = 'epcos/blocks/_contact_data.html'
 
 
+class OrderingCodeBlock(blocks.StructBlock):
+    lead = blocks.CharBlock()
+    vpk = blocks.CharBlock()
+    vr = blocks.CharBlock()
+    vop = blocks.CharBlock()
+    cnom = blocks.CharBlock()
+    ceff = blocks.CharBlock()
+    co = blocks.CharBlock()
+    ordering_code = blocks.CharBlock()
+
+
+class OrderingCodeBlock(BaseBlock):
+    codes = blocks.ListBlock(OrderingCodeBlock())
+
+    class Meta:
+        template = 'epcos/blocks/_ordering_codes.html'
+
+
 class RevisionDataBlock(blocks.StructBlock):
     date = blocks.DateBlock()
     revisions = blocks.ListBlock(blocks.StructBlock([

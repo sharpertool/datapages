@@ -17,7 +17,8 @@ from datasheet.blocks import (DimensionBlock, ChartBlock,
                               PDFBlock, RichTextBlock, BasicImageBlock)
 from onsemi.blocks import FigureBlock
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
-                     ApplicationsBlock, ConstructionBlock, CarouselImageBlock)
+                     ApplicationsBlock, ConstructionBlock, CarouselImageBlock,
+                     OrderingCodeBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -55,7 +56,8 @@ class SheetPage(SheetBasePage):
         ('pdf', PDFBlock()),
         ('richtext', RichTextBlock()),
         ('basic_image', BasicImageBlock()),
-        ('figure', FigureBlock())
+        ('figure', FigureBlock()),
+        ('ordering_codes', OrderingCodeBlock()),
     ], blank=True)
     attributes = StreamField([
         ('features', FeaturesBlock()),

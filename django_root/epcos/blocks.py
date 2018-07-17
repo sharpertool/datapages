@@ -103,3 +103,32 @@ class CarouselStreamBlock(blocks.StreamBlock):
 
     class Meta:
         icon = 'cogs'
+
+
+class CeralinkProductCodeItemBlock(blocks.StructBlock):
+    value = blocks.CharBlock()
+    options = blocks.ListBlock(
+        blocks.StructBlock(
+            [
+                ('key', blocks.CharBlock()),
+                ('value', blocks.CharBlock())
+            ],
+            form_template='teconn/blocks/editing/common/_struct_inline.html'
+        ),
+        required=False
+    )
+
+    class Meta:
+        template = 'epcos/blocks/_ceralink_product_code_item.html'
+        form_classname = 'product-code-block'
+
+
+class CeralinkProductCodeBlock(BaseBlock):
+    cde_type = CeralinkProductCodeItemBlock()
+    capacitance_code = CeralinkProductCodeItemBlock()
+    capacitance_tolerance = CeralinkProductCodeItemBlock()
+    wvdc_code = CeralinkProductCodeItemBlock()
+    packaging_code = CeralinkProductCodeItemBlock()
+
+    class Meta:
+        template = 'epcos/blocks/_ceralink_product_code.html'

@@ -85,3 +85,32 @@ class CarouselStreamBlock(blocks.StreamBlock):
 
     class Meta:
         icon = 'cogs'
+
+
+class CapacitorProductCodeItemBlock(blocks.StructBlock):
+    value = blocks.CharBlock()
+    options = blocks.ListBlock(
+        blocks.StructBlock(
+            [
+                ('key', blocks.CharBlock()),
+                ('value', blocks.CharBlock())
+            ],
+            form_template='teconn/blocks/editing/common/_struct_inline.html'
+        ),
+        required=False
+    )
+
+    class Meta:
+        template = 'sager/blocks/_capacitor_product_code_item.html'
+        form_classname = 'product-code-block'
+
+
+class CapacitorProductCodeBlock(BaseBlock):
+    cde_type = CapacitorProductCodeItemBlock()
+    capacitance_code = CapacitorProductCodeItemBlock()
+    capacitance_tolerance = CapacitorProductCodeItemBlock()
+    wvdc_code = CapacitorProductCodeItemBlock()
+    packaging_code = CapacitorProductCodeItemBlock()
+
+    class Meta:
+        template = 'sager/blocks/_capacitor_product_code.html'

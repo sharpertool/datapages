@@ -89,7 +89,6 @@ class SheetPage(SheetBasePage):
 
     def get_hierarchy_data(self):
         children = self.get_children().order_by('title')
-
         noprefix = lambda s: s if '::' not in s else s.partition('::')[2]
         site = Site.objects.get(hostname__startswith='microchip.datapages')
 

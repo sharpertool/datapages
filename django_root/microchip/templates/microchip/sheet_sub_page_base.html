@@ -74,6 +74,8 @@
     <script src="//www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://clara.io/js/claraplayer.min.js"></script>
+    <script src="{% static 'js/draw_widget.js' %}"></script>
+    <script src="{% static 'js/sidebar_menu.js' %}"></script>
 
     <!--
     Include ag-grid when GridDataBlock exist in streamfields
@@ -97,7 +99,9 @@
         <script src="{% static 'js/grid.js' %}"></script>
     {% endif %}
 
-    {% if debug %}
-        {% render_bundle 'app' %}
+    {% if render_bundles %}
+        <!-- Rendering Bundles -->
+        {% render_bundle 'draw_widget' %}
+        {% render_bundle 'sidebar_menu' %}
     {% endif %}
 {% endblock %}

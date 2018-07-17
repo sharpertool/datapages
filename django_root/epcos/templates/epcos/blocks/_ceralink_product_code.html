@@ -1,0 +1,23 @@
+{% load wagtailcore_tags %}
+
+<div class="product-code-structure block" id="{{ block.value.bookmark }}">
+    <h1 class="title"><span>{{ block.value.title }}</span></h1>
+
+    <ul class="product-code">
+        <li class="product-code-item">
+            {% include_block block.value.cde_type with index="cde_type" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.capacitance_code with index="capacitance_code" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.capacitance_tolerance with index="capacitance_tolerance" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.wvdc_code with index="wvdc_code" %}
+        </li>
+        <li class="product-code-item">
+            {% include_block block.value.packaging_code with index="packaging_code" %}
+        </li>
+    </ul>
+</div>

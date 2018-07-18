@@ -17,7 +17,7 @@ from datasheet.blocks import (DimensionBlock, ChartBlock,
 from onsemi.blocks import FigureBlock
 from .blocks import (ContactDataBlock, RevisionBlock, FeaturesBlock,
                      ApplicationsBlock, CarouselImageBlock, HighlightsBlock,
-                     CapacitorProductCodeBlock)
+                     CapacitorProductCodeBlock, ConfigurableProductCodeBlock)
 
 
 class SheetPageTag(TaggedItemBase):
@@ -58,6 +58,7 @@ class SheetPage(SheetBasePage):
         ('richtext', RichTextBlock()),
         ('figure', FigureBlock()),
         ('cap_product_selector', CapacitorProductCodeBlock()),
+        ('configurable_product', ConfigurableProductCodeBlock()),
     ], blank=True)
 
     attributes = StreamField([

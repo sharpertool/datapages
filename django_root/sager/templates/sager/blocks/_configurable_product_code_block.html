@@ -1,0 +1,21 @@
+{% load wagtailcore_tags %}
+
+<div class="product-code-structure block" id="{{ block.value.bookmark }}">
+    <h1 class="product-code"><span>{{ block.value.title }}</span></h1>
+    <ul id="foo" class="product-code">
+    </ul>
+
+</div>
+
+<script>
+    (function($) {
+        var data = {{ configuration|safe  }};
+
+
+        var foo = $('#foo');
+        data.fields.forEach(function(field) {
+            foo.append("<li class='product-code-item'>" + field.title + "</li>")
+            console.log('Generate a field for ' + field.title)
+        })
+    })($)
+</script>

@@ -4,7 +4,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 
-from datasheet.blocks import BaseBlock
+from datasheet.blocks import BaseBlock, JSONTextBlock
 
 
 class ContactDataBlock(BaseBlock):
@@ -25,9 +25,9 @@ class ContactDataBlock(BaseBlock):
 class RevisionDataBlock(blocks.StructBlock):
     date = blocks.DateBlock()
     revisions = blocks.ListBlock(blocks.StructBlock([
-            ('title', blocks.CharBlock()),
-            ('description', blocks.CharBlock())
-        ],
+        ('title', blocks.CharBlock()),
+        ('description', blocks.CharBlock())
+    ],
         form_template='sager/blocks/editing/common/_struct_inline.html'))
 
 
@@ -114,3 +114,74 @@ class CapacitorProductCodeBlock(BaseBlock):
 
     class Meta:
         template = 'sager/blocks/_capacitor_product_code.html'
+
+    def myfields(self, context=None):
+        print(f"------------ Sweet.. My Fields function was called.")
+        if context:
+            print(f"Context is set {context}")
+
+        return None
+        # return [self.cde_type,
+        #         self.capacitance_code,
+        #         self.capacitance_tolerance,
+        #         self.wvdc_code,
+        #         self.packaging_code]
+
+    def render(self, value, context=None):
+        print(f"Rendering {value}")
+        return super().render(value, context=context)
+
+
+class ConfigurableProductCodeBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    bookmark = blocks.CharBlock(null=True, blank=True)
+    configuration = JSONTextBlock(
+        help_text=dedent("""
+            JSON data structure that defines the properties for this block
+            Example:
+            <pre>
+                { 
+                  "fields": [
+                    {"code": "cde", "title": "CDE"},
+                    {"code": "capacitance", "title": "Capacitance (μF)"},
+                    {"code": "tolerance", "title": "Tolerance (%)"},
+                    {"code": "wvdc", "title": "Working Voltage (Vdc)"},
+                    {"code": "packaging", "title": "Packaging"}
+                  ],
+                  "options": {
+                    "cde": [
+                        ["esrd", "ESRD"]                    
+                    ],
+                    "capacitance": [
+                        ["4R7", "4.7 μF"],                    
+                        ["220", "22 μF"],                    
+                        ["101", "100 μF"]                    
+                    ],
+                    "tolerance": [
+                        ["M", "+- 20%"]                    
+                    ],
+                    "wvdc": [
+                        ["02", "2.0 Vdc"],                    
+                        ["0E", "2.5 Vdc"],                    
+                        ["04", "4.0 Vdc"],                    
+                        ["06", "6.3 Vdc"]                    
+                    ],
+                    "packaging": [
+                        ["R", "Tape & Reel"],                    
+                        ["B", "Bulk"]                   
+                    ]
+                  }
+                }
+            </pre>
+            """)
+    )
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context=parent_context)
+        context.update({
+            'configuration': value["configuration"]
+        })
+        return context
+
+    class Meta:
+        template = "sager/blocks/_configurable_product_code_block.html"

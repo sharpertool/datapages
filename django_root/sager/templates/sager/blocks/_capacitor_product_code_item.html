@@ -1,11 +1,19 @@
 {% load utility_tags %}
 
-{% with block.value|lookup:index as item %}
+<li class="product-code-item">
     <div class="head">
-        <h5 class="name">{{ item.value }}</h5>
-        <p class="description">{{ index|replace:'search=_&replacement= '|capfirst }}</p>
+        <!-- Code Item -->
+        <h5 class="name">{{ value.value }}</h5>
+        <p class="description">{{ desc }}</p>
     </div>
 
-    {% include 'epcos/blocks/_ceralink_product_code_dropdown.html' %}
-{% endwith %}
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">{{ value.options.0.value }}</button>
+        <div class="dropdown-menu">
+            {% for option in value.options %}
+                <a href="#{{ option.key }}" class="dropdown-item">{{ option.value }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</li>
 

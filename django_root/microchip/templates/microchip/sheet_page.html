@@ -8,7 +8,13 @@
 
 {% block script_data %}
     {{ block.super }}
+    {% if hierarchy_data %}
+        <script>
+            const hierarchy_data = {{ hierarchy_data|safe }};
+        </script>
+    {% endif %}
+
     <script>
-        const hierarchy_data = {{ hierarchy_data|safe }};
+        console.log('What is the main data? ' + hierarchy_data.name)
     </script>
 {% endblock %}

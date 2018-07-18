@@ -82,6 +82,7 @@
     {% if grid_included %}
         <script src="https://unpkg.com/ag-grid/dist/ag-grid.min.noStyle.js"></script>
     {% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -100,14 +101,18 @@
 
     {% if render_bundles %}
         {% render_bundle 'DrawingComponent' %}
-        {% render_bundle 'SidebarComponent' %}
+        {% if hierarchy_data %}
+            {% render_bundle 'SidebarComponent' %}
+        {% endif %}
     {% endif %}
 
     <script type="text/javascript">
         DrawingComponent('.drawable')
-        const data = {{ hierarchy_data | safe}}
-        const sidebar = new SidebarComponent('.datapages-sidebar')
-        sidebar.render(data)
+        {% if hierarchy_data %}
+            const data = {{ hierarchy_data | safe}}
+            const sidebar = new SidebarComponent('.datapages-sidebar')
+            sidebar.render(data)
+        {% endif %}
     </script>
 
 {% endblock %}

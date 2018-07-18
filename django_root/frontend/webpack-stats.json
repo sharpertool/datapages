@@ -1,0 +1,27 @@
+{
+    "status": "done",
+    "publicPath": "/static/",
+    "chunks": {
+        "DrawingComponent": [
+            {
+                "name": "css/DrawingComponent.css",
+                "publicPath": "/static/css/DrawingComponent.css",
+                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/css/DrawingComponent.css"
+            },
+            {
+                "name": "js/DrawingComponent_086d71b42b866d4106f1.js",
+                "publicPath": "/static/js/DrawingComponent_086d71b42b866d4106f1.js",
+                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/DrawingComponent_086d71b42b866d4106f1.js"
+            }
+        ],
+        "SidebarComponent": [
+            {
+                "name": "js/SidebarComponent_086d71b42b866d4106f1.js",
+                "publicPath": "/static/js/SidebarComponent_086d71b42b866d4106f1.js",
+                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/SidebarComponent_086d71b42b866d4106f1.js"
+            }
+        ]
+    },
+    "startTime": 1531944962671,
+    "endTime": 1531944973196
+}

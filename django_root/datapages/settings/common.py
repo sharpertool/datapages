@@ -283,12 +283,11 @@ else:
 
 # ReactJS Build import
 REACT_BUILD_DIR = env.str('REACT_BUILD_DIR', default='')
-RENDER_BUNDLES=False
-if REACT_BUILD_DIR != '':
+RENDER_BUNDLES = True # Use in Prod as well as Development
+if DEBUG and REACT_BUILD_DIR != '':
     REACT_BUILD_DIR = environ.Path(REACT_BUILD_DIR)
 
     STATICFILES_DIRS += [str(REACT_BUILD_DIR)]
-    RENDER_BUNDLES=True
 
     WEBPACK_LOADER = {
         'DEFAULT': {
@@ -300,6 +299,16 @@ if REACT_BUILD_DIR != '':
             'IGNORE': ['.+\.hot-update.js', '.+\.map']
         }
     }
+else:
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'CACHE': True,
+            'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='/'),
+            'STATS_FILE': PROJECT_DIR('frontend/webpack-stats.json'),
+            'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        }
+    }
+
 
 
 # Get settings from environment. These are required to be set.

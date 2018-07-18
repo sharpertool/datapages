@@ -105,7 +105,9 @@
 
     <script type="text/javascript">
         DrawingComponent('.drawable')
-        SidebarComponent('.datapages-sidebar', {{ hierarchy_data | safe}})
+        const data = {{ hierarchy_data | safe}}
+        const sidebar = new SidebarComponent('.datapages-sidebar')
+        sidebar.render(data)
     </script>
 
 {% endblock %}

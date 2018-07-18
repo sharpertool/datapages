@@ -293,13 +293,14 @@ if REACT_BUILD_DIR != '':
     WEBPACK_LOADER = {
         'DEFAULT': {
             'CACHE': not DEBUG,
-            'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='js/'),
+            'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='/'),
             'STATS_FILE': REACT_BUILD_DIR('webpack-stats.json'),
             'POLL_INTERVAL': 0.1,
             'TIMEOUT': None,
             'IGNORE': ['.+\.hot-update.js', '.+\.map']
         }
     }
+
 
 # Get settings from environment. These are required to be set.
 RAVEN_CONFIG = {

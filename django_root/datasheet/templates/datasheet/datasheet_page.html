@@ -99,11 +99,13 @@
     {% endif %}
 
     {% if render_bundles %}
-        {% render_bundle 'datapages_components' %}
+        {% render_bundle 'DrawingComponent' %}
+        {% render_bundle 'SidebarComponent' %}
     {% endif %}
 
     <script type="text/javascript">
-        datapages_components.DrawingComponent('.drawable')
-        datapages_components.SidebarComponent('.datapages-sidebar')
+        DrawingComponent('.drawable')
+        SidebarComponent('.datapages-sidebar')
     </script>
+
 {% endblock %}

@@ -6,14 +6,16 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import (StreamFieldPanel, FieldPanel,
-                                         InlinePanel, MultiFieldPanel)
-from wagtail.core.models import Page, Orderable, Site
-
-from taggit.models import TaggedItemBase
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
+
+from taggit.models import TaggedItemBase
+
+from wagtail.admin.edit_handlers import (StreamFieldPanel, FieldPanel,
+                                         InlinePanel, MultiFieldPanel)
+from wagtail.api import APIField
+from wagtail.core.fields import StreamField
+from wagtail.core.models import Page, Orderable, Site
 
 from datasheet.models import IndexBasePage, SheetBasePage
 from datasheet.blocks import (DimensionBlock, ChartBlock,
@@ -109,6 +111,7 @@ class SheetPage(SheetBasePage):
             for child in children:
                 d = {
                     'name': noprefix(child.title),
+                    'id': child.pk,
                     'url': child.get_url(current_site=site)
                 }
 
@@ -127,11 +130,14 @@ class SheetPage(SheetBasePage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        key = "_".join([request.path, 'hierarchy_data'])
         cache = caches['default']
-        hierarchy = cache.get('hierarchy_data')
-        if not hierarchy:
+        hierarchy = cache.get(key)
+        if hierarchy:
+            print("Loaded hierarchy from cache")
+        else:
             hierarchy = self.get_hierarchy_data()
-            cache.set('hierarchy_data', hierarchy, 300)
+            cache.set(key, hierarchy, 300)
         context['hierarchy_data'] = json.dumps(hierarchy)
         return context
 
@@ -165,6 +171,10 @@ class SheetSubPage(Page):
         FieldPanel('section_number'),
         FieldPanel('pdf_page'),
         StreamFieldPanel('stream', heading="Blocks"),
+    ]
+
+    api_fields = [
+        APIField('title_raw'),
     ]
 
     def full_clean(self, *args, **kwargs):

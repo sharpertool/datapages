@@ -1,10 +1,7 @@
 {% extends 'core/_base.html' %}
 {% load static wagtailcore_tags wagtailimages_tags %}
 {% block body_class %}template-datasheet{% endblock %}
-
-{% if debug %}
-    {% load render_bundle from webpack_loader %}
-{% endif %}
+{% load render_bundle from webpack_loader %}
 
 {% block extra_css %}
     {% include "datasheet/partials/_styles_vars.html" %}
@@ -99,20 +96,18 @@
         <script src="{% static 'js/grid.js' %}"></script>
     {% endif %}
 
+{% endblock %}
+
+{% block render_bundles %}
+    {{ block.super }}
     {% if render_bundles %}
         {% render_bundle 'DrawingComponent' %}
-        {% if hierarchy_data %}
-            {% render_bundle 'SidebarComponent' %}
-        {% endif %}
     {% endif %}
+{% endblock %}
 
+{% block initialize_bundles %}
+    {{ block.super }}
     <script type="text/javascript">
         DrawingComponent('.drawable')
-        {% if hierarchy_data %}
-            const data = {{ hierarchy_data | safe}}
-            const sidebar = new SidebarComponent('.datapages-sidebar')
-            sidebar.render(data)
-        {% endif %}
     </script>
-
 {% endblock %}

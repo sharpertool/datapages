@@ -81,6 +81,14 @@
             {# Override this in templates to add extra javascript #}
         {% endblock %}
 
+        {% block render_bundles %}
+            {# Add logic to render bundles #}
+        {% endblock %}
+
+        {% block initialize_bundles %}
+            {# Add logic to initialize bundles #}
+        {% endblock %}
+
         {% block social_media %}
             <!-- Go to www.addthis.com/dashboard to customize your tools -->
             <!--<script type="text/javascript"

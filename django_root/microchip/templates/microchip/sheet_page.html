@@ -1,5 +1,8 @@
 {% extends 'datasheet/datasheet_page.html' %}
 
+{% load static wagtailcore_tags wagtailimages_tags %}
+{% load render_bundle from webpack_loader %}
+
 {% block body_class %}{{ block.super }} microchip-sheetpage{% endblock %}
 
 {% block sidebar %}
@@ -8,4 +11,24 @@
 
 {% block script_data %}
     {{ block.super }}
+{% endblock %}
+
+{% block render_bundles %}
+    {{ block.super }}
+    {% if hierarchy_data %}
+        {% render_bundle 'SidebarComponent' %}
+    {% endif %}
+{% endblock %}
+
+{% block initialize_bundles %}
+    {{ block.super }}
+    <script type="text/javascript">
+        {% if hierarchy_data %}
+            const datapages = window.datapages || {}
+            datapages.hierarchy_data = {{ hierarchy_data | safe}}
+            const sidebar = new SidebarComponent('.datapages-sidebar')
+            sidebar.render(datapages.hierarchy_data)
+        {% endif %}
+    </script>
+
 {% endblock %}

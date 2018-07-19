@@ -227,6 +227,8 @@ SASS_PROCESSOR_INCLUDE_DIRS = [
 ]
 SASS_PROCESSOR_ROOT = PROJECT_DIR('static')
 
+# Wagtail API
+WAGTAILAPI_LIMIT_MAX = 100
 
 PIPELINE = {
     'PIPELINE_ENABLED': DEBUG is False,  # Compress if not debugging

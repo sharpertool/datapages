@@ -175,6 +175,9 @@ class SheetSubPage(Page):
 
     api_fields = [
         APIField('title_raw'),
+        APIField('section_number'),
+        APIField('pdf_page'),
+        APIField('numchild'),
     ]
 
     def full_clean(self, *args, **kwargs):

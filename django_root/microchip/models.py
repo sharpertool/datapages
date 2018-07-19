@@ -88,6 +88,15 @@ class SheetPage(SheetBasePage):
         return children
 
     def get_hierarchy_data(self):
+        """
+        Build a data structure that is suitable for rendeing with react treebeard
+
+        Do not render a children: [] unless we want to dynamically load sub-sections.
+        If there is a children at all, it will have an indicator for sub-levels.
+
+        :param self:
+        :return:
+        """
         children = self.get_children().order_by('title')
         noprefix = lambda s: s if '::' not in s else s.partition('::')[2]
         site = Site.objects.get(hostname__startswith='microchip.datapages')
@@ -97,17 +106,19 @@ class SheetPage(SheetBasePage):
             for child in children:
                 d = {
                     'name': noprefix(child.title),
-                    'children': render(child.get_children().order_by('title')),
                     'url': child.get_url(current_site=site)
                 }
+
+                sub_children = child.get_children().order_by('title')
+                if sub_children:
+                    d.update({
+                        'children': render(sub_children),
+                    })
+
                 out.append(d)
             return out
 
-        return {
-            'name': 'root',
-            'toggled': True,
-            'children': render(children)
-        }
+        return render(children)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)

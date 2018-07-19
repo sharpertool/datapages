@@ -323,6 +323,27 @@ RAVEN_CONFIG = {
     'release': env.str('DATAPAGES_VERSION', default='')
 }
 
+# Configure Redis caching. Can be used locally or remote.
+CACHE_HOST = env.str('CACHE_HOST', default='')
+CACHE_PORT = env.int('CACHE_PORT', default=6379)
+CACHE_DB = env.int('CACHE_DB', default=1)
+if CACHE_HOST:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": f"redis://{CACHE_HOST}:{CACHE_PORT}/{CACHE_DB}",
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,

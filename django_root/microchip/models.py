@@ -1,4 +1,6 @@
 import json
+
+from django.core.cache import caches
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -100,6 +102,7 @@ class SheetPage(SheetBasePage):
         children = self.get_children().order_by('title')
         noprefix = lambda s: s if '::' not in s else s.partition('::')[2]
         site = Site.objects.get(hostname__startswith='microchip.datapages')
+        print("Generating hierarchy data")
 
         def render(children):
             out = []
@@ -118,11 +121,17 @@ class SheetPage(SheetBasePage):
                 out.append(d)
             return out
 
-        return render(children)
+        result = render(children)
+        print("Done")
+        return result
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        hierarchy = self.get_hierarchy_data()
+        cache = caches['default']
+        hierarchy = cache.get('hierarchy_data')
+        if not hierarchy:
+            hierarchy = self.get_hierarchy_data()
+            cache.set('hierarchy_data', hierarchy, 300)
         context['hierarchy_data'] = json.dumps(hierarchy)
         return context
 

@@ -22,6 +22,13 @@
     {% if grid_included %}
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
+
+        {% if render_bundles %}
+            {% render_bundle 'ImageEditorComponent' 'css' %}
+            {% if hierarchy_data %}
+                {% render_bundle 'SidebarComponent' 'css' %}
+            {% endif %}
+        {% endif %}
     {% endif %}
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -101,13 +108,21 @@
 {% block render_bundles %}
     {{ block.super }}
     {% if render_bundles %}
-        {% render_bundle 'DrawingComponent' %}
+        {% render_bundle 'ImageEditorComponent' 'js' %}
+        {% if hierarchy_data %}
+            {% render_bundle 'SidebarComponent' 'js' %}
+        {% endif %}
     {% endif %}
 {% endblock %}
 
 {% block initialize_bundles %}
     {{ block.super }}
     <script type="text/javascript">
-        DrawingComponent('.drawable')
+        ImageEditorComponent('.drawable')
+        {% if hierarchy_data %}
+            const data = {{ hierarchy_data | safe}}
+            const sidebar = new SidebarComponent('.datapages-sidebar')
+            sidebar.render(data)
+        {% endif %}
     </script>
 {% endblock %}

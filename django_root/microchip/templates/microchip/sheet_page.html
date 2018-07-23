@@ -3,6 +3,15 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 {% load render_bundle from webpack_loader %}
 
+{% block extra_css %}
+    {{ block.super }}
+    {% if render_bundles %}
+        {% if hierarchy_data %}
+            {% render_bundle 'SidebarComponent' 'css' %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
 {% block body_class %}{{ block.super }} microchip-sheetpage{% endblock %}
 
 {% block sidebar %}
@@ -16,7 +25,7 @@
 {% block render_bundles %}
     {{ block.super }}
     {% if hierarchy_data %}
-        {% render_bundle 'SidebarComponent' %}
+        {% render_bundle 'SidebarComponent' 'js' %}
     {% endif %}
 {% endblock %}
 
@@ -25,10 +34,9 @@
     <script type="text/javascript">
         {% if hierarchy_data %}
             const datapages = window.datapages || {}
-            datapages.hierarchy_data = {{ hierarchy_data | safe}}
+            datapages.hierarchy_data = {{ hierarchy_data | safe }}
             const sidebar = new SidebarComponent('.datapages-sidebar')
             sidebar.render(datapages.hierarchy_data)
         {% endif %}
     </script>
-
 {% endblock %}

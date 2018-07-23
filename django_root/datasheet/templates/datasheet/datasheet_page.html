@@ -24,6 +24,11 @@
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     {% endif %}
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
+
+    {% if render_bundles %}
+        {% render_bundle 'ImageEditorComponent' 'css' %}
+    {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -101,13 +106,13 @@
 {% block render_bundles %}
     {{ block.super }}
     {% if render_bundles %}
-        {% render_bundle 'DrawingComponent' %}
+        {% render_bundle 'ImageEditorComponent' 'js' %}
     {% endif %}
 {% endblock %}
 
 {% block initialize_bundles %}
     {{ block.super }}
     <script type="text/javascript">
-        DrawingComponent('.drawable')
+        ImageEditorComponent('.drawable')
     </script>
 {% endblock %}

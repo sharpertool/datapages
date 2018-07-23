@@ -24,12 +24,11 @@
         <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     {% endif %}
     <link rel="stylesheet" href="{% static 'css/datasheet.css' %}" rel="stylesheet" type="text/css">
+
     {% if render_bundles %}
         {% render_bundle 'ImageEditorComponent' 'css' %}
-        {% if hierarchy_data %}
-            {% render_bundle 'SidebarComponent' 'css' %}
-        {% endif %}
     {% endif %}
+
 {% endblock %}
 
 {% block content %}

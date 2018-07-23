@@ -299,7 +299,7 @@ if DEBUG and REACT_BUILD_DIR != '':
             'STATS_FILE': REACT_BUILD_DIR('webpack-stats.json'),
             'POLL_INTERVAL': 0.1,
             'TIMEOUT': None,
-            'IGNORE': ['.+\.hot-update.js', '.+\.map']
+            #'IGNORE': ['.+\.hot-update.js', '.+\.map']
         }
     }
 else:

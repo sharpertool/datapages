@@ -9,19 +9,19 @@
                 "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/css/ImageEditorComponent.css"
             },
             {
-                "name": "js/ImageEditorComponent_5ae4c6c47a57f3268e31.js",
-                "publicPath": "/static/js/ImageEditorComponent_5ae4c6c47a57f3268e31.js",
-                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/ImageEditorComponent_5ae4c6c47a57f3268e31.js"
+                "name": "js/ImageEditorComponent_6e334d5d2a0c1730c709.js",
+                "publicPath": "/static/js/ImageEditorComponent_6e334d5d2a0c1730c709.js",
+                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/ImageEditorComponent_6e334d5d2a0c1730c709.js"
             }
         ],
         "SidebarComponent": [
             {
-                "name": "js/SidebarComponent_5ae4c6c47a57f3268e31.js",
-                "publicPath": "/static/js/SidebarComponent_5ae4c6c47a57f3268e31.js",
-                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/SidebarComponent_5ae4c6c47a57f3268e31.js"
+                "name": "js/SidebarComponent_6e334d5d2a0c1730c709.js",
+                "publicPath": "/static/js/SidebarComponent_6e334d5d2a0c1730c709.js",
+                "path": "/Volumes/sharpertool/proj/bigzeta/datapages_react/datapages_draw_widget/dist.prod/js/SidebarComponent_6e334d5d2a0c1730c709.js"
             }
         ]
     },
-    "startTime": 1532315240764,
-    "endTime": 1532315250907
+    "startTime": 1532468120599,
+    "endTime": 1532468153787
 }

@@ -182,6 +182,11 @@ jobs:
   install_js_packages:
     <<: *container_config_min
     steps:
+      - *restore_repo
+      - *restore_venv
+
+      - *attach_workspace
+
       - run:
           name: Install datapages client packages
           command: |

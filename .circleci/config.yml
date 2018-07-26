@@ -193,7 +193,10 @@ jobs:
             source .venv3/bin/activate
             cd django_root
             export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
-            VERSION=$(grep COMPONENTS_VERSION datapages/settings/common.py | sed s/^.*=.*'// | sed s/'$// )
+            python manage.py get_components_version version.txt
+            VERSION=$(cat version.txt)
+            rm version.tt
+            echo "Downloading components version ${VERSION} to frontend/static"
             aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./frontend/static
             mv ./frontend/static/webpack-stats.json ./frontend
 

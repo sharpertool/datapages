@@ -303,11 +303,16 @@ if DEBUG and REACT_BUILD_DIR != '':
         }
     }
 else:
+    # Set the components version to download upon build here, or in the .env file.
+    # This is used at build time only
+    COMPONENTS_VERSION = env.str('COMPONENTS_VERSION', default='v0.1.1')
+
     WEBPACK_LOADER = {
         'DEFAULT': {
             'CACHE': True,
             'BUNDLE_DIR_NAME': env.str('BUNDLE_DIR_NAME', default='/'),
-            'STATS_FILE': PROJECT_DIR('frontend/webpack-stats.json'),
+            'STATS_FILE': env.str('WEBPACK_STATS_FILE',
+                                  default=PROJECT_DIR('frontend/webpack-stats.json')),
             'IGNORE': ['.+\.hot-update.js', '.+\.map']
         }
     }

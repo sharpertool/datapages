@@ -50,7 +50,7 @@ references:
         - v1-repo
 
   venv_cache_key: &venv_cache_key
-    v2-dependency-venv-{{ checksum "requirements/test.txt" }}-{{ checksum "requirements/dev.txt" }}-{{ checksum "requirements/base.txt" }}
+    v3-dependency-venv-{{ checksum "requirements/test.txt" }}-{{ checksum "requirements/dev.txt" }}-{{ checksum "requirements/base.txt" }}
 
   restore_venv: &restore_venv
     restore_cache:
@@ -127,14 +127,14 @@ jobs:
       - run:
           name: Install project pip modules
           command: |
-            python3 -m venv .venv
-            source .venv/bin/activate
+            python3 -m venv .venv3
+            source .venv3/bin/activate
             pip install -r requirements/test.txt
 
       - save_cache:
           key: *venv_cache_key
           paths:
-            - .venv
+            - .venv3
 
   compile_assets:
     <<: *container_config_min
@@ -179,6 +179,23 @@ jobs:
             - ./django_root/static
             - ./collectedstatic
 
+  install_js_packages:
+    <<: *container_config_min
+    steps:
+      - run:
+          name: Install datapages client packages
+          command: |
+            source .venv3/bin/activate
+            cd django_root/frontend
+            VERSION=$(./manage shell -c "from django.conf import settings;print(f'COMPONENTS:{settings.COMPONENTS_VERSION}')" | sed s/^.*COMPONENTS://)
+            aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./static
+            mv ./static/webpack-stats.json .
+
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./django_root/frontend
+
   collectstatic:
     <<: *container_config_min
     steps:
@@ -195,7 +212,7 @@ jobs:
       - run:
           name: Collect static files
           command: |
-            source .venv/bin/activate
+            source .venv3/bin/activate
             cd django_root
             export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
             python manage.py collectstatic --noinput --ignore=*.scss
@@ -204,18 +221,6 @@ jobs:
           root: *workspace_root
           paths:
             - ./collectedstatic
-
-  install_js_packages:
-    <<: *container_config_min
-    steps:
-      - run:
-          name: Install datapages client packages
-          command: |
-            aws s3 sync s3://${DEPLOY_BUCKET}/datapages/0.1.0 ./datapages
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - ./build
 
   pytest:
     <<: *container_config
@@ -230,7 +235,7 @@ jobs:
 
       - run:
           command: |
-            source .venv/bin/activate
+            source .venv3/bin/activate
             cd django_root
             export EDITOR_DIST_DIR=~/build/datapages
             DJANGO_SETTINGS_MODULE=datapages.settings.circleci python manage.py test
@@ -398,9 +403,17 @@ workflows:
             tags:
               only: /v.*/
 
+      - install_js_packages:
+          requires:
+            - build_venv
+          filters:
+            tags:
+              onlly: /v.*/
+
       - collectstatic:
           requires:
             - compile_assets
+            - install_js_packages
           filters:
             tags:
               only: /v.*/

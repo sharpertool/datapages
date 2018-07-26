@@ -195,7 +195,7 @@ jobs:
             export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
             python manage.py get_components_version version.txt
             VERSION=$(cat version.txt)
-            rm version.tt
+            rm version.txt
             echo "Downloading components version ${VERSION} to frontend/static"
             aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./frontend/static
             mv ./frontend/static/webpack-stats.json ./frontend

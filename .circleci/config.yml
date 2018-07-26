@@ -191,10 +191,10 @@ jobs:
           name: Install datapages client packages
           command: |
             source .venv3/bin/activate
-            cd django_root/frontend
+            cd django_root
             VERSION=$(python manage.py shell -c "from django.conf import settings;print(f'COMPONENTS:{settings.COMPONENTS_VERSION}')" | sed s/^.*COMPONENTS://)
-            aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./static
-            mv ./static/webpack-stats.json .
+            aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./frontend/static
+            mv ./frontend/static/webpack-stats.json ./frontend
 
       - persist_to_workspace:
           root: *workspace_root

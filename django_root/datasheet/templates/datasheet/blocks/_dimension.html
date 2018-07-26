@@ -7,9 +7,6 @@
 
     <div class="card chart-card">
         <div class="card-body">
-            <a href="#" class="expand-btn">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-1109/icon-expand.png" alt="expand">
-            </a>
             {% image block.value.image original as photo %}
             {% if block.value.enabled_drawing %}
                 <div class="drawable" data-props="{{ photo.url }}"></div>

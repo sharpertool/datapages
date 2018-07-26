@@ -192,7 +192,8 @@ jobs:
           command: |
             source .venv3/bin/activate
             cd django_root
-            VERSION=$(python manage.py shell -c "from django.conf import settings;print(f'COMPONENTS:{settings.COMPONENTS_VERSION}')" | sed s/^.*COMPONENTS://)
+            export DJANGO_SETTINGS_MODULE=datapages.settings.circleci
+            VERSION=$(grep COMPONENTS_VERSION datapages/settings/common.py | sed s/^.*=.*'// | sed s/'$// )
             aws s3 sync s3://${DEPLOY_BUCKET}/react-components/prod/${VERSION} ./frontend/static
             mv ./frontend/static/webpack-stats.json ./frontend
 

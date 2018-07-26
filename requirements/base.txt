@@ -46,4 +46,4 @@ django-suit==0.2.26
 django-webpack-loader==0.6.0
 
 # PDF Processing
-pymupdf==1.13.14
+pymupdf==1.13.15

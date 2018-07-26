@@ -408,7 +408,7 @@ workflows:
             - build_venv
           filters:
             tags:
-              onlly: /v.*/
+              only: /v.*/
 
       - collectstatic:
           requires:

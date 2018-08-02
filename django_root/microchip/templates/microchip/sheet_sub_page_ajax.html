@@ -1,7 +1,7 @@
 {% load wagtailuserbar %}
 {% load static wagtailcore_tags wagtailimages_tags %}
 
-<div class="col">
+<div id="{{ slug }}" class="sheet-content">
     {% for block in page.stream %}
         {% include_block block %}
     {% endfor %}

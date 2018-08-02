@@ -14,23 +14,49 @@
 
 {% block body_class %}{{ block.super }} microchip-sheetpage{% endblock %}
 
-{% block sidebar %}
-    {% include 'microchip/partials/_sidebar.html' %}
-{% endblock %}
-
 {% block script_data %}
     {{ block.super }}
 {% endblock %}
 
+{% block content %}
+    {% include 'datasheet/partials/_datasheet_header.html' %}
+
+    <main id="bookmark_top">
+        {% image banner_mark original as banner %}
+        {% include 'datasheet/partials/_jumbotron.html' with banner=banner %}
+
+        <div class="container-fluid">
+            <div class="row px-2">
+                <div class="col-12 col-lg-3 sidebar">
+                    {% block sidebar %}
+                        {% include 'microchip/partials/_sidebar.html' %}
+                    {% endblock %}
+                </div>
+                <div class="col-lg-9 col-md-12">
+                    <div class="product-slider row">
+                        {% include 'datasheet/partials/_product_slider.html' %}
+                    </div>
+                    <div class="menu-mobile row d-lg-none sticky-top sticky-offset ">
+                        {% include 'datasheet/partials/_menu_mobile.html' %}
+                    </div>
+                    <div class="row" id="content-container">
+                    </div>
+                </div>
+            </div>
+            <div class="row px-2">
+                {% include 'datasheet/partials/_footer.html' %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
 {% block render_bundles %}
-    {{ block.super }}
     {% if hierarchy_data %}
         {% render_bundle 'SidebarComponent' 'js' %}
     {% endif %}
 {% endblock %}
 
 {% block initialize_bundles %}
-    {{ block.super }}
     <script type="text/javascript">
         {% if hierarchy_data %}
             const datapages = window.datapages || {}

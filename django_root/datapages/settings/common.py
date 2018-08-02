@@ -305,7 +305,7 @@ if DEBUG and REACT_BUILD_DIR != '':
 else:
     # Set the components version to download upon build here
     # This is used at build time only, so .env file does not help
-    COMPONENTS_VERSION = 'v0.2.2'
+    COMPONENTS_VERSION = 'v0.3.0'
 
     WEBPACK_LOADER = {
         'DEFAULT': {

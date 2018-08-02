@@ -102,16 +102,14 @@ jobs:
             echo -e "Host github.com\n  StrictHostKeyChecking no\n" >> ~/.ssh/config
 
       - run:
-          name: fetch tags
-          command: |
-            git fetch --tags || true
+          name: Fix the crap in the circleci checkout.sh script
+          command: !
+            if [ -n "${CIRCLE_TAG}" ]
+            then
+              git fetch --force origin "refs/tags/${CIRCLE_TAG}:refs/tags/${CIRCLE_TAG}"
+            fi
 
       - checkout
-
-      - run:
-          name: fetch tags
-          command: |
-            git fetch --tags || true
 
       - save_cache:
           key: v1-repo-{{ .Branch }}-{{ .Revision }}

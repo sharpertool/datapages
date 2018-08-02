@@ -127,6 +127,8 @@ class SheetBasePage(Page):
     subtitle = models.CharField(max_length=250, blank=True)
     main_image = models.FileField(blank=True, null=True)
 
+    buy_now_link = models.CharField(max_length=255, null=True, blank=True)
+
     content_panels = Page.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
@@ -136,6 +138,7 @@ class SheetBasePage(Page):
             FieldPanel('subtitle'),
             FieldPanel('main_image'),
             FieldPanel('body', classname="full"),
+            FieldPanel('buy_now_link'),
         ], heading="General Sheet Information")
     ]
 

@@ -43,7 +43,6 @@ class SheetPage(SheetBasePage):
     """
     page_ptr = models.OneToOneField(Page, on_delete=models.CASCADE, parent_link=True,
                                     related_name='sager_sheet')
-    buy_now_link = models.CharField(max_length=255, null=True, blank=True)
 
     sheet_blocks = StreamField([
         ('contact_data', ContactDataBlock()),
@@ -76,9 +75,6 @@ class SheetPage(SheetBasePage):
                                   blank=True, related_name='sager_sheetpage_tags')
 
     content_panels = SheetBasePage.content_panels + [
-        MultiFieldPanel([
-            FieldPanel('buy_now_link'),
-        ], 'Sager Sheet Information'),
         MultiFieldPanel([
             StreamFieldPanel('attributes', heading=None, classname="full"),
         ],

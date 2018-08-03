@@ -3,9 +3,9 @@
 <div class="dimension block" id="{{ block.value.bookmark }}">
     <h1 class="title"><span>{{ block.value.title }}</span></h1>
 
-    <p class="text-muted text-center chart-title"><i>{{ block.value.title|capfirst }}</i></p>
+    <!--<p class="text-muted text-center chart-title"><i>{{ block.value.title|capfirst }}</i></p>-->
 
-    <div class="card chart-card">
+    <div class="card">
         <div class="card-body">
             {% image block.value.image original as photo %}
             {% if block.value.enabled_drawing %}

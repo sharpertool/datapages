@@ -2,12 +2,15 @@
 
 <section class="figure-stream image">
     <h5 class="figure-stream-title">{{ value.title }} <small>{{ value.description }}</small></h5>
-
-    {% image value.image original as figure_image %}
-    {% if value.enabled_drawing %}
-        <div class="drawable img-thumbnail" data-props="{{ figure_image.url }}"/>
-    {% else %}
-        <img src="{{ figure_image.url }}" width="100%" class="img-thumbnail">
-    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            {% image value.image original as figure_image %}
+            {% if value.enabled_drawing %}
+                <div class="drawable" data-props="{{ figure_image.url }}"/>
+            {% else %}
+                <img src="{{ figure_image.url }}" width="100%" class="img-thumbnail">
+            {% endif %}
+        </div>
+    </div>
 
 </section>

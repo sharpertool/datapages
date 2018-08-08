@@ -201,6 +201,7 @@ class SheetSubPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context['slug'] = self.slug
+        context['title'] = self.title_raw
         return context
 
 

@@ -112,6 +112,7 @@ class SheetPage(SheetBasePage):
                 d = {
                     'name': noprefix(child.title),
                     'id': child.pk,
+                    'slug': noprefix(child.slug),
                     'url': child.get_url(current_site=site)
                 }
 
@@ -196,6 +197,12 @@ class SheetSubPage(Page):
             self.draft_title = self.title_raw
 
         return super().full_clean(*args, **kwargs)
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context['slug'] = self.slug
+        context['title'] = self.title_raw
+        return context
 
 
 class RelatedLinks(Orderable):

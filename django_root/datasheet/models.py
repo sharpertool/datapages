@@ -1,5 +1,6 @@
 import collections
 import uuid
+import json
 from django.db import models
 
 from wagtail.core.models import Page, PageManager, Site
@@ -32,6 +33,12 @@ class SiteSettings(BaseSetting):
     active_area_background_color = models.CharField(default='#ddd', max_length=20)
     ga_tracking_id = models.CharField(blank=True, null=True, max_length=200)
     is_distributor = models.BooleanField(default=False)
+
+    # For content height setting
+    mobile = models.CharField(blank=True, null=True, max_length=50)
+    desktop = models.CharField(blank=True, null=True, max_length=50)
+    tablet = models.CharField(blank=True, null=True, max_length=50)
+
     panels = [
         FieldPanel('primary_color'),
         FieldPanel('secondary_color'),
@@ -41,7 +48,12 @@ class SiteSettings(BaseSetting):
         ImageChooserPanel('banner_mark'),
         FieldPanel('chat_url'),
         FieldPanel('ga_tracking_id'),
-        FieldPanel('is_distributor'),
+        FieldPanel('is_distributor', heading="Is this a distributor?"),
+        MultiFieldPanel([
+            FieldPanel('mobile'),
+            FieldPanel('desktop'),
+            FieldPanel('tablet')
+        ], heading="Content Height")
     ]
 
     @property
@@ -198,6 +210,11 @@ class SheetBasePage(Page):
         context['is_distributor'] = settings.is_distributor
         context['company_name'] = parent.title
         context['grid_included'] = False
+        context['content_height'] = json.dumps({
+            "mobile": settings.mobile,
+            "desktop": settings.desktop,
+            "tablet": settings.tablet
+        })
 
         for value in self.sheet_blocks:
             if isinstance(value.block, (GridDataBlock, PartSelectorBlock)):

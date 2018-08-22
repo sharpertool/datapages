@@ -1,8 +1,8 @@
 {% load wagtailuserbar %}
 {% load static wagtailcore_tags wagtailimages_tags %}
 
-<div id="{{ slug }}" class="card sheet-content">
-    <div class="card-header">{{ title }}</div>
+<div id="{{ slug }}" class="sheet-content">
+    <h3 class="sheet-content-header">{{ title }}</h3>
     {% for block in page.stream %}
         {% include_block block %}
     {% endfor %}

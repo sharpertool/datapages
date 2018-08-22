@@ -59,8 +59,9 @@
         {% if hierarchy_data %}
             const datapages = window.datapages || {}
             datapages.hierarchy_data = {{ hierarchy_data | safe }}
+            datapages.settings = {{ content_height | safe }}
             const sidebar = new SidebarComponent('.datapages-sidebar')
-            sidebar.render(datapages.hierarchy_data)
+            sidebar.render(datapages)
         {% endif %}
     </script>
 {% endblock %}

@@ -17,9 +17,9 @@
             }
         }
         @media screen and (min-width:768px) {
-            position: absolute;
-            width: calc(100% - 20px);
-            min-height: 100%;
+            //width: calc(100% - 20px);
+            width: 100%;
+            min-height: 500px;
         }
         .carousel-control-prev, .carousel-control-next{
             span{
@@ -45,7 +45,7 @@
             @media screen and (max-width:1024px){
                 width: 100%;
                 padding:0px;
-                bottom: -48px;
+                justify-content: center;
             }
             @media screen and (max-width:767px){
                 bottom: -22px;
@@ -71,6 +71,7 @@
         padding-left: 28px;
         @media screen and (max-width:1024px){
             padding-left: 15px;
+            margin-top: 60px;
         }
         @media screen and (max-width:767px){
             padding: 38px 18px 0 18px;
@@ -109,6 +110,7 @@
 
             @media (max-width: 1080px) {
                 --attr_height: 160px;
+                margin-left: 0px;
             }
 
             @media (min-width: 992px) {
@@ -125,7 +127,7 @@
 
             max-height: var(--attr_height);
             margin-top: 17px;
-            margin-left: 17px;
+            //margin-left: 17px;
         }
     }
     .nav-pills {
@@ -135,13 +137,13 @@
         .nav-link {
             border-radius: 0px;
             padding: 0;
-            color: var(--secondary_color);
+            color: #ccc;
             margin-bottom: 20px;
             font-size: 24px;
             position:relative;
             &.active {
                 background: transparent;
-                color: #fff;
+                color: var(--secondary_color);
                 &:before{
                     height:3px;
                     content: '';

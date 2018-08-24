@@ -28,7 +28,7 @@ django-redis==4.9.0
 
 # Static and Media files
 django-storages==1.6.6
-boto3==1.7.82
+boto3==1.7.84
 django-pipeline==1.6.14
 
 # SCSS files

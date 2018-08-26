@@ -28,7 +28,7 @@ django-redis==4.9.0
 
 # Static and Media files
 django-storages==1.6.6
-boto3==1.7.84
+boto3==1.8.0
 django-pipeline==1.6.14
 
 # SCSS files
@@ -46,4 +46,4 @@ django-suit==0.2.26
 django-webpack-loader==0.6.0
 
 # PDF Processing
-pymupdf==1.13.16
+pymupdf==1.13.18

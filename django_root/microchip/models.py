@@ -5,6 +5,8 @@ from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.template.response import TemplateResponse
+from django.http import JsonResponse
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -203,6 +205,21 @@ class SheetSubPage(Page):
         context['slug'] = self.slug
         context['title'] = self.title_raw
         return context
+
+    def serve(self, request, *args, **kwargs):
+        context = self.get_context(request, *args, **kwargs)
+        stream_data = context['page'].stream.stream_data
+        blocks_as_json = ['characteristics', 'grid', 'chart']
+
+        if not stream_data or stream_data[0]['type'] not in blocks_as_json:
+            request.is_preview = getattr(request, 'is_preview', False)
+            return TemplateResponse(
+                request,
+                self.get_template(request, *args, **kwargs),
+                self.get_context(request, *args, **kwargs)
+            )
+        else:
+            return JsonResponse(stream_data[0])
 
 
 class RelatedLinks(Orderable):

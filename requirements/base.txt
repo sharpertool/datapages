@@ -8,7 +8,7 @@ wagtail==2.2
 #django-crispy-forms
 django-mathfilters==0.4.0
 
-django-allauth==0.36.0
+django-allauth==0.37.1
 
 # Database
 # NOTE: version 2.7.4 is busted.. do not update.

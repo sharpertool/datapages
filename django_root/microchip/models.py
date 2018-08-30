@@ -111,11 +111,19 @@ class SheetPage(SheetBasePage):
         def render(children):
             out = []
             for child in children:
+                content = child.specific.stream.stream_data
                 d = {
                     'name': noprefix(child.title),
                     'id': child.pk,
                     'slug': noprefix(child.slug),
-                    'url': child.get_url(current_site=site)
+                    'url': child.get_url(current_site=site),
+                    'bookmarks': [
+                        {
+                            'title': stream['value']['title'],
+                            'bookmark': stream['value']['bookmark']
+                        }
+                        for stream in content
+                    ]
                 }
 
                 sub_children = child.get_children().order_by('title')
@@ -207,19 +215,14 @@ class SheetSubPage(Page):
         return context
 
     def serve(self, request, *args, **kwargs):
-        context = self.get_context(request, *args, **kwargs)
-        stream_data = context['page'].stream.stream_data
-        blocks_as_json = ['characteristics', 'grid', 'chart']
-
-        if not stream_data or stream_data[0]['type'] not in blocks_as_json:
-            request.is_preview = getattr(request, 'is_preview', False)
-            return TemplateResponse(
-                request,
-                self.get_template(request, *args, **kwargs),
-                self.get_context(request, *args, **kwargs)
-            )
+        if not request.is_ajax():
+            return super().serve(request, *args, **kwargs)
         else:
-            return JsonResponse(stream_data[0])
+            return JsonResponse({
+                'slug': self.slug,
+                'title': self.title_raw,
+                'content': self.stream.stream_data
+            })
 
 
 class RelatedLinks(Orderable):

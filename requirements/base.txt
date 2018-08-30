@@ -1,7 +1,7 @@
 
 # Core tools
 django<=2.0 # pyup: ignore
-wagtail==2.2
+wagtail==2.2.2
 
 # Forms
 #django-braces

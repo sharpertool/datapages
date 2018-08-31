@@ -5,7 +5,7 @@ from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
-from django.template.response import TemplateResponse
+from wagtail.images.models import Image
 from django.http import JsonResponse
 
 from modelcluster.fields import ParentalKey
@@ -218,6 +218,16 @@ class SheetSubPage(Page):
         if not request.is_ajax():
             return super().serve(request, *args, **kwargs)
         else:
+            has_image = lambda s: True if s.get('value').get('image', None) else False
+            stream_data = []
+            for stream in self.stream.stream_data:
+                if has_image(stream):
+                    image = stream.get('value').get('image')
+                    stream_value = stream.get('value')
+                    stream_value['url'] = Image.objects.get(pk=image).get_rendition('original').url
+                    stream['value'] = stream_value
+                stream_data.append(stream)
+
             return JsonResponse({
                 'slug': self.slug,
                 'title': self.title_raw,

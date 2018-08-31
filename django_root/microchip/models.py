@@ -231,7 +231,7 @@ class SheetSubPage(Page):
             return JsonResponse({
                 'slug': self.slug,
                 'title': self.title_raw,
-                'content': self.stream.stream_data
+                'content': stream_data
             })
 
 

@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from wagtail.images.models import Image
+from wagtail.documents.models import Document
 from django.http import JsonResponse
 
 from modelcluster.fields import ParentalKey
@@ -218,13 +219,16 @@ class SheetSubPage(Page):
         if not request.is_ajax():
             return super().serve(request, *args, **kwargs)
         else:
-            has_image = lambda s: True if s.get('value').get('image', None) else False
+            need_url = lambda s:\
+                True if s.get('value').get('image', None) or s.get('value').get('file', None) else False
             stream_data = []
             for stream in self.stream.stream_data:
-                if has_image(stream):
-                    image = stream.get('value').get('image')
+                if need_url(stream):
                     stream_value = stream.get('value')
-                    stream_value['url'] = Image.objects.get(pk=image).get_rendition('original').url
+                    if stream.get('value').get('file', None):
+                        stream_value['url'] = Document.objects.get(pk=stream.get('value').get('file')).file.url
+                    else:
+                        stream_value['url'] = Image.objects.get(pk=stream.get('value').get('image')).file.url
                     stream['value'] = stream_value
                 stream_data.append(stream)
 

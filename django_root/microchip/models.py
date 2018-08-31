@@ -220,15 +220,15 @@ class SheetSubPage(Page):
             return super().serve(request, *args, **kwargs)
         else:
             need_url = lambda s:\
-                True if s.get('value').get('image', None) or s.get('value').get('file', None) else False
+                True if s.get('image', None) or s.get('file', None) else False
             stream_data = []
             for stream in self.stream.stream_data:
-                if need_url(stream):
-                    stream_value = stream.get('value')
+                stream_value = stream.get('value')
+                if need_url(stream_value):
                     if stream.get('value').get('file', None):
-                        stream_value['url'] = Document.objects.get(pk=stream.get('value').get('file')).file.url
+                        stream_value['url'] = Document.objects.get(pk=stream_value.get('file')).file.url
                     else:
-                        stream_value['url'] = Image.objects.get(pk=stream.get('value').get('image')).file.url
+                        stream_value['url'] = Image.objects.get(pk=stream_value.get('image')).file.url
                     stream['value'] = stream_value
                 stream_data.append(stream)
 

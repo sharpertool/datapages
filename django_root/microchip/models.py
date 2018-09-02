@@ -5,6 +5,9 @@ from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from wagtail.images.models import Image
+from wagtail.documents.models import Document
+from django.http import JsonResponse
 
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -109,11 +112,19 @@ class SheetPage(SheetBasePage):
         def render(children):
             out = []
             for child in children:
+                content = child.specific.stream.stream_data
                 d = {
                     'name': noprefix(child.title),
                     'id': child.pk,
                     'slug': noprefix(child.slug),
-                    'url': child.get_url(current_site=site)
+                    'url': child.get_url(current_site=site),
+                    'bookmarks': [
+                        {
+                            'title': stream['value']['title'],
+                            'bookmark': stream['value']['bookmark']
+                        }
+                        for stream in content
+                    ]
                 }
 
                 sub_children = child.get_children().order_by('title')
@@ -203,6 +214,29 @@ class SheetSubPage(Page):
         context['slug'] = self.slug
         context['title'] = self.title_raw
         return context
+
+    def serve(self, request, *args, **kwargs):
+        if not request.is_ajax():
+            return super().serve(request, *args, **kwargs)
+        else:
+            need_url = lambda s:\
+                True if s.get('image', None) or s.get('file', None) else False
+            stream_data = []
+            for stream in self.stream.stream_data:
+                stream_value = stream.get('value')
+                if need_url(stream_value):
+                    if stream.get('value').get('file', None):
+                        stream_value['url'] = Document.objects.get(pk=stream_value.get('file')).file.url
+                    else:
+                        stream_value['url'] = Image.objects.get(pk=stream_value.get('image')).file.url
+                    stream['value'] = stream_value
+                stream_data.append(stream)
+
+            return JsonResponse({
+                'slug': self.slug,
+                'title': self.title_raw,
+                'content': stream_data
+            })
 
 
 class RelatedLinks(Orderable):

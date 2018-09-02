@@ -5,6 +5,8 @@
 
 {% block extra_css %}
     {{ block.super }}
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid/dist/styles/ag-theme-balham.css">
     {% if render_bundles %}
         {% if hierarchy_data %}
             {% render_bundle 'SidebarComponent' 'css' %}

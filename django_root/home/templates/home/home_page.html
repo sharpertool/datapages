@@ -16,12 +16,14 @@
         <div class="row">
             {% for sheet in datasheets %}
                 {% with sheet=sheet.specific %}
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-5">
                         <div class="card product-card">
                             <a href="{{ sheet.url }}">
                                 <div class="card-body">
                                     {% if sheet.settings.logo %}
-                                        <img width="200" height="200" src="{{ sheet.settings.logo.url }}" alt="TE Logo" />
+                                        <div class="product-card-image">
+                                            <img src="{{ sheet.settings.logo.url }}" alt="{{ sheet.title}}" />
+                                        </div>
                                     {% endif %}
                                     <h2 class="product-title">{{ sheet.title }}</h2>
                                 </div>

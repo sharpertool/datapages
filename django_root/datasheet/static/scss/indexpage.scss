@@ -25,6 +25,20 @@
   }
 }
 
+.product {
+    &-card {
+        &-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            > img {
+                width: 170px;
+            }
+        }
+    }
+}
+
 main.content {
   margin-top: 215px;
   padding: 0 30px;
@@ -36,9 +50,6 @@ main.content {
     .card-body {
       text-align: center;
       padding: 30px;
-      > img {
-        min-width: 100%;
-      }
       .vendor-name {
         font-size: 14px;
         letter-spacing: 1px;

@@ -2,6 +2,7 @@
 *.pyc
 *.pyo
 *.db
+*.py.bak
 .DS_Store
 .coverage
 local_settings.py

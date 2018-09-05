@@ -7,5 +7,8 @@ version=$(grep 'COMPONENTS_VERSION' ${file} )
 
 echo "Current version is ${version}"
 
-exp="s/\(COMPONENTS_VERSION[[:space:]]*=[[:space:]]*\)'\(.*\)'/\1'${newversion}' #Old: \2/"
-sed "${exp}" ${file}  | grep COMPONENTS_VERSION
+exp="s/(COMPONENTS_VERSION[[:space:]]*=[[:space:]]*)('[^']+').*/\1'${newversion}'  # Previous Version: \2/"
+#echo "Expression: ${exp}"
+
+sed -i .bak -E -e "${exp}" ${file}
+grep COMPONENTS_VERSION ${file}
